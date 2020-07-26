@@ -1,5 +1,5 @@
 # Infrastructure as Code
-- [ ] ansible
+- [x] ansible
   - [x]MongoDB
 - [ ] Terraform
 - [ ] Kubernetes
