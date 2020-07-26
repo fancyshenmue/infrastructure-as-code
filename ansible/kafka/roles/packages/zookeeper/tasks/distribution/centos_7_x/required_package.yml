@@ -1,0 +1,8 @@
+---
+- name: required package | zookeeper
+  yum:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+  with_items:
+    - "{{ zookeeper_required_package }}"
+  when: zookeeper_required_package is defined

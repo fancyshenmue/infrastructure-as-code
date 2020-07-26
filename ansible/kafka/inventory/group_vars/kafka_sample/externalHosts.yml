@@ -1,0 +1,5 @@
+---
+externalHosts:
+- 10.0.0.11 kafka-sample-001
+- 10.0.0.12 kafka-sample-002
+- 10.0.0.13 kafka-sample-003

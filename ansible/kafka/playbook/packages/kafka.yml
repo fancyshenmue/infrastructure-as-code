@@ -1,0 +1,13 @@
+---
+- hosts: '{{ hn }}'
+  roles:
+    - role: roles/permission/linux_account
+      become: True
+      become_user: root
+      become_method: sudo
+      vars:
+        include_permisssion: kafka
+    - role: roles/packages/kafka
+      become: True
+      become_user: root
+      become_method: sudo

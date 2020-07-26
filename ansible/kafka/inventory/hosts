@@ -1,0 +1,6 @@
+# kafka
+[kafka_sample]
+kafka-sample-001 ansible_user=root ansible_ssh_host=10.0.0.11
+kafka-sample-002 ansible_user=root ansible_ssh_host=10.0.0.12
+kafka-sample-003 ansible_user=root ansible_ssh_host=10.0.0.13
+# end of kafka

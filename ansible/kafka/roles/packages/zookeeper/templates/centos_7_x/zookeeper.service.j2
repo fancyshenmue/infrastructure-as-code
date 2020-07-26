@@ -1,0 +1,20 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+[Unit]
+Description=ZooKeeper Service
+Documentation=http://zookeeper.apache.org
+After=network.target
+
+[Service]
+Type=forking
+User={{ zookeeper_environment.user }}
+Group={{ zookeeper_environment.group }}
+Environment=ZOO_LOG_DIR={{ zookeeper_environment.environment.zoo_log_dir }}
+ExecStart={{ zookeeper_environment.execstart }}
+ExecStop={{ zookeeper_environment.execstop }}
+ExecReload={{ zookeeper_environment.execreload }}
+WorkingDirectory={{ zookeeper_environment.workingdirectory }}
+SyslogIdentifier={{ zookeeper_environment.syslogidentifier }}
+PIDFile={{ zookeeper_environment.pidfile }}
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+---
+kafka_conf_required_data:
+- src: "{{ role_path }}/files/jmx_prometheus_javaagent-0.13.0.jar"
+  dest: "/data/kafka/jmx_exporter/jmx_prometheus_javaagent-0.13.0.jar"
+  owner: kafka
+  group: kafka
+  mode: "0644"
+- src: "{{ inventory_dir }}/group_vars/{{ group_names[0] }}/files/kafka/jmx_exporter.yml"
+  dest: "/data/kafka/jmx_exporter/jmx_exporter.yml"
+  owner: kafka
+  group: kafka
+  mode: "0644"

@@ -1,0 +1,85 @@
+---
+kafka_service:
+- name: kafka
+  daemon_reload: yes
+
+kafka_required_package:
+- name: "java-1.8.0-openjdk-1.8.0.252.b09-2.el7_8"
+
+kafka_required_directory:
+- path: /data
+  owner: root
+  group: root
+  mode: "0755"
+- path: /data/kafka
+  owner: kafka
+  group: kafka
+  mode: "0755"
+- path: /data/kafka/service
+  owner: kafka
+  group: kafka
+  mode: "0755"
+- path: /data/kafka/data
+  owner: kafka
+  group: kafka
+  mode: "0755"
+- path: /data/kafka/logs
+  owner: kafka
+  group: kafka
+  mode: "0755"
+
+kafka_required_data_before_download_local:
+- url: "https://archive.apache.org/dist/kafka/2.2.1/kafka_2.12-2.2.1.tgz"
+  dest: "{{ role_path }}/files/kafka_2.12-2.2.1.tgz"
+
+kafka_required_data:
+- src: "{{ role_path }}/files/kafka_2.12-2.2.1.tgz"
+  dest: "/tmp/kafka_2.12-2.2.1.tgz"
+  owner: root
+  group: root
+  mode: "0644"
+
+kafka_required_data_after:
+- src: "/data/kafka/service/config/server.properties"
+  dest: "/data/kafka/service/config/server.properties.orig"
+  owner: kafka
+  group: kafka
+  mode: "0644"
+  remote_src: yes
+  force: no
+
+kafka_required_data_after_template:
+- src: "centos_7_x/kafka.service.j2"
+  dest: "/etc/systemd/system/kafka.service"
+  owner: root
+  group: root
+  mode: "0644"
+
+kafka_unarchive_data:
+- src: /tmp/kafka_2.12-2.2.1.tgz
+  dest: /data/kafka/service
+  owner: kafka
+  group: kafka
+  extra_opts:
+    - "--strip-components=1"
+  remote_src: "yes"
+
+# cleanup
+kafka_cleanup_local:
+- path: "{{ role_path }}/files/kafka_2.12-2.2.1.tgz"
+
+kafka_cleanup_remote:
+- path: /tmp/kafka_2.12-2.2.1.tgz
+
+# environment
+kafka_environment:
+  user: kafka
+  group: kafka
+  execstart: /data/kafka/service/bin/kafka-server-start.sh /data/kafka/service/config/server.properties
+  execstop: /data/kafka/service/bin/kafka-server-stop.sh
+  syslogidentifier: kafka
+  limitnofile: 300000
+  limitfsize: infinity
+  environment:
+    java_home: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.252.b09-2.el7_8.x86_64/jre
+    log_dir: /data/kafka/logs

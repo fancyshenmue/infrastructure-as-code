@@ -1,0 +1,46 @@
+---
+zookeeper_conf:
+# zoo.cfg
+- src: "{{ template_zoo_cfg }}"
+  dest: /data/zookeeper/service/conf/zoo.cfg
+  owner: zookeeper
+  group: zookeeper
+  mode: "0644"
+  info:
+    dataDir: /data/zookeeper/data
+    dataLogDir: /data/zookeeper/datalog
+    cluster: "true"
+
+# myid
+- src: "{{ template_myid }}"
+  dest: /data/zookeeper/data/myid
+  owner: zookeeper
+  group: zookeeper
+  mode: "0644"
+
+# java.env
+- src: "{{ template_java_env }}"
+  dest: /data/zookeeper/service/conf/java.env
+  owner: zookeeper
+  group: zookeeper
+  mode: "0644"
+  info:
+    jvmflags: "-Xmx1024m -Xms1024m"
+
+# systemd
+- src: "{{ template_zookeeper_service }}"
+  dest: /etc/systemd/system/zookeeper.service
+  owner: root
+  group: root
+  mode: "0644"
+  info:
+    user: zookeeper
+    group: zookeeper
+    execstart: /data/zookeeper/service/bin/zkServer.sh start
+    execstop: /data/zookeeper/service/bin/zkServer.sh stop
+    execreload: /data/zookeeper/service/bin/zkServer.sh restart
+    workingdirectory: /data/zookeeper/service
+    syslogidentifier: zookeeper
+    pidfile: /data/zookeeper/data/zookeeper_server.pid
+    environment:
+      zoo_log_dir: /data/zookeeper/logs

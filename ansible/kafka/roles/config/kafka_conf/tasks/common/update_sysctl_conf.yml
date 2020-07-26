@@ -1,0 +1,13 @@
+---
+# update sysctl | kafka_conf
+- name: update sysctl | kafka_conf
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    sysctl_set: "{{ item.sysctl_set }}"
+    sysctl_file: "{{ item.sysctl_file }}"
+    state: "{{ item.state }}"
+    reload: "{{ item.reload }}"
+  with_items:
+    - "{{ kafka_conf_sysctl_conf }}"
+  when: kafka_conf_sysctl_conf is defined

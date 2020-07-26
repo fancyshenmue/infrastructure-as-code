@@ -1,0 +1,9 @@
+---
+# check vars yml exist | kafka
+- name: check vars yml exist | kafka
+  local_action: stat path="{{ role_path }}/vars/{{ distribution }}/main.yml"
+  register: vars_yml
+
+# include vars yml if exist | kafka
+- include_vars: "{{ role_path }}/vars/{{ distribution }}/main.yml"
+  when: vars_yml.stat.exists == True

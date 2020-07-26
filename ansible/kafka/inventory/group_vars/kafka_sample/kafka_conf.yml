@@ -1,0 +1,60 @@
+---
+kafka_conf:
+# zoo.cfg
+- src: "{{ template_server_properties }}"
+  dest: /data/kafka/service/config/server.properties
+  owner: kafka
+  group: kafka
+  mode: "0644"
+  info:
+    cluster: "true"
+    logDirs: "/data/kafka/kafka-logs"
+    # numNetworkThreads: "3"
+    # numIoThreads: "8"
+    # socketSendBufferBytes: "102400"
+    # socketReceiveBufferBytes: "102400"
+    # socketRequestMaxBytes: "104857600"
+    # numPartitions: "1"
+    # numRecoveryThreadsPerDataDir: "1"
+    # offsetsTopicReplicationFactor: "1"
+    # transactionStateLogReplicationFactor: "1"
+    # transactionStateLogMinIsr: "1"
+    # logRetentionHours: "168"
+    # logSegmentBytes: "1073741824"
+    # logRetentionCheckIntervalMs: "300000"
+    zookeeperConnect:
+      - "kafka-sample-001:2181"
+      - "kafka-sample-002:2181"
+      - "kafka-sample-003:2181"
+    # zookeeperConnectionTimeoutMs: "6000"
+    # groupInitialRebalanceDelayMs: "0"
+    # autoCreateTopicsEnable: "true"
+    # deleteTopicEnable: "true"
+    # defaultReplicationFactor: "3"
+
+# myid
+- src: "{{ template_myid }}"
+  dest: /data/kafka/data/myid
+  owner: kafka
+  group: kafka
+  mode: "0644"
+
+# systemd
+- src: "{{ template_kafka_service }}"
+  dest: /etc/systemd/system/kafka.service
+  owner: root
+  group: root
+  mode: "0644"
+  info:
+    user: kafka
+    group: kafka
+    execstart: /data/kafka/service/bin/kafka-server-start.sh /data/kafka/service/config/server.properties
+    execstop: /data/kafka/service/bin/kafka-server-stop.sh
+    syslogidentifier: kafka
+    limitnofile: 300000
+    limitfsize: infinity
+    environment:
+      javaHome: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.252.b09-2.el7_8.x86_64/jre
+      logDir: /data/kafka/logs
+      kafkaOpts: "-javaagent:/data/kafka/jmx_exporter/jmx_prometheus_javaagent-0.13.0.jar=6060:/data/kafka/jmx_exporter/jmx_exporter.yml"
+      jmxPort: "9999"

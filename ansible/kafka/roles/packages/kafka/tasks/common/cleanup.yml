@@ -1,0 +1,26 @@
+---
+# cleanup | local | kafka
+- name: cleanup | local | kafka
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ kafka_cleanup_local }}"
+  when: kafka_cleanup_local is defined
+  run_once: true
+  delegate_to: localhost
+
+# cleanup | remote | kafka
+- name: cleanup | remote | kafka
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ kafka_cleanup_remote }}"
+  when: kafka_cleanup_remote is defined

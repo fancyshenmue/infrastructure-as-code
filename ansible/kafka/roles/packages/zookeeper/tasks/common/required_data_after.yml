@@ -1,0 +1,26 @@
+---
+# required data | after | zookeeper
+- name: required data | after | zookeeper
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    remote_src: "{{ item.remote_src | default('no') }}"
+    force: "{{ item.force | default('yes') }}"
+  with_items:
+    - "{{ zookeeper_required_data_after }}"
+  when: zookeeper_required_data_after is defined
+
+# required data | after | template | zookeeper
+- name: required data | after | template | zookeeper
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ zookeeper_required_data_after_template }}"
+  when: zookeeper_required_data_after_template is defined

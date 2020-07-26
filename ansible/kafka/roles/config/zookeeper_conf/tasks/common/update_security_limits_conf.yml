@@ -1,0 +1,12 @@
+---
+# update security limit | zookeeper_conf
+- name: update security limit | zookeeper_conf
+  pam_limits:
+    domain: "{{ item.domain }}"
+    limit_type: "{{ item.limit_type }}"
+    limit_item: "{{ item.limit_item }}"
+    value: "{{ item.value }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - "{{ zookeeper_conf_security_limit }}"
+  when: zookeeper_conf_security_limit is defined

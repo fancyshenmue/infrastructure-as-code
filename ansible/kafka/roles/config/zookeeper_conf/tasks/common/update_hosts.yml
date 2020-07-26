@@ -1,0 +1,7 @@
+---
+- name: add {{ file_hosts }} | zookeeper_conf
+  blockinfile:
+    dest: "{{ file_hosts }}"
+    marker: "# {mark} Ansible Zookeeper Management"
+    content: |
+      {{ lookup('template', template_hosts) }}

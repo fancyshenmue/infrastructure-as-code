@@ -1,0 +1,11 @@
+# service
+service_name: "kafka"
+
+# template
+template_server_properties: server.properties.j2
+template_myid: myid.j2
+template_kafka_service: kafka.service.j2
+template_hosts: hosts.j2
+
+# file
+file_hosts: /etc/hosts

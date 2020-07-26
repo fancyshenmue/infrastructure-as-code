@@ -1,0 +1,85 @@
+---
+zookeeper_service:
+- name: zookeeper
+  daemon_reload: yes
+
+zookeeper_required_package:
+- name: "java-1.8.0-openjdk-1.8.0.252.b09-2.el7_8"
+
+zookeeper_required_directory:
+- path: /data
+  owner: root
+  group: root
+  mode: "0755"
+- path: /data/zookeeper
+  owner: zookeeper
+  group: zookeeper
+  mode: "0755"
+- path: /data/zookeeper/service
+  owner: zookeeper
+  group: zookeeper
+  mode: "0755"
+- path: /data/zookeeper/data
+  owner: zookeeper
+  group: zookeeper
+  mode: "0755"
+- path: /data/zookeeper/logs
+  owner: zookeeper
+  group: zookeeper
+  mode: "0755"
+
+zookeeper_required_data_before_download_local:
+- url: "https://archive.apache.org/dist/zookeeper/zookeeper-3.4.13/zookeeper-3.4.13.tar.gz"
+  dest: "{{ role_path }}/files/zookeeper-3.4.13.tar.gz"
+
+zookeeper_required_data:
+- src: "{{ role_path }}/files/zookeeper-3.4.13.tar.gz"
+  dest: "/tmp/zookeeper-3.4.13.tar.gz"
+  owner: root
+  group: root
+  mode: "0644"
+
+zookeeper_required_data_after:
+- src: "/data/zookeeper/service/conf/zoo_sample.cfg"
+  dest: "/data/zookeeper/service/conf/zoo.cfg"
+  owner: zookeeper
+  group: zookeeper
+  mode: "0644"
+  remote_src: yes
+  force: no
+
+zookeeper_required_data_after_template:
+- src: "centos_7_x/zookeeper.service.j2"
+  dest: "/etc/systemd/system/zookeeper.service"
+  owner: root
+  group: root
+  mode: "0644"
+
+zookeeper_unarchive_data:
+- src: /tmp/zookeeper-3.4.13.tar.gz
+  dest: /data/zookeeper/service
+  owner: zookeeper
+  group: zookeeper
+  extra_opts:
+    - "--strip-components=1"
+  remote_src: "yes"
+
+# cleanup
+zookeeper_cleanup_local:
+- path: "{{ role_path }}/files/zookeeper-3.4.13.tar.gz"
+
+zookeeper_cleanup_remote:
+- path: /tmp/zookeeper-3.4.13.tar.gz
+
+# environment
+zookeeper_environment:
+  user: zookeeper
+  group: zookeeper
+  execstart: /data/zookeeper/service/bin/zkServer.sh start
+  execstop: /data/zookeeper/service/bin/zkServer.sh stop
+  execreload: /data/zookeeper/service/bin/zkServer.sh restart
+  workingdirectory: /data/zookeeper/service
+  syslogidentifier: zookeeper
+  pidfile: /data/zookeeper/data/zookeeper_server.pid
+  environment:
+    zoo_log_dir: /data/zookeeper/logs

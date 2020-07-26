@@ -1,0 +1,35 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+[Unit]
+Description=Apache Kafka server (broker)
+Documentation=http://kafka.apache.org/documentation.html
+Requires=network.target remote-fs.target
+After=network.target remote-fs.target
+
+[Service]
+Type=simple
+{# KAFKA_HEAP_OPTS #}
+{% if item.info.environment.kafkaHeapOpts is defined %}
+Environment="KAFKA_HEAP_OPTS={{ item.info.environment.kafkaHeapOpts }}"
+{% else %}
+Environment="KAFKA_HEAP_OPTS=-Xms{{ (ansible_memtotal_mb * 0.5 / 1024) | round | int }}G -Xmx{{ (ansible_memtotal_mb * 0.5 / 1024) | round | int }}G"
+{% endif %}
+{# KAFKA_OPTS #}
+{% if item.info.environment.kafkaOpts is defined %}
+Environment="KAFKA_OPTS={{ item.info.environment.kafkaOpts }}"
+{% endif %}
+{# JMX_PORT #}
+{% if item.info.environment.jmxPort is defined %}
+Environment="JMX_PORT={{ item.info.environment.jmxPort }}"
+{% endif %}
+Environment=JAVA_HOME={{ item.info.environment.javaHome }}
+Environment=LOG_DIR={{ item.info.environment.logDir }}
+User={{ item.info.user }}
+Group={{ item.info.group }}
+ExecStart={{ item.info.execstart }}
+ExecStop={{ item.info.execstop }}
+SyslogIdentifier={{ item.info.syslogidentifier }}
+LimitNOFILE={{ item.info.limitnofile | default(300000) }}
+LimitFSIZE={{ item.info.limitfsize | default('infinity') }}
+
+[Install]
+WantedBy=multi-user.target

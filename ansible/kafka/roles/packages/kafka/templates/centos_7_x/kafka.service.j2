@@ -1,0 +1,22 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+[Unit]
+Description=Apache Kafka server (broker)
+Documentation=http://kafka.apache.org/documentation.html
+Requires=network.target remote-fs.target
+After=network.target remote-fs.target
+
+[Service]
+Type=simple
+Environment="KAFKA_HEAP_OPTS=-Xms{{ (ansible_memtotal_mb * 0.5 / 1024) | round | int }}G -Xmx{{ (ansible_memtotal_mb * 0.5 / 1024) | round | int }}G"
+Environment=JAVA_HOME={{ kafka_environment.environment.java_home }}
+Environment=LOG_DIR={{ kafka_environment.environment.log_dir }}
+User={{ kafka_environment.user }}
+Group={{ kafka_environment.group }}
+ExecStart={{ kafka_environment.execstart }}
+ExecStop={{ kafka_environment.execstop }}
+SyslogIdentifier={{ kafka_environment.syslogidentifier }}
+LimitNOFILE={{ kafka_environment.limitnofile | default(300000) }}
+LimitFSIZE={{ kafka_environment.limitfsize | default('infinity') }}
+
+[Install]
+WantedBy=multi-user.target

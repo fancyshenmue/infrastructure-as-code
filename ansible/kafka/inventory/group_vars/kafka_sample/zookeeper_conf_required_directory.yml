@@ -1,0 +1,26 @@
+---
+zookeeper_conf_required_directory:
+- path: /data
+  owner: root
+  group: root
+  mode: "0755"
+- path: /data/zookeeper
+  owner: zookeeper
+  group: zookeeper
+  mode: "0755"
+- path: /data/zookeeper/service
+  owner: zookeeper
+  group: zookeeper
+  mode: "0755"
+- path: /data/zookeeper/data
+  owner: zookeeper
+  group: zookeeper
+  mode: "0755"
+- path: /data/zookeeper/datalog
+  owner: zookeeper
+  group: zookeeper
+  mode: "0755"
+- path: /data/zookeeper/logs
+  owner: zookeeper
+  group: zookeeper
+  mode: "0755"

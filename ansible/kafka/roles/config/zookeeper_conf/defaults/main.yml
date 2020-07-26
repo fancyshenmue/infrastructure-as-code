@@ -1,0 +1,12 @@
+# service
+service_name: "zookeeper"
+
+# template
+template_zoo_cfg: zoo.cfg.j2
+template_myid: myid.j2
+template_zookeeper_service: zookeeper.service.j2
+template_hosts: hosts.j2
+template_java_env: java.env.j2
+
+# file
+file_hosts: /etc/hosts

@@ -1,0 +1,7 @@
+---
+- name: add {{ file_hosts }} | kafka_conf
+  blockinfile:
+    dest: "{{ file_hosts }}"
+    marker: "# {mark} Ansible Kafka Management"
+    content: |
+      {{ lookup('template', template_hosts) }}

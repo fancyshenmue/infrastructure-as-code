@@ -1,0 +1,28 @@
+---
+# update conf | template | zookeeper_conf
+- name: update conf | template | zookeeper_conf
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ zookeeper_conf }}"
+  when: zookeeper_conf is defined
+  # notify:
+  #   - reload zookeeper
+
+# update conf | custom | zookeeper_conf
+- name: update conf | custom | zookeeper_conf
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ zookeeper_conf_custom }}"
+  when: zookeeper_conf_custom is defined
+  # notify:
+  #   - reload zookeeper

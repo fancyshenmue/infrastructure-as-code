@@ -1,0 +1,8 @@
+---
+- name: update systemd status | zookeeper
+  systemd:
+    name: "{{ item.name }}"
+    enabled: "{{ item.enabled | default('yes') }}"
+  with_items:
+    - "{{ zookeeper_service }}"
+  when: zookeeper_service is defined

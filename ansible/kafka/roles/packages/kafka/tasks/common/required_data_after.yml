@@ -1,0 +1,26 @@
+---
+# required data | after | kafka
+- name: required data | after | kafka
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    remote_src: "{{ item.remote_src | default('no') }}"
+    force: "{{ item.force | default('yes') }}"
+  with_items:
+    - "{{ kafka_required_data_after }}"
+  when: kafka_required_data_after is defined
+
+# required data | after | template | kafka
+- name: required data | after | template | kafka
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ kafka_required_data_after_template }}"
+  when: kafka_required_data_after_template is defined

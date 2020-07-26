@@ -1,0 +1,40 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+# The number of milliseconds of each tick
+tickTime=2000
+# The number of ticks that the initial
+# synchronization phase can take
+initLimit=10
+# The number of ticks that can pass between
+# sending a request and getting an acknowledgement
+syncLimit=5
+# the directory where the snapshot is stored.
+# do not use /tmp for storage, /tmp here is just
+# example sakes.
+dataDir={{ item.info.dataDir | default('/tmp/zookeeper') }}
+# the port at which the clients will connect
+clientPort={{ item.info.clientPort | default(2181) }}
+# the maximum number of client connections.
+# increase this if you need to handle more clients
+#maxClientCnxns=60
+#
+# Be sure to read the maintenance section of the
+# administrator guide before turning on autopurge.
+#
+# http://zookeeper.apache.org/doc/current/zookeeperAdmin.html#sc_maintenance
+#
+# The number of snapshots to retain in dataDir
+#autopurge.snapRetainCount=3
+# Purge task interval in hours
+# Set to "0" to disable auto purge feature
+#autopurge.purgeInterval=1
+
+{# dataLogDir #}
+{% if item.info.dataLogDir is defined %}
+dataLogDir={{ item.info.dataLogDir }}
+{% endif %}
+{# cluster #}
+{% if (item.info.cluster is defined) and (item.info.cluster == "true") %}
+    {% for i in groups[group_names[0]] %}
+server.{{ loop.index }}={{ hostvars[i]['ansible_hostname'] }}:{{ item.info.connectionPort | default(2888) }}:{{ item.info.leaderPort | default(3888) }}
+    {% endfor %}
+{% endif %}
