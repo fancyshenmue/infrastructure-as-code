@@ -1,6 +1,6 @@
 # Infrastructure as Code
-- [] ansible
-  - [x]MongoDB
+- [ ] Ansible
+  - [x] Mongodb
 - [ ] Terraform
 - [ ] Kubernetes
   - [ ] Kustomize
