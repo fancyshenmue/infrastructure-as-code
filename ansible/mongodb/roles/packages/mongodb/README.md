@@ -3,11 +3,11 @@
 
 # Usage
 ``` shell
-export INVENTORY=</path>/<to>/<inventory>
-export HN=<host_name>
-export PLAYBOOK=<path>/<to>/<playbook>
+export _INVENTORY=</path>/<to>/<inventory>
+export _HN=<host_name>
+export _PLAYBOOK=<path>/<to>/<playbook>
 
-ansible-playbook -i ${INVENTORY} -e "hn=${HN}" ${PLAYBOOK}
+ansible-playbook -i ${_INVENTORY} -e "hn=${_HN}" ${_PLAYBOOK}
 ```
 
 # Example Playbook
