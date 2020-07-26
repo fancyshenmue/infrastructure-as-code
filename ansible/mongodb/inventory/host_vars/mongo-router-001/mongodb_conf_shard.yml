@@ -1,0 +1,15 @@
+---
+mongodb_conf_shard:
+- login_host: "{{ inventory_hostname }}"
+  # login_port: "27017"
+  # login_user: ""
+  # login_password: ""
+  shard: "Shard1RepSet/mongo-shard-001-001:27017,mongo-shard-001-002:27017,mongo-shard-001-003:27017"
+  state: "present"
+
+- login_host: "{{ inventory_hostname }}"
+  # login_port: "27017"
+  # login_user: ""
+  # login_password: ""
+  shard: "Shard2RepSet/mongo-shard-002-001:27017,mongo-shard-002-002:27017,mongo-shard-002-003:27017"
+  state: "present"

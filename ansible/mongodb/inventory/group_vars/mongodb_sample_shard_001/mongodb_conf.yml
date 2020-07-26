@@ -1,0 +1,54 @@
+---
+mongodb_conf:
+# config
+- src: mongod.conf.j2
+  dest: /data/mongodb/conf/mongod.conf
+  owner: root
+  group: root
+  mode: "0644"
+  info:
+    systemLog:
+      - "  destination: file"
+      - "  logAppend: true"
+      - "  path: /data/mongodb/log/mongod.log"
+    storage:
+      - "  dbPath: /data/mongodb/data"
+      - "  journal:"
+      - "    enabled: true"
+      - "  wiredTiger:"
+      - "    engineConfig:"
+      - "      cacheSizeGB: 5"
+    processManagement:
+      - "  fork: true"
+      - "  pidFilePath: /data/mongodb/pid/mongod.pid"
+      - "  timeZoneInfo: /usr/share/zoneinfo"
+    net:
+      - "  port: 27017"
+      - "  bindIp: 0.0.0.0"
+    security:
+      - "  authorization: disabled"
+      - "  clusterAuthMode: keyFile"
+      - "  keyFile: /data/mongodb/auth/mongod.key"
+    replication:
+      - "  replSetName: Shard1RepSet"
+    sharding:
+      - "  clusterRole: shardsvr"
+
+# service
+- src: mongod.service.j2
+  dest: /etc/systemd/system/mongod_shard.service
+  owner: root
+  group: root
+  mode: "0644"
+  info:
+    Unit:
+      After: network.target rc-local.service
+    Service:
+      Environment:
+        OPTIONS: OPTIONS=-f /data/mongodb/conf/mongod.conf
+      ExecStart: /usr/bin/mongod $OPTIONS
+      ExecStartPre:
+        - "/usr/bin/mkdir -p /data/mongodb/pid"
+        - "/usr/bin/chown mongod:mongod /data/mongodb/pid"
+        - "/usr/bin/chmod 0755 /data/mongodb/pid"
+      PIDFile: /data/mongodb/pid/mongod.pid

@@ -1,0 +1,6 @@
+---
+mongodb_conf_permission_after:
+- path: /etc/rc.d/rc.local
+  owner: root
+  group: root
+  mode: "0755"

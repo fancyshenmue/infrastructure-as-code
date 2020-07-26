@@ -1,0 +1,45 @@
+---
+mongodb_conf:
+# config
+- src: mongod.conf.j2
+  dest: /data/mongodb/conf/mongod.conf
+  owner: root
+  group: root
+  mode: "0644"
+  info:
+    mongoRoles: "router"
+    systemLog:
+      - "  destination: file"
+      - "  logAppend: true"
+      - "  path: /data/mongodb/log/mongod.log"
+    processManagement:
+      - "  fork: true"
+      - "  pidFilePath: /data/mongodb/pid/mongod.pid"
+      - "  timeZoneInfo: /usr/share/zoneinfo"
+    net:
+      - "  port: 27017"
+      - "  bindIp: 0.0.0.0"
+    security:
+      - "  clusterAuthMode: keyFile"
+      - "  keyFile: /data/mongodb/auth/mongod.key"
+    sharding:
+      - "  configDB: ConfigDBRepSet/{% for i in groups['mongodb_sample_config'] %}{{ i }}:27017{% if not loop.last %},{% endif %}{% endfor %}"
+
+# service
+- src: mongod.service.j2
+  dest: /etc/systemd/system/mongod_router.service
+  owner: root
+  group: root
+  mode: "0644"
+  info:
+    Unit:
+      After: network.target rc-local.service
+    Service:
+      Environment:
+        OPTIONS: OPTIONS=-f /data/mongodb/conf/mongod.conf
+      ExecStart: /usr/bin/mongos $OPTIONS
+      ExecStartPre:
+        - "/usr/bin/mkdir -p /data/mongodb/pid"
+        - "/usr/bin/chown mongod:mongod /data/mongodb/pid"
+        - "/usr/bin/chmod 0755 /data/mongodb/pid"
+      PIDFile: /data/mongodb/pid/mongod.pid

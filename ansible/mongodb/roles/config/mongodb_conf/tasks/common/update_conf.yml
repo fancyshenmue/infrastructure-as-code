@@ -1,0 +1,49 @@
+---
+# update conf | template | mongodb_conf
+- name: update conf | template | mongodb_conf
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ mongodb_conf }}"
+  when: mongodb_conf is defined
+  # notify:
+  #   - reload mongod
+  tags:
+    - initial
+    - config
+
+# update conf | custom | mongodb_conf
+- name: update conf | custom | mongodb_conf
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ mongodb_conf_custom }}"
+  when: mongodb_conf_custom is defined
+  # notify:
+  #   - reload mongod
+  tags:
+    - initial
+    - config
+
+# update conf | template | append | mongodb_conf
+- name: update conf | template | append | mongodb_conf
+  blockinfile:
+    dest: "{{ item.dest }}"
+    marker: "{{ item.marker }}"
+    content: |
+      {{ lookup('template', item.content) }}
+  with_items:
+    - "{{ mongodb_conf_append }}"
+  when:
+    mongodb_conf_append is defined
+  tags:
+    - initial
+    - config

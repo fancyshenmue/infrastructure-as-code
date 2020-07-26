@@ -1,0 +1,20 @@
+---
+# mongodb user | mongodb_conf
+- name: mongodb user | mongodb_conf
+  mongodb_user:
+    login_host: "{{ item.login_host }}"
+    login_port: "{{ item.login_port | default('27017') }}"
+    login_user: "{{ item.login_user | default('') }}"
+    login_password: "{{ item.login_password | default('') }}"
+    database: "{{ item.database }}"
+    user: "{{ item.user }}"
+    password: "{{ item.password }}"
+    state: "{{ item.state | default('present') }}"
+    roles: "{{ item.roles }}"
+  with_items:
+    - "{{ mongodb_conf_mongodb_user }}"
+  when:
+    - mongodb_conf_mongodb_user is defined
+  delegate_to: localhost
+  tags:
+    - user

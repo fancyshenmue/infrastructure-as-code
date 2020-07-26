@@ -1,0 +1,30 @@
+# mongo
+[mongodb_sample_router]
+mongo-router-001 ansible_user=root ansible_ssh_host=10.0.0.11
+mongo-router-002 ansible_user=root ansible_ssh_host=10.0.0.12
+mongo-router-003 ansible_user=root ansible_ssh_host=10.0.0.13
+
+[mongodb_sample_config]
+mongo-config-001 ansible_user=root ansible_ssh_host=10.0.0.14
+mongo-config-002 ansible_user=root ansible_ssh_host=10.0.0.15
+mongo-config-003 ansible_user=root ansible_ssh_host=10.0.0.16
+
+[mongodb_sample_shard_001]
+mongo-shard-001-001 ansible_user=root ansible_ssh_host=10.0.0.17
+mongo-shard-001-002 ansible_user=root ansible_ssh_host=10.0.0.18
+mongo-shard-001-003 ansible_user=root ansible_ssh_host=10.0.0.19
+
+[mongodb_sample_shard_002]
+mongo-shard-002-001 ansible_user=root ansible_ssh_host=10.0.0.20
+mongo-shard-002-002 ansible_user=root ansible_ssh_host=10.0.0.21
+mongo-shard-002-003 ansible_user=root ansible_ssh_host=10.0.0.22
+
+[mongodb_sample_shard:children]
+mongodb_sample_shard_001
+mongodb_sample_shard_002
+
+[mongodb_sample:children]
+mongodb_sample_router
+mongodb_sample_config
+mongodb_sample_shard
+# end of mongo

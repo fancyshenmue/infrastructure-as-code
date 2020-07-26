@@ -1,0 +1,8 @@
+---
+- name: required package | mongodb
+  yum:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+  with_items:
+    - "{{ mongodb_required_package }}"
+  when: mongodb_required_package is defined

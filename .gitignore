@@ -1,0 +1,6 @@
+*.retry
+*.key
+*.pem
+*.csr
+*.crt
+venv

@@ -1,0 +1,9 @@
+---
+mongodb_conf_append:
+- dest: /etc/rc.d/rc.local
+  marker: "# {mark} Ansible Mongo Management"
+  content: rc.local.j2
+  info:
+    append:
+      - echo never > /sys/kernel/mm/transparent_hugepage/enabled
+      - echo never > /sys/kernel/mm/transparent_hugepage/defrag

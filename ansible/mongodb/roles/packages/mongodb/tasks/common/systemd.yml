@@ -1,0 +1,8 @@
+---
+- name: update systemd status | mongodb
+  systemd:
+    name: "{{ item.name }}"
+    enabled: "{{ item.enabled | default('yes') }}"
+  with_items:
+    - "{{ mongodb_service }}"
+  when: mongodb_service is defined

@@ -1,0 +1,10 @@
+---
+- name: add {{ file_hosts }} | mongodb_conf
+  blockinfile:
+    dest: "{{ file_hosts }}"
+    marker: "# {mark} Ansible Mongo Management"
+    content: |
+      {{ lookup('template', template_hosts) }}
+  tags:
+    - initial
+    - config

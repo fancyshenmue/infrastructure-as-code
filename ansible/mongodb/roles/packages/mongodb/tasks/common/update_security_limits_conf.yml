@@ -1,0 +1,12 @@
+---
+# update security limit | mongodb
+- name: update security limit | mongodb
+  pam_limits:
+    domain: "{{ item.domain }}"
+    limit_type: "{{ item.limit_type }}"
+    limit_item: "{{ item.limit_item }}"
+    value: "{{ item.value }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - "{{ mongodb_security_limit }}"
+  when: mongodb_security_limit is defined

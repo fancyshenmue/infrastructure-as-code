@@ -1,0 +1,10 @@
+---
+mongodb_conf_mongodb_user:
+- login_host: "{{ inventory_hostname }}"
+  # login_port: "27017"
+  # login_user: ""
+  # login_password: ""
+  database: admin
+  user: root
+  password: example
+  roles: root

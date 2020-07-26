@@ -1,0 +1,10 @@
+---
+# service
+service_name: "mongod"
+
+# template
+template_zookeeper_service: zookeeper.service.j2
+template_hosts: hosts.j2
+
+# file
+file_hosts: /etc/hosts

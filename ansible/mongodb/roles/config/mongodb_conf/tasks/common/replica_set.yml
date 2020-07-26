@@ -1,0 +1,18 @@
+---
+# replica set | mongodb_conf
+- name: replica set | mongodb_conf
+  mongodb_replicaset:
+    login_host: "{{ item.login_host }}"
+    login_port: "{{ item.login_port | default('27017') }}"
+    login_user: "{{ item.login_user | default('') }}"
+    login_password: "{{ item.login_password | default('') }}"
+    replica_set: "{{ item.replica_set }}"
+    members:
+      "{{ item.members }}"
+  with_items:
+    - "{{ mongodb_conf_replica_set }}"
+  when:
+    - mongodb_conf_replica_set is defined
+  delegate_to: localhost
+  tags:
+    - replica

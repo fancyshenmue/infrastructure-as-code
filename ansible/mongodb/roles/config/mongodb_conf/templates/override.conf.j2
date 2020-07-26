@@ -1,0 +1,34 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+{% if item.info.Unit is defined %}
+[Unit]
+    {# After #}
+    {% if item.info.Unit.After is defined %}
+After={{ item.info.Unit.After }}
+    {% endif %}
+{% endif %}
+
+{% if item.info.Service is defined %}
+[Service]
+    {# Environment.OPTIONS #}
+    {% if item.info.Service.Environment.OPTIONS is defined %}
+Environment="OPTIONS={{ item.info.Service.Environment.OPTIONS }}"
+    {% endif %}
+    {# ExecStart #}
+    {% if item.info.Service.ExecStart is defined %}
+ExecStart={{ item.info.Service.ExecStart }}
+    {% endif %}
+    {# ExecStartPre #}
+    {% if item.info.Service.ExecStartPre is defined %}
+        {% for i in item.info.Service.ExecStartPre %}
+ExecStartPre={{ i }}
+        {% endfor %}
+    {% endif %}
+    {# PIDFile #}
+    {% if item.info.Service.PIDFile is defined %}
+PIDFile={{ item.info.Service.PIDFile }}
+    {% endif %}
+    {# Type #}
+    {% if item.info.Service.Type is defined %}
+Type={{ item.info.Service.Type }}
+    {% endif %}
+{% endif %}

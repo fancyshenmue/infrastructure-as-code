@@ -1,0 +1,60 @@
+---
+# set variables
+- include_tasks: "{{ role_path }}/tasks/common/set_variables.yml"
+  tags:
+    - always
+
+# include variables
+- include_tasks: "{{ role_path }}/tasks/common/include_variables.yml"
+  tags:
+    - always
+
+# sysctl conf
+- include_tasks: "{{ role_path }}/tasks/common/update_sysctl_conf.yml"
+  tags:
+    - always
+
+# security limits
+- include_tasks: "{{ role_path }}/tasks/common/update_security_limits_conf.yml"
+  tags:
+    - always
+
+# update hosts
+- include_tasks: "{{ role_path }}/tasks/common/update_hosts.yml"
+  tags:
+    - always
+
+# required directory
+- include_tasks: "{{ role_path }}/tasks/common/required_directory.yml"
+  tags:
+    - always
+
+# required data
+- include_tasks: "{{ role_path }}/tasks/common/required_data.yml"
+  tags:
+    - always
+
+# update conf
+- include_tasks: "{{ role_path }}/tasks/common/update_conf.yml"
+  tags:
+    - always
+
+# permission after
+- include_tasks: "{{ role_path }}/tasks/common/permission_after.yml"
+  tags:
+    - always
+
+# replica set
+- include_tasks: "{{ role_path }}/tasks/common/replica_set.yml"
+  tags:
+    - always
+
+# shard
+- include_tasks: "{{ role_path }}/tasks/common/shard.yml"
+  tags:
+    - always
+
+# mongo user
+- include_tasks: "{{ role_path }}/tasks/common/mongo_user.yml"
+  tags:
+    - always

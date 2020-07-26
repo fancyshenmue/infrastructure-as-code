@@ -1,0 +1,11 @@
+---
+mongodb_conf_replica_set:
+- login_host: "{{ inventory_hostname }}"
+  # login_port: "27017"
+  # login_user: ""
+  # login_password: ""
+  replica_set: "ConfigDBRepSet"
+  members:
+    - mongo-config-001:27017
+    - mongo-config-002:27017
+    - mongo-config-003:27017

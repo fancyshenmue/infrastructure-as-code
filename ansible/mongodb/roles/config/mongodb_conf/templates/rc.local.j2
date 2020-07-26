@@ -1,0 +1,6 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+{% if item.info.append is defined %}
+    {% for i in item.info.append %}
+        {{- i }}
+    {% endfor %}
+{% endif %}

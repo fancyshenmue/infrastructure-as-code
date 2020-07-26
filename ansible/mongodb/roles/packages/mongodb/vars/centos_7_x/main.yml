@@ -1,0 +1,23 @@
+---
+mongodb_required_data:
+- src: "{{ ansible_distribution.lower() }}_{{ ansible_distribution_major_version }}_x/mongodb-org-4.2.repo"
+  dest: /etc/yum.repos.d/mongodb-org-4.2.repo
+  owner: root
+  group: root
+  mode: "0644"
+
+mongodb_required_package:
+- name: mongodb-org-4.2.8-1.el7.x86_64
+- name: mongodb-org-server-4.2.8-1.el7.x86_64
+- name: mongodb-org-shell-4.2.8-1.el7.x86_64
+- name: mongodb-org-mongos-4.2.8-1.el7.x86_64
+- name: mongodb-org-tools-4.2.8-1.el7.x86_64
+
+mongodb_required_data_after:
+- src: /etc/mongod.conf
+  dest:  /etc/mongod.conf.orig
+  owner: root
+  group: root
+  mode: "0644"
+  remote_src: yes
+  force: no

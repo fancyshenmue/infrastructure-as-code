@@ -1,0 +1,13 @@
+---
+# check vars yml exist | mongodb_conf
+- name: check vars yml exist | mongodb_conf
+  local_action: stat path="{{ role_path }}/vars/{{ env }}/{{ env_group }}/{{ var_file_name }}.yml"
+  register: vars_yml
+  tags:
+    - always
+
+# include vars yml if exist | mongodb_conf
+- include_vars: "{{ role_path }}/vars/{{ env }}/{{ env_group }}/{{ var_file_name }}.yml"
+  when: vars_yml.stat.exists == True
+  tags:
+    - always

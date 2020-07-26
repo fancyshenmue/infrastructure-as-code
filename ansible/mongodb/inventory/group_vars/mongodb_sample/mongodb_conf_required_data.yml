@@ -1,0 +1,7 @@
+---
+mongodb_conf_required_data:
+- src: "{{ inventory_dir }}/group_vars/{{ group_names[0] }}/files/mongod.key"
+  dest: "/data/mongodb/auth/mongod.key"
+  owner: mongod
+  group: mongod
+  mode: "0400"

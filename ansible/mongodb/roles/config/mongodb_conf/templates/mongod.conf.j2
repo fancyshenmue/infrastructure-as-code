@@ -1,0 +1,129 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+# mongod.conf
+
+# for documentation of all options, see:
+#   http://docs.mongodb.org/manual/reference/configuration-options/
+
+{# systemLog #}
+{% if item.info.systemLog is defined %}
+# where to write logging data.
+systemLog:
+    {% for i in item.info.systemLog %}
+{{ i }}
+    {% endfor %}
+{% else %}
+# where to write logging data.
+systemLog:
+  destination: file
+  logAppend: true
+  path: /var/log/mongodb/mongod.log
+{% endif %}
+
+{# storage #}
+{% if item.info.storage is defined %}
+# Where and how to store data.
+storage:
+    {% for i in item.info.storage %}
+{{ i }}
+    {% endfor %}
+{% elif ((item.info.storage is not defined) and (item.info.mongoRoles is defined) and (item.info.mongoRoles != "router")) or
+        ((item.info.storage is not defined) and (item.info.mongoRoles is not defined)) %}
+# Where and how to store data.
+storage:
+  dbPath: /var/lib/mongo
+  journal:
+    enabled: true
+#  engine:
+#  wiredTiger:
+{% endif %}
+
+{# processManagement #}
+{% if item.info.processManagement is defined %}
+# how the process runs
+processManagement:
+    {% for i in item.info.processManagement %}
+{{ i }}
+    {% endfor %}
+{% else %}
+# how the process runs
+processManagement:
+  fork: true  # fork and run in background
+  pidFilePath: /var/run/mongodb/mongod.pid  # location of pidfile
+  timeZoneInfo: /usr/share/zoneinfo
+{% endif %}
+
+{# net #}
+{% if item.info.net is defined %}
+# network interfaces
+net:
+    {% for i in item.info.net %}
+{{ i }}
+    {% endfor %}
+{% else %}
+# network interfaces
+net:
+  port: 27017
+  bindIp: 127.0.0.1  # Enter 0.0.0.0,:: to bind to all IPv4 and IPv6 addresses or, alternatively, use the net.bindIpAll setting.
+{% endif %}
+
+{# security #}
+{% if item.info.security is defined %}
+security:
+    {% for i in item.info.security %}
+{{ i }}
+    {% endfor %}
+{% else %}
+#security:
+{% endif %}
+
+{# operationProfiling #}
+{% if item.info.operationProfiling is defined %}
+operationProfiling:
+    {% for i in item.info.operationProfiling %}
+{{ i }}
+    {% endfor %}
+{% else %}
+#operationProfiling:
+{% endif %}
+
+{# replication #}
+{% if item.info.replication is defined %}
+replication:
+    {% for i in item.info.replication %}
+{{ i }}
+    {% endfor %}
+{% else %}
+#replication:
+{% endif %}
+
+{# sharding #}
+{% if item.info.sharding is defined %}
+sharding:
+    {% for i in item.info.sharding %}
+{{ i }}
+    {% endfor %}
+{% else %}
+#sharding:
+{% endif %}
+
+## Enterprise-Only Options
+
+{# auditLog #}
+{% if item.info.auditLog is defined %}
+auditLog:
+    {% for i in item.info.auditLog %}
+{{ i }}
+    {% endfor %}
+{% else %}
+#auditLog:
+{% endif %}
+
+{# snmp #}
+{% if item.info.snmp is defined %}
+snmp:
+    {% for i in item.info.snmp %}
+{{ i }}
+    {% endfor %}
+{% else %}
+#snmp:
+{% endif %}

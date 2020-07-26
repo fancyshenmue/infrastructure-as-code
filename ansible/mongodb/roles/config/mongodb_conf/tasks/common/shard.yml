@@ -1,0 +1,17 @@
+---
+# shard | mongodb_conf
+- name: shard | mongodb_conf
+  mongodb_shard:
+    login_host: "{{ item.login_host }}"
+    login_port: "{{ item.login_port | default('27017') }}"
+    login_user: "{{ item.login_user | default('') }}"
+    login_password: "{{ item.login_password | default('') }}"
+    shard: "{{ item.shard }}"
+    state: "{{ item.state | default('present') }}"
+  with_items:
+    - "{{ mongodb_conf_shard }}"
+  when:
+    mongodb_conf_shard is defined
+  delegate_to: localhost
+  tags:
+    - shard
