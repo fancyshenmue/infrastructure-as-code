@@ -16,7 +16,7 @@
   - [Inventory Example](#Inventory-Example)
   - [Playbook Example](#Playbook-Example)
   - [Varaibles Example](#Varaibles-Example)
-    - [group_vars/mongodb_sample/mongodb_conf_required_directory.yml](#group_vars--mongodb_sample--mongodb_conf_required_directory.yml)
+    - [group_vars/mongodb_sample/mongodb_conf_required_directory.yml](#group_vars\/mongodb_sample\/mongodb_conf_required_directory.yml)
     - [group_vars/mongodb_sample/mongodb_conf_required_data.yml](#group_vars/mongodb_sample/mongodb_conf_required_data.yml)
     - [group_vars/mongodb_sample/mongodb_conf.yml](#group_vars/mongodb_sample/mongodb_conf.yml)
     - [group_vars/mongodb_sample/mongodb_conf_permission_after.yml](#group_vars/mongodb_sample/mongodb_conf_permission_after.yml)
