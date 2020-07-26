@@ -1,9 +1,17 @@
 # Infrastructure as Code
 - [ ] Ansible
   - [x] Mongodb
+  - [ ] Elasticsearch
   - [x] Kafka
+  - [ ] RabbitMQ
+  - [ ] Redis
+  - [ ] MySQL
+  - [ ] PostgreSQL
+  - [ ] Kubernetes
   - [ ] Jenkins
+  - [ ] Prometheus
 - [ ] Terraform
 - [ ] Kubernetes
   - [ ] Kustomize
   - [ ] Helm
+  - [ ] Kube-Prometheus
