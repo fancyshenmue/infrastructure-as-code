@@ -1,0 +1,13 @@
+---
+# update sysctl | alertmanager_conf
+- name: update sysctl | alertmanager_conf
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    sysctl_set: "{{ item.sysctl_set }}"
+    sysctl_file: "{{ item.sysctl_file }}"
+    state: "{{ item.state }}"
+    reload: "{{ item.reload }}"
+  with_items:
+    - "{{ alertmanager_conf_sysctl_conf }}"
+  when: alertmanager_conf_sysctl_conf is defined

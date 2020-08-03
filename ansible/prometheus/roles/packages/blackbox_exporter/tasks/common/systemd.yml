@@ -1,0 +1,8 @@
+---
+- name: update systemd status | blackbox_exporter
+  systemd:
+    name: "{{ item.name }}"
+    enabled: "{{ item.enabled | default('yes') }}"
+  with_items:
+    - "{{ blackbox_exporter_service }}"
+  when: blackbox_exporter_service is defined

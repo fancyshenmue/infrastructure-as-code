@@ -1,0 +1,10 @@
+groups:
+- name: NodeMemoryUsage
+  rules:
+  - alert: NodeMemoryUsage over 90%
+    expr: (node_memory_MemTotal_bytes - (node_memory_MemFree_bytes + node_memory_Buffers_bytes+node_memory_Cached_bytes)) / node_memory_MemTotal_bytes * 100 > 90 and ((node_memory_SwapTotal_bytes - node_memory_SwapFree_bytes) / (node_memory_SwapTotal_bytes)) * 100 > 25
+    for: 5m
+    labels:
+      level: 3
+    annotations:
+      summary: "{{$labels.instance}}: High Memory usage detected (current value is:{{ $value }})"

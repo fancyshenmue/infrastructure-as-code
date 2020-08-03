@@ -1,0 +1,9 @@
+---
+# service
+service_name: "prometheus"
+
+# prometheus
+template_prometheus_yml: prometheus.yml.j2
+template_prometheus_service: prometheus.service.j2
+
+template_override_conf: override.conf.j2

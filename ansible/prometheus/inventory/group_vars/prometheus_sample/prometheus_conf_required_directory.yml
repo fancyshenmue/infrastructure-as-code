@@ -1,0 +1,14 @@
+---
+prometheus_conf_required_directory:
+- path: /data/prometheus
+  owner: prometheus
+  group: prometheus
+  mode: "0755"
+- path: /data/prometheus/data
+  owner: prometheus
+  group: prometheus
+  mode: "0755"
+- path: /data/prometheus/rules
+  owner: prometheus
+  group: prometheus
+  mode: "0755"

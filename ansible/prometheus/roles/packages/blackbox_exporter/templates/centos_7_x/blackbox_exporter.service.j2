@@ -1,0 +1,14 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+[Unit]
+Description=Blackbox Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User={{ blackbox_exporter_environment.user }}
+Group={{ blackbox_exporter_environment.group }}
+Type=simple
+ExecStart={{ blackbox_exporter_environment.binary }} {{ blackbox_exporter_environment.options }}
+
+[Install]
+WantedBy=multi-user.target

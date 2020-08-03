@@ -1,0 +1,8 @@
+---
+- name: systemd status | prometheus
+  systemd:
+    name: "{{ item.name }}"
+    enabled: "{{ item.enabled | default('yes') }}"
+  with_items:
+    - "{{ prometheus_service }}"
+  when: prometheus_service is defined

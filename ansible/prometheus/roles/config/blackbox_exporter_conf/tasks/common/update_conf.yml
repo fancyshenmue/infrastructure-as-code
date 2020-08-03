@@ -1,0 +1,28 @@
+---
+# update conf | template | blackbox_exporter_conf
+- name: update conf | template | blackbox_exporter_conf
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ blackbox_exporter_conf }}"
+  when: blackbox_exporter_conf is defined
+  notify:
+    - restart blackbox_exporter
+
+# update conf | custom | blackbox_exporter_conf
+- name: update conf | custom | blackbox_exporter_conf
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ blackbox_exporter_conf_custom }}"
+  when: blackbox_exporter_conf_custom is defined
+  notify:
+    - restart blackbox_exporter

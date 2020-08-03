@@ -1,0 +1,16 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+[Unit]
+Description=Prometheus Alertmanager
+After=network.target
+
+[Service]
+PIDFile={{ item.info.pid }}
+User={{ item.info.user }}
+Group={{ item.info.group }}
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStart={{ item.info.binary }} {{ item.info.options }}
+SyslogIdentifier={{ item.info.syslogidentifier }}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,13 @@
+---
+# update sysctl | redis_exporter
+- name: update sysctl | redis_exporter
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    sysctl_set: "{{ item.sysctl_set }}"
+    sysctl_file: "{{ item.sysctl_file }}"
+    state: "{{ item.state }}"
+    reload: "{{ item.reload }}"
+  with_items:
+    - "{{ redis_exporter_sysctl_conf }}"
+  when: redis_exporter_sysctl_conf is defined

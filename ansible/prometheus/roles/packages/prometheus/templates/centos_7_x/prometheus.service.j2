@@ -1,0 +1,13 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+[Unit]
+Description=Prometheus Server
+Documentation=https://prometheus.io/docs/introduction/overview/
+After=network-online.target
+
+[Service]
+User={{ prometheus_environment.user }}
+Restart=on-failure
+ExecStart={{ prometheus_environment.binary }} {{ prometheus_environment.options }}
+
+[Install]
+WantedBy=multi-user.target

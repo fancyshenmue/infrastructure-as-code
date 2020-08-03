@@ -1,0 +1,8 @@
+---
+- name: update systemd status | redis_exporter
+  systemd:
+    name: "{{ item.name }}"
+    enabled: "{{ item.enabled | default('yes') }}"
+  with_items:
+    - "{{ redis_exporter_service }}"
+  when: redis_exporter_service is defined

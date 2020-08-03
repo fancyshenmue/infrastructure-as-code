@@ -1,0 +1,12 @@
+---
+# required directory | blackbox_exporter
+- name: required directory | blackbox_exporter
+  file:
+    path: "{{ item.path }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    state: directory
+  with_items:
+    - "{{ blackbox_exporter_required_directory }}"
+  when: blackbox_exporter_required_directory is defined

@@ -1,0 +1,26 @@
+---
+# required data | after | blackbox_exporter
+- name: required data | after | blackbox_exporter
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    remote_src: "{{ item.remote_src | default('no') }}"
+    force: "{{ item.force | default('yes') }}"
+  with_items:
+    - "{{ blackbox_exporter_required_data_after }}"
+  when: blackbox_exporter_required_data_after is defined
+
+# required data | after | template | blackbox_exporter
+- name: required data | after | template | blackbox_exporter
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ blackbox_exporter_required_data_after_template }}"
+  when: blackbox_exporter_required_data_after_template is defined

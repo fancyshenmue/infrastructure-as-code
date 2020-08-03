@@ -1,0 +1,64 @@
+---
+blackbox_exporter_service:
+- name: blackbox_exporter
+  daemon_reload: yes
+
+blackbox_exporter_required_directory:
+- path: /data
+  owner: root
+  group: root
+  mode: "0755"
+- path: /data/blackbox_exporter
+  owner: blackbox_exporter
+  group: blackbox_exporter
+  mode: "0755"
+
+blackbox_exporter_required_data_before_download_local:
+- url: "https://github.com/prometheus/blackbox_exporter/releases/download/v0.16.0/blackbox_exporter-0.16.0.linux-amd64.tar.gz"
+  dest: "{{ role_path }}/files/blackbox_exporter-0.16.0.linux-amd64.tar.gz"
+
+blackbox_exporter_required_data:
+- src: "{{ role_path }}/files/blackbox_exporter-0.16.0.linux-amd64.tar.gz"
+  dest: "/tmp/blackbox_exporter-0.16.0.linux-amd64.tar.gz"
+  owner: root
+  group: root
+  mode: "0644"
+
+blackbox_exporter_required_data_after:
+- src: "/data/blackbox_exporter/blackbox.yml"
+  dest: "/data/blackbox_exporter/blackbox.yml.orig"
+  owner: blackbox_exporter
+  group: blackbox_exporter
+  mode: "0644"
+  remote_src: yes
+  force: no
+
+blackbox_exporter_required_data_after_template:
+- src: "centos_7_x/blackbox_exporter.service.j2"
+  dest: "/etc/systemd/system/blackbox_exporter.service"
+  owner: root
+  group: root
+  mode: "0644"
+
+blackbox_exporter_unarchive_data:
+- src: /tmp/blackbox_exporter-0.16.0.linux-amd64.tar.gz
+  dest: /data/blackbox_exporter
+  owner: blackbox_exporter
+  group: blackbox_exporter
+  extra_opts:
+    - "--strip-components=1"
+  remote_src: "yes"
+
+# cleanup
+blackbox_exporter_cleanup_local:
+- path: "{{ role_path }}/files/blackbox_exporter-0.16.0.linux-amd64.tar.gz"
+
+blackbox_exporter_cleanup_remote:
+- path: /tmp/blackbox_exporter-0.16.0.linux-amd64.tar.gz
+
+# environment
+blackbox_exporter_environment:
+  user: blackbox_exporter
+  group: blackbox_exporter
+  binary: /data/blackbox_exporter/blackbox_exporter
+  options: --config.file=/data/blackbox_exporter/blackbox.yml --web.listen-address=0.0.0.0:9115

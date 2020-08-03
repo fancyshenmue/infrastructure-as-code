@@ -1,0 +1,12 @@
+---
+# required directory | alertmanager_conf
+- name: required directory | alertmanager_conf
+  file:
+    path: "{{ item.path }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    state: directory
+  with_items:
+    - "{{ alertmanager_conf_required_directory }}"
+  when: alertmanager_conf_required_directory is defined

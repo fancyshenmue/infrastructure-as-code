@@ -1,0 +1,26 @@
+---
+# cleanup | local | node_exporter
+- name: cleanup | local | node_exporter
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ node_exporter_cleanup_local }}"
+  when: node_exporter_cleanup_local is defined
+  run_once: true
+  delegate_to: localhost
+
+# cleanup | remote | node_exporter
+- name: cleanup | remote | node_exporter
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ node_exporter_cleanup_remote }}"
+  when: node_exporter_cleanup_remote is defined

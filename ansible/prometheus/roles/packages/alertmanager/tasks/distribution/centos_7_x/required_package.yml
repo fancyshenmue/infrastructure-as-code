@@ -1,0 +1,8 @@
+---
+- name: required package | alertmanager
+  yum:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+  with_items:
+    - "{{ alertmanager_required_package }}"
+  when: alertmanager_required_package is defined

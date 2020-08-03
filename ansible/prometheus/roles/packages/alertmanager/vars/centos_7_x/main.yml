@@ -1,0 +1,70 @@
+---
+alertmanager_service:
+- name: alertmanager
+  daemon_reload: yes
+
+alertmanager_required_directory:
+- path: /data
+  owner: root
+  group: root
+  mode: "0755"
+- path: /data/alertmanager
+  owner: alertmanager
+  group: alertmanager
+  mode: "0755"
+- path: /data/alertmanager/pid
+  owner: alertmanager
+  group: alertmanager
+  mode: "0755"
+
+alertmanager_required_data_before_download_local:
+- url: "https://github.com/prometheus/alertmanager/releases/download/v0.20.0/alertmanager-0.20.0.linux-amd64.tar.gz"
+  dest: "{{ role_path }}/files/alertmanager-0.20.0.linux-amd64.tar.gz"
+
+alertmanager_required_data:
+- src: "{{ role_path }}/files/alertmanager-0.20.0.linux-amd64.tar.gz"
+  dest: "/tmp/alertmanager-0.20.0.linux-amd64.tar.gz"
+  owner: root
+  group: root
+  mode: "0644"
+
+alertmanager_required_data_after:
+- src: "/data/alertmanager/alertmanager.yml"
+  dest: "/data/alertmanager/alertmanager.yml.orig"
+  owner: alertmanager
+  group: alertmanager
+  mode: "0644"
+  remote_src: yes
+  force: no
+
+alertmanager_required_data_after_template:
+- src: "centos_7_x/alertmanager.service.j2"
+  dest: "/etc/systemd/system/alertmanager.service"
+  owner: root
+  group: root
+  mode: "0644"
+
+alertmanager_unarchive_data:
+- src: /tmp/alertmanager-0.20.0.linux-amd64.tar.gz
+  dest: /data/alertmanager
+  owner: alertmanager
+  group: alertmanager
+  extra_opts:
+    - "--strip-components=1"
+  remote_src: "yes"
+
+# cleanup
+alertmanager_cleanup_local:
+- path: "{{ role_path }}/files/alertmanager-0.20.0.linux-amd64.tar.gz"
+
+alertmanager_cleanup_remote:
+- path: /tmp/alertmanager-0.20.0.linux-amd64.tar.gz
+
+# environment
+alertmanager_environment:
+  pid: /data/alertmanager/pid/alertmanager.pid
+  user: alertmanager
+  group: alertmanager
+  binary: /data/alertmanager/alertmanager
+  options: --config.file=/data/alertmanager/alertmanager.yml --storage.path=/data/alertmanager/data --web.listen-address=0.0.0.0:9093
+  syslogidentifier: prometheus-alertmanager

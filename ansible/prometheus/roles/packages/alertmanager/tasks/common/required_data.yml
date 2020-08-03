@@ -1,0 +1,24 @@
+---
+# required data | alertmanager
+- name: required data | alertmanager
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ alertmanager_required_data }}"
+  when: alertmanager_required_data is defined
+
+# required data | template | alertmanager
+- name: required data | template | alertmanager
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ alertmanager_required_data_template }}"
+  when: alertmanager_required_data_template is defined

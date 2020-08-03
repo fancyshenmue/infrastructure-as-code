@@ -1,0 +1,26 @@
+---
+# cleanup | local | redis_exporter
+- name: cleanup | local | redis_exporter
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ redis_exporter_cleanup_local }}"
+  when: redis_exporter_cleanup_local is defined
+  run_once: true
+  delegate_to: localhost
+
+# cleanup | remote | redis_exporter
+- name: cleanup | remote | redis_exporter
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ redis_exporter_cleanup_remote }}"
+  when: redis_exporter_cleanup_remote is defined

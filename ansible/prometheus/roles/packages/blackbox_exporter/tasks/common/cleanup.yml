@@ -1,0 +1,26 @@
+---
+# cleanup | local | blackbox_exporter
+- name: cleanup | local | blackbox_exporter
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ blackbox_exporter_cleanup_local }}"
+  when: blackbox_exporter_cleanup_local is defined
+  run_once: true
+  delegate_to: localhost
+
+# cleanup | remote | blackbox_exporter
+- name: cleanup | remote | blackbox_exporter
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ blackbox_exporter_cleanup_remote }}"
+  when: blackbox_exporter_cleanup_remote is defined

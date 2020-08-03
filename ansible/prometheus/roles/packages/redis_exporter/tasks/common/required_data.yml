@@ -1,0 +1,24 @@
+---
+# required data | redis_exporter
+- name: required data | redis_exporter
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ redis_exporter_required_data }}"
+  when: redis_exporter_required_data is defined
+
+# required data | template | redis_exporter
+- name: required data | template | redis_exporter
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ redis_exporter_required_data_template }}"
+  when: redis_exporter_required_data_template is defined

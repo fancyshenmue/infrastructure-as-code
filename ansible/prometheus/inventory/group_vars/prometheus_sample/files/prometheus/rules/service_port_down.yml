@@ -1,0 +1,10 @@
+groups:
+- name: ServicePortDown
+  rules:
+  - alert: ServicePortDown
+    expr: probe_success == 0
+    for: 3m
+    labels:
+      level: 3
+    annotations:
+      summary: "{{$labels.instance}}\n*{{$labels.service_type}}* service was down({{$labels.service_id}})"

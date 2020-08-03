@@ -1,0 +1,26 @@
+---
+# cleanup | local | alertmanager
+- name: cleanup | local | alertmanager
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ alertmanager_cleanup_local }}"
+  when: alertmanager_cleanup_local is defined
+  run_once: true
+  delegate_to: localhost
+
+# cleanup | remote | alertmanager
+- name: cleanup | remote | alertmanager
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ alertmanager_cleanup_remote }}"
+  when: alertmanager_cleanup_remote is defined

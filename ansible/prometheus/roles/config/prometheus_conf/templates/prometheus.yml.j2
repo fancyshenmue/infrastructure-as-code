@@ -1,0 +1,111 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+{# global #}
+{% if item.info.global is defined %}
+global:
+  {% for i in item.info.global %}
+{{ i }}
+  {% endfor %}
+{% else %}
+global:
+  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+{% endif %}
+
+{# alerting #}
+{% if item.info.alerting is defined %}
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      # - alertmanager:9093
+{% else %}
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      # - alertmanager:9093
+{% endif %}
+
+{# rule_files #}
+{% if item.info.rule_files is defined %}
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  {% for rule_file in item.info.rule_files %}
+  - "{{ rule_file }}"
+  {% endfor %}
+{% else %}
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+{% endif %}
+
+{# scrape_configs #}
+{% if item.info.scrape_configs is defined %}
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    static_configs:
+    - targets: ['localhost:9090']
+
+  {% for scrape_config in item.info.scrape_configs %}
+    {# job_name #}
+  - job_name: {{ scrape_config.job_name }}
+    {# metrics_path #}
+    {% if "metrics_path" in scrape_config  %}
+    metrics_path: {{ scrape_config.metrics_path }}
+    {% endif %}
+    {# params #}
+    {% if "params" in scrape_config %}
+    params:
+      {% for param in scrape_config.params %}
+      {{ param }}
+      {% endfor %}
+    {% endif %}
+    static_configs:
+    {# targets #}
+    {% if "targets" in scrape_config %}
+      - targets:
+      {% for target in scrape_config.targets %}
+        - {{ target }}
+      {% endfor %}
+    {% endif %}
+    {# relabel_configs #}
+    {% if "relabel_configs" in scrape_config %}
+    relabel_configs:
+      {# black_export #}
+      {% if "black_export" in scrape_config.relabel_configs %}
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+      {% endif %}
+      {# replacement #}
+      {% if "replacement" in scrape_config.relabel_configs %}
+        replacement: {{ scrape_config.relabel_configs.replacement }}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% else %}
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    static_configs:
+    - targets: ['localhost:9090']
+{% endif %}

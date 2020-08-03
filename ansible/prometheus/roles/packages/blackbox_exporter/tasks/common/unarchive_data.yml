@@ -1,0 +1,15 @@
+---
+- name: unarchive data | blackbox_exporter
+  unarchive:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode | default(omit) }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    extra_opts:
+      "{{ item.extra_opts }}"
+    remote_src: "{{ item.remote_src | default('yes') }}"
+  with_items:
+    - "{{ blackbox_exporter_unarchive_data }}"
+  when:
+    blackbox_exporter_unarchive_data is defined

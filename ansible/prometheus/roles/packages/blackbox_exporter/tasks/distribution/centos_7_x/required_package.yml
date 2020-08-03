@@ -1,0 +1,8 @@
+---
+- name: required package
+  yum:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+  with_items:
+    - "{{ required_package }}"
+  when: required_package is defined

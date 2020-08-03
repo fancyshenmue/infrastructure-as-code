@@ -1,0 +1,27 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: 'alertmanager_notifier_application'
+  repeat_interval: 3h
+  group_by: [alertname, datacenter, app]
+  routes:
+  - receiver: 'alertmanager_notifier_common'
+    group_wait: 10s
+    match:
+      instance_type: common
+
+receivers:
+- name: 'alertmanager_notifier_application'
+  slack_configs:
+  - channel: '#monitoring_application'
+    api_url: 'https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/xxxxxxxxxxxxxxxxxxxxxxxx'
+    text: "{{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}"
+    send_resolved: true
+
+- name: 'alertmanager_notifier_common'
+  slack_configs:
+  - channel: '#monitoring_service'
+    api_url: 'https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/xxxxxxxxxxxxxxxxxxxxxxxx'
+    text: "{{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}"
+    send_resolved: true

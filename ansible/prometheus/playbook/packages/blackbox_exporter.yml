@@ -1,0 +1,7 @@
+---
+- hosts: '{{ hn }}'
+  roles:
+    - role: roles/packages/blackbox_exporter
+      become: True
+      become_user: root
+      become_method: sudo

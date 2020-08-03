@@ -1,0 +1,23 @@
+---
+# update conf | template
+blackbox_exporter_conf:
+# systemd
+- src: "{{ template_blackbox_exporter_service }}"
+  dest: /etc/systemd/system/blackbox_exporter.service
+  owner: root
+  group: root
+  mode: "0644"
+  info:
+    user: blackbox_exporter
+    group: blackbox_exporter
+    binary: /data/blackbox_exporter/blackbox_exporter
+    options: --config.file=/data/blackbox_exporter/blackbox.yml --web.listen-address=0.0.0.0:9115
+
+# update conf | custom
+blackbox_exporter_conf_custom:
+# service conf
+- src: "{{ inventory_dir }}/group_vars/{{ group_names[0] }}/files/blackbox_exporter/blackbox.yml"
+  dest: /data/blackbox_exporter/blackbox.yml
+  owner: blackbox_exporter
+  group: blackbox_exporter
+  mode: "0644"

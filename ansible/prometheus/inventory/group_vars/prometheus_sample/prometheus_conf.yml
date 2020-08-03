@@ -1,0 +1,48 @@
+---
+# update conf | template
+prometheus_conf:
+# systemd
+- src: "{{ template_prometheus_service }}"
+  dest: /etc/systemd/system/prometheus.service
+  owner: root
+  group: root
+  mode: "0644"
+  info:
+    user: prometheus
+    binary: /data/prometheus/prometheus
+    options: "--config.file=/data/prometheus/prometheus.yml --storage.tsdb.path=/data/prometheus/data --web.listen-address=0.0.0.0:9090 --storage.tsdb.retention.time 7d"
+
+# update conf | custom
+prometheus_conf_custom:
+# main conf
+- src: "{{ inventory_dir }}/group_vars/{{ group_names[0] }}/files/prometheus/prometheus.yml"
+  dest: /data/prometheus/prometheus.yml
+  owner: prometheus
+  group: prometheus
+  mode: "0644"
+# rules
+- src: "{{ inventory_dir }}/group_vars/{{ group_names[0] }}/files/prometheus/rules/cpu_over_85.yml"
+  dest: /data/prometheus/rules/cpu_over_85.yml
+  owner: prometheus
+  group: prometheus
+  mode: "0644"
+- src: "{{ inventory_dir }}/group_vars/{{ group_names[0] }}/files/prometheus/rules/disk_over_85.yml"
+  dest: /data/prometheus/rules/disk_over_85.yml
+  owner: prometheus
+  group: prometheus
+  mode: "0644"
+- src: "{{ inventory_dir }}/group_vars/{{ group_names[0] }}/files/prometheus/rules/instance_down.yml"
+  dest: /data/prometheus/rules/instance_down.yml
+  owner: prometheus
+  group: prometheus
+  mode: "0644"
+- src: "{{ inventory_dir }}/group_vars/{{ group_names[0] }}/files/prometheus/rules/mem_over_90.yml"
+  dest: /data/prometheus/rules/mem_over_90.yml
+  owner: prometheus
+  group: prometheus
+  mode: "0644"
+- src: "{{ inventory_dir }}/group_vars/{{ group_names[0] }}/files/prometheus/rules/service_port_down.yml"
+  dest: /data/prometheus/rules/service_port_down.yml
+  owner: prometheus
+  group: prometheus
+  mode: "0644"

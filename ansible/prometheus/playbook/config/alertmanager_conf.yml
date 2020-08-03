@@ -1,0 +1,7 @@
+---
+- hosts: "{{ hn }}"
+  roles:
+    - role: roles/config/alertmanager_conf
+      become: True
+      become_user: root
+      become_method: sudo

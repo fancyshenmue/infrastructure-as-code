@@ -1,0 +1,24 @@
+---
+# required data | prometheus
+- name: required data | prometheus
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ prometheus_required_data }}"
+  when: prometheus_required_data is defined
+
+# required data | template | prometheus
+- name: required data | template | prometheus
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ prometheus_required_data_template }}"
+  when: prometheus_required_data_template is defined

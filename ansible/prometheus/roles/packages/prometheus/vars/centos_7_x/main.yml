@@ -1,0 +1,231 @@
+---
+prometheus_service:
+- name: prometheus
+  daemon_reload: yes
+
+prometheus_required_directory:
+- path: /data
+  owner: root
+  group: root
+  mode: "0755"
+- path: /data/prometheus
+  owner: prometheus
+  group: prometheus
+  mode: "0755"
+
+prometheus_required_data_before_download_local:
+- url: "https://github.com/prometheus/prometheus/releases/download/v2.18.1/prometheus-2.18.1.linux-amd64.tar.gz"
+  dest: "{{ role_path }}/files/prometheus-2.18.1.linux-amd64.tar.gz"
+
+prometheus_required_data:
+- src: "{{ role_path }}/files/prometheus-2.18.1.linux-amd64.tar.gz"
+  dest: "/tmp/prometheus-2.18.1.linux-amd64.tar.gz"
+  owner: root
+  group: root
+  mode: "0644"
+
+prometheus_required_data_after:
+- src: "/data/prometheus/prometheus.yml"
+  dest: "/data/prometheus/prometheus.yml.orig"
+  owner: prometheus
+  group: prometheus
+  mode: "0644"
+  remote_src: yes
+  force: no
+
+prometheus_required_data_after_template:
+- src: "centos_7_x/prometheus.service.j2"
+  dest: "/etc/systemd/system/prometheus.service"
+  owner: root
+  group: root
+  mode: "0644"
+
+prometheus_unarchive_data:
+- src: /tmp/prometheus-2.18.1.linux-amd64.tar.gz
+  dest: /data/prometheus
+  owner: prometheus
+  group: prometheus
+  extra_opts:
+    - "--strip-components=1"
+  remote_src: "yes"
+
+# cleanup
+prometheus_cleanup_local:
+- path: "{{ role_path }}/files/prometheus-2.18.1.linux-amd64.tar.gz"
+
+prometheus_cleanup_remote:
+- path: /tmp/prometheus-2.18.1.linux-amd64.tar.gz
+
+# environment
+prometheus_security_limit:
+- domain: "root"
+  limit_type: soft
+  limit_item: nofile
+  value: "200000"
+  dest: "/etc/security/limits.d/prometheus.conf"
+- domain: "root"
+  limit_type: hard
+  limit_item: nofile
+  value: "200000"
+  dest: "/etc/security/limits.d/prometheus.conf"
+- domain: "*"
+  limit_type: soft
+  limit_item: nofile
+  value: "200000"
+  dest: "/etc/security/limits.d/prometheus.conf"
+- domain: "*"
+  limit_type: hard
+  limit_item: nofile
+  value: "200000"
+  dest: "/etc/security/limits.d/prometheus.conf"
+- domain: "root"
+  limit_type: soft
+  limit_item: nproc
+  value: "102400"
+  dest: "/etc/security/limits.d/prometheus.conf"
+- domain: "root"
+  limit_type: hard
+  limit_item: nproc
+  value: "102400"
+  dest: "/etc/security/limits.d/prometheus.conf"
+- domain: "*"
+  limit_type: soft
+  limit_item: nproc
+  value: "102400"
+  dest: "/etc/security/limits.d/prometheus.conf"
+- domain: "*"
+  limit_type: hard
+  limit_item: nproc
+  value: "102400"
+  dest: "/etc/security/limits.d/prometheus.conf"
+
+prometheus_sysctl_conf:
+# memory
+- name: kernel.shmmax
+  value: "{{ (ansible_memtotal_mb * 1024 * 1024 * 0.9) | int }}"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/prometheus.conf
+  state: present
+  reload: yes
+- name: kernel.shmall
+  value: "{{ (ansible_memtotal_mb * 1024 * 1024 * 0.9 / 4096) | int }}"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/prometheus.conf
+  state: present
+  reload: yes
+- name: kernel.msgmax
+  value: "65536"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/prometheus.conf
+  state: present
+  reload: yes
+- name: kernel.msgmnb
+  value: "65536"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/prometheus.conf
+  state: present
+  reload: yes
+- name: vm.swappiness
+  value: "0"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/prometheus.conf
+  state: present
+  reload: yes
+# netowrk
+- name: net.core.rmem_default
+  value: "26214400"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/prometheus.conf
+  state: present
+  reload: yes
+- name: net.core.rmem_max
+  value: "26214400"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/prometheus.conf
+  state: present
+  reload: yes
+- name: net.core.wmem_default
+  value: "26214400"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/prometheus.conf
+  state: present
+  reload: yes
+- name: net.core.wmem_max
+  value: "26214400"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/prometheus.conf
+  state: present
+  reload: yes
+- name: net.core.somaxconn
+  value: "65535"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/prometheus.conf
+  state: present
+  reload: yes
+- name: net.ipv4.tcp_tw_reuse
+  value: "0"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/prometheus.conf
+  state: present
+  reload: yes
+- name: net.ipv4.tcp_tw_recycle
+  value: "0"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/prometheus.conf
+  state: present
+  reload: yes
+- name: net.ipv4.tcp_fin_timeout
+  value: "5"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/prometheus.conf
+  state: present
+  reload: yes
+- name: net.ipv4.tcp_keepalive_time
+  value: "300"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/prometheus.conf
+  state: present
+  reload: yes
+- name: net.core.netdev_max_backlog
+  value: "30000"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/prometheus.conf
+  state: present
+  reload: yes
+- name: net.ipv4.ip_forward
+  value: "0"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/prometheus.conf
+  state: present
+  reload: yes
+- name: net.ipv4.icmp_echo_ignore_broadcasts
+  value: "1"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/prometheus.conf
+  state: present
+  reload: yes
+# disable ipv6
+- name: net.ipv6.conf.all.disable_ipv6
+  value: "1"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/prometheus.conf
+  state: present
+  reload: yes
+- name: net.ipv6.conf.default.disable_ipv6
+  value: "1"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/prometheus.conf
+  state: present
+  reload: yes
+# filesystem
+- name: fs.file-max
+  value: "1000000"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/prometheus.conf
+  state: present
+  reload: yes
+
+prometheus_environment:
+  user: prometheus
+  binary: /data/prometheus/prometheus
+  options: "--config.file=/data/prometheus/prometheus.yml --storage.tsdb.path=/data/prometheus/data --web.listen-address=0.0.0.0:9090 --storage.tsdb.retention.time 90d"

@@ -1,0 +1,12 @@
+---
+# update security limit | blackbox_exporter
+- name: update security limit | blackbox_exporter
+  pam_limits:
+    domain: "{{ item.domain }}"
+    limit_type: "{{ item.limit_type }}"
+    limit_item: "{{ item.limit_item }}"
+    value: "{{ item.value }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - "{{ blackbox_exporter_security_limit }}"
+  when: blackbox_exporter_security_limit is defined

@@ -1,0 +1,12 @@
+---
+# update security limit | redis_exporter
+- name: update security limit | redis_exporter
+  pam_limits:
+    domain: "{{ item.domain }}"
+    limit_type: "{{ item.limit_type }}"
+    limit_item: "{{ item.limit_item }}"
+    value: "{{ item.value }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - "{{ redis_exporter_security_limit }}"
+  when: redis_exporter_security_limit is defined

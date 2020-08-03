@@ -1,0 +1,14 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+[Unit]
+Description=Redis Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User={{ redis_exporter_environment.user }}
+Group={{ redis_exporter_environment.group }}
+Type=simple
+ExecStart={{ redis_exporter_environment.binary }}
+
+[Install]
+WantedBy=multi-user.target

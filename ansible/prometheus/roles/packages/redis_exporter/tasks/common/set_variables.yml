@@ -1,0 +1,7 @@
+---
+# set variables | redis_exporter
+- name: set variables | redis_exporter
+  set_fact:
+    env: "{{ group_names[0] }}"
+    roles_name: "{{ role_path|basename }}"
+    distribution: "{{ ansible_distribution.lower() }}_{{ ansible_distribution_major_version }}_x"

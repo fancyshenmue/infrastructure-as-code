@@ -1,0 +1,9 @@
+---
+# check vars yml exist | redis_exporter
+- name: check vars yml exist | redis_exporter
+  local_action: stat path="{{ role_path }}/vars/{{ distribution }}/main.yml"
+  register: vars_yml
+
+# include vars yml if exist | redis_exporter
+- include_vars: "{{ role_path }}/vars/{{ distribution }}/main.yml"
+  when: vars_yml.stat.exists == True

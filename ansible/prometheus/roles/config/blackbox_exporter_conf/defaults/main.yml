@@ -1,0 +1,6 @@
+# service
+service_name: blackbox_exporter
+
+# blackbox_exporter
+template_blackbox_exporter: blackbox.yml.j2
+template_blackbox_exporter_service: blackbox_exporter.service.j2

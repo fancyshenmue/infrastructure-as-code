@@ -1,0 +1,12 @@
+---
+# update security limit | alertmanager
+- name: update security limit | alertmanager
+  pam_limits:
+    domain: "{{ item.domain }}"
+    limit_type: "{{ item.limit_type }}"
+    limit_item: "{{ item.limit_item }}"
+    value: "{{ item.value }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - "{{ alertmanager_security_limit }}"
+  when: alertmanager_security_limit is defined

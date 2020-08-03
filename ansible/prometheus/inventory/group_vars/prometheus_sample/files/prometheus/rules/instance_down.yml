@@ -1,0 +1,10 @@
+groups:
+- name: InstanceDown
+  rules:
+  - alert: InstanceDown
+    expr: up == 0
+    for: 1m
+    labels:
+      level: 3
+    annotations:
+      summary: "Instance {{ $labels.instance }} down ({{ $labels.job }})"

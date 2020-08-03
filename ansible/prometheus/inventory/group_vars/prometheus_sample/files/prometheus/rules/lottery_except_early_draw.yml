@@ -1,0 +1,11 @@
+groups:
+- name: LotteryExceptEarlyDraw
+  rules:
+  - alert: LotteryExceptEarlyDraw
+    expr: lottery_except_early_draw > bool (time() - 600) == 1
+    for: 15s
+    labels:
+      level: 3
+    annotations:
+      description: "Alert - LotteryExceptEarlyDraw - Mtail Notify"
+      summary: "*Host*:`{{$labels.instance}}`\n*Content*:`{{$labels.content}}`"

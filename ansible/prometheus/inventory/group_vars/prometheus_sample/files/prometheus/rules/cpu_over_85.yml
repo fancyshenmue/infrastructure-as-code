@@ -1,0 +1,10 @@
+groups:
+- name: NodeCPUUsage
+  rules:
+  - alert: NodeCPUUsage over 85%
+    expr: 100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 85
+    for: 5m
+    labels:
+      level: 3
+    annotations:
+      summary: "{{$labels.instance}}: High CPU usage detected (current value is:{{ $value }})"

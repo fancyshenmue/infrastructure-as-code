@@ -1,0 +1,6 @@
+---
+# service
+service_name: "alertmanager"
+
+# alertmanager
+template_alertmanager_service: alertmanager.service.j2

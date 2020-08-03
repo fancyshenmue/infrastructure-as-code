@@ -1,0 +1,9 @@
+---
+# check vars yml exist | blackbox_exporter
+- name: check vars yml exist | blackbox_exporter
+  local_action: stat path="{{ role_path }}/vars/{{ distribution }}/main.yml"
+  register: vars_yml
+
+# include vars yml if exist | blackbox_exporter
+- include_vars: "{{ role_path }}/vars/{{ distribution }}/main.yml"
+  when: vars_yml.stat.exists == True

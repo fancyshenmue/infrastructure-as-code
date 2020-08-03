@@ -1,0 +1,12 @@
+---
+# required data | before | download | local | prometheus
+- name: required data | before | download | local | prometheus
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode | default('0644') }}"
+  with_items:
+    - "{{ prometheus_required_data_before_download_local }}"
+  run_once: True
+  delegate_to: localhost
+  when: prometheus_required_data_before_download_local is defined

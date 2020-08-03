@@ -1,0 +1,25 @@
+---
+# update conf | template
+alertmanager_conf:
+# systemd
+- src: "{{ template_alertmanager_service }}"
+  dest: /etc/systemd/system/alertmanager.service
+  owner: root
+  group: root
+  mode: "0644"
+  info:
+    pid: /data/alertmanager/pid/alertmanager.pid
+    user: alertmanager
+    group: alertmanager
+    binary: /data/alertmanager/alertmanager
+    options: --config.file=/data/alertmanager/alertmanager.yml --storage.path=/data/alertmanager/data --web.listen-address=0.0.0.0:9093
+    syslogidentifier: prometheus-alertmanager
+
+# update conf | custom
+alertmanager_conf_custom:
+# main conf
+- src: "{{ inventory_dir }}/group_vars/{{ group_names[0] }}/files/alertmanager/alertmanager.yml"
+  dest: /data/alertmanager/alertmanager.yml
+  owner: alertmanager
+  group: alertmanager
+  mode: "0644"

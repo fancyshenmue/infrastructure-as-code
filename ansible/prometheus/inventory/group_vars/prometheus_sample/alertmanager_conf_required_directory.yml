@@ -1,0 +1,14 @@
+---
+alertmanager_conf_required_directory:
+- path: /data/alertmanager
+  owner: alertmanager
+  group: alertmanager
+  mode: "0755"
+- path: /data/alertmanager/data
+  owner: alertmanager
+  group: alertmanager
+  mode: "0755"
+- path: /data/alertmanager/pid
+  owner: alertmanager
+  group: alertmanager
+  mode: "0755"

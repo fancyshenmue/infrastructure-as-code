@@ -1,0 +1,8 @@
+---
+- name: required package | prometheus
+  yum:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+  with_items:
+    - "{{ prometheus_required_package }}"
+  when: prometheus_required_package is defined

@@ -1,0 +1,6 @@
+---
+blackbox_exporter_conf_required_directory:
+- path: /data/blackbox_exporter
+  owner: blackbox_exporter
+  group: blackbox_exporter
+  mode: "0755"

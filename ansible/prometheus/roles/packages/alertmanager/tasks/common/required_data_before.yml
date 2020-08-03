@@ -1,0 +1,12 @@
+---
+# required data | before | download | local | alertmanager
+- name: required data | before | download | local | alertmanager
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode | default('0644') }}"
+  with_items:
+    - "{{ alertmanager_required_data_before_download_local }}"
+  run_once: True
+  delegate_to: localhost
+  when: alertmanager_required_data_before_download_local is defined

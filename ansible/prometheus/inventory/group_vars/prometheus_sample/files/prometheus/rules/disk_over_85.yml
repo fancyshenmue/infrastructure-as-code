@@ -1,0 +1,11 @@
+groups:
+- name: NodeDiskUsage
+  rules:
+  - alert: NodeDiskUsage over 85%
+    expr: |
+      100 - ((node_filesystem_avail_bytes * 100) / node_filesystem_size_bytes) > 85
+    for: 5m
+    labels:
+      level: 3
+    annotations:
+      summary: "{{$labels.instance}}: High Disk usage detected (mountpoint:{{ $labels.mountpoint }}) (current value is:{{ $value }})"
