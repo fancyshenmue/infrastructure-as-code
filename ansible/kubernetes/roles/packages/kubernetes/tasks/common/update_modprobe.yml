@@ -1,0 +1,9 @@
+---
+# update modprobe
+- name: update modprobe
+  modprobe:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present')}}"
+  with_items:
+    - "{{ modprobe_conf }}"
+  when: modprobe_conf is defined

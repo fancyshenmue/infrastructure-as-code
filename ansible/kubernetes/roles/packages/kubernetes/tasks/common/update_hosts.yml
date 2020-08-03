@@ -1,0 +1,7 @@
+---
+- name: add {{ hosts_file }}
+  blockinfile:
+    dest: "{{ hosts_file }}"
+    marker: "# {mark} Ansible Kubernetes Management Block"
+    content: |
+      {{ lookup('template', hosts_j2) }}

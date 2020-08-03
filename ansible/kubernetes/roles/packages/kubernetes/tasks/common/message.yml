@@ -1,0 +1,14 @@
+---
+- name: get kube config
+  command: cat /etc/kubernetes/admin.conf
+  when:
+    - node_roles is defined
+    - node_roles == "master"
+  register: kube_config
+
+- name: debug
+  debug:
+    msg: "{{ kube_config.stdout_lines | list }}"
+  when:
+    - node_roles is defined
+    - node_roles == "master"

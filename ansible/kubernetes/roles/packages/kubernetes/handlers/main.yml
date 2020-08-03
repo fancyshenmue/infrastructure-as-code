@@ -1,0 +1,3 @@
+---
+- name: firewalld reload
+  command: /usr/bin/firewall-cmd --reload

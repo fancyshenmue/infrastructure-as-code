@@ -1,0 +1,78 @@
+---
+version: "1.17.0-0"
+
+systemd_after:
+- name: "kubelet"
+
+systemd_before:
+- name: "firewalld"
+
+required_data:
+- src: kubernetes.repo
+  dest: /etc/yum.repos.d/kubernetes.repo
+  owner: root
+  group: root
+  mode: "644"
+- src: br_netfilter.conf
+  dest: /etc/modules-load.d/br_netfilter.conf
+  owner: root
+  group: root
+  mode: "644"
+
+required_package:
+- name: "kubelet-{{ version }}"
+- name: "kubeadm-{{ version }}"
+- name: "kubectl-{{ version }}"
+
+# firewalld_port_rules:
+# - port: "6443/tcp"
+# - port: "2379-2380/tcp"
+# - port: "10250/tcp"
+# - port: "10251/tcp"
+# - port: "10252/tcp"
+# - port: "10255/tcp"
+
+sysctl_conf:
+- name: net.ipv4.ip_forward
+  value: "1"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/kubernetes.conf
+  state: present
+  reload: yes
+- name: net.bridge.bridge-nf-call-ip6tables
+  value: "1"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/kubernetes.conf
+  state: present
+  reload: yes
+- name: net.bridge.bridge-nf-call-iptables
+  value: "1"
+  sysctl_set: yes
+  sysctl_file: /etc/sysctl.d/kubernetes.conf
+  state: present
+  reload: yes
+
+security_limit:
+- domain: "*"
+  limit_type: soft
+  limit_item: nofile
+  value: "1000000"
+  dest: "/etc/security/limits.d/kubernetes.conf"
+- domain: "*"
+  limit_type: hard
+  limit_item: nofile
+  value: "1000000"
+  dest: "/etc/security/limits.d/kubernetes.conf"
+- domain: "*"
+  limit_type: soft
+  limit_item: nproc
+  value: "1000000"
+  dest: "/etc/security/limits.d/kubernetes.conf"
+- domain: "*"
+  limit_type: hard
+  limit_item: nproc
+  value: "1000000"
+  dest: "/etc/security/limits.d/kubernetes.conf"
+
+modprobe_conf:
+- name: br_netfilter

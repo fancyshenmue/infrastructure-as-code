@@ -1,0 +1,9 @@
+---
+- name: systemd | after
+  systemd:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('stopped') }}"
+    enabled: "{{ item.enabled | default('yes') }}"
+  with_items:
+    - "{{ systemd_after }}"
+  when: systemd_after is defined

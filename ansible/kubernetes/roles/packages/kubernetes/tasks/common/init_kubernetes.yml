@@ -1,0 +1,20 @@
+---
+- name: kubeadm init
+  command: |
+    kubeadm init \
+    --apiserver-advertise-address={{ ansible_default_ipv4.address }} \
+    --pod-network-cidr=10.244.0.0/16 \
+    --service-cidr=10.96.0.0/12 \
+    --kubernetes-version=v1.17.0 \
+    --cri-socket="/var/run/dockershim.sock"
+  when:
+    - node_roles is defined
+    - node_roles == "master"
+  register: kubernetes_init
+
+- name: kubeadm init output
+  debug:
+    msg: "{{ kubernetes_init.stdout_lines | list }}"
+  when:
+    - node_roles is defined
+    - node_roles == "master"

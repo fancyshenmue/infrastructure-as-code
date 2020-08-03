@@ -1,0 +1,45 @@
+---
+# set variables
+- include_tasks: "{{ role_path }}/tasks/common/set_variables.yml"
+
+# include variables
+- include_tasks: "{{ role_path }}/tasks/common/include_variables.yml"
+
+# include distribution
+- include_tasks: "{{ role_path }}/tasks/common/include_distribution.yml"
+
+# required directory
+- include_tasks: "{{ role_path }}/tasks/common/required_directory.yml"
+
+# required data
+- include_tasks: "{{ role_path }}/tasks/common/required_data.yml"
+
+# update modprobe
+- include_tasks: "{{ role_path }}/tasks/common/update_modprobe.yml"
+
+# update hosts
+- include_tasks: "{{ role_path }}/tasks/common/update_hosts.yml"
+
+# update sysctl conf
+- include_tasks: "{{ role_path }}/tasks/common/update_sysctl_conf.yml"
+
+# update security limits conf
+- include_tasks: "{{ role_path }}/tasks/common/update_security_limits_conf.yml"
+
+# systemd before
+- include_tasks: "{{ role_path }}/tasks/common/systemd_before.yml"
+
+# install package
+- include_tasks: "{{ role_path }}/tasks/common/include_firewalld.yml"
+
+# install package
+- include_tasks: "{{ role_path }}/tasks/distribution/{{ distribution }}/required_package.yml"
+
+# # init kubernetes
+# - include_tasks: "{{ role_path }}/tasks/common/init_kubernetes.yml"
+
+# systemd after
+- include_tasks: "{{ role_path }}/tasks/common/systemd_after.yml"
+
+# # message
+# - include_tasks: "{{ role_path }}/tasks/common/message.yml"

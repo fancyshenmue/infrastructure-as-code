@@ -1,0 +1,9 @@
+# kube
+[kube_cluster_sample]
+kube-master01 ansible_user=root ansible_ssh_host=10.0.0.11
+kube-master02 ansible_user=root ansible_ssh_host=10.0.0.12
+kube-master03 ansible_user=root ansible_ssh_host=10.0.0.13
+kube-worker01 ansible_user=root ansible_ssh_host=10.0.0.14
+kube-worker02 ansible_user=root ansible_ssh_host=10.0.0.15
+kube-worker03 ansible_user=root ansible_ssh_host=10.0.0.16
+# end of kube

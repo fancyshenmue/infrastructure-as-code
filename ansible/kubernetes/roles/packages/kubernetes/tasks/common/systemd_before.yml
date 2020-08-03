@@ -1,0 +1,9 @@
+---
+- name: systemd | before
+  systemd:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('stopped') }}"
+    enabled: "{{ item.enabled | default('no') }}"
+  with_items:
+    - "{{ systemd_before }}"
+  when: systemd_before is defined

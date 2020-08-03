@@ -1,0 +1,14 @@
+---
+# check distribution exist
+- name: check distribution yaml exist
+  local_action: stat path="{{ role_path }}/tasks/distribution/{{ distribution }}/main.yml"
+  register: distribution_path_stat
+
+# set variables
+- name: set variables
+  set_fact:
+    distribution_yml_path: "{{ role_path }}/tasks/distribution/{{ distribution }}/main.yml"
+  when: distribution_path_stat.stat.exists == True
+
+# include tasks distribution yaml if exist
+- include_tasks: "{{ distribution_yml_path | default(role_path + '/tasks/common/empty.yml') }}"
