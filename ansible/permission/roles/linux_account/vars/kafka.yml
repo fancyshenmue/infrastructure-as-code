@@ -1,0 +1,14 @@
+---
+specific_group:
+- name: "{{ group_kafka }}"
+  gid: "{{ gid_kafka }}"
+
+specific_user:
+- name: "{{ user_kafka }}"
+  uid: "{{ uid_kafka }}"
+  group: "{{ group_kafka }}"
+  groups: ""
+  home: "/data/{{ user_kafka }}"
+  create_home: "no"
+  system: "yes"
+  shell: /sbin/nologin

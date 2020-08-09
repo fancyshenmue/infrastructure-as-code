@@ -1,0 +1,3 @@
+---
+linux_account_remove_user:
+- name: '{{ user_ansible }}'

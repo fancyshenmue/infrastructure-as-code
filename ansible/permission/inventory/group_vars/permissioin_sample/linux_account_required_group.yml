@@ -1,0 +1,4 @@
+---
+linux_account_required_group:
+- name: "{{ group_automation }}"
+  gid: "{{ gid_automation }}"

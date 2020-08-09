@@ -1,0 +1,11 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+{% if item.info.strictHostKeyChecking is defined %}
+Host *
+    StrictHostKeyChecking no
+{% endif %}
+
+{% for i in groups[group_names[0]] %}
+Host {{ hostvars[i]['ansible_hostname'] }}
+  Hostname {{ hostvars[i]['ansible_hostname'] }}
+  User {{ item.info.user }}
+{% endfor %}

@@ -1,0 +1,17 @@
+---
+specific_directory:
+- path: "{{ home_service }}"
+  owner: root
+  group: root
+  mode: "0755"
+
+specific_group:
+- name: "{{ group_haproxy }}"
+  gid: "{{ gid_haproxy }}"
+
+specific_user:
+- name: '{{ user_haproxy }}'
+  uid: '{{ uid_haproxy }}'
+  group: '{{ group_haproxy }}'
+  groups: ''
+  home: '{{ home_service }}/{{ user_haproxy }}'

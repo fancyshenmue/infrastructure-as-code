@@ -1,0 +1,14 @@
+---
+specific_group:
+- name: "{{ group_alertmanager }}"
+  gid: "{{ gid_alertmanager }}"
+
+specific_user:
+- name: "{{ user_alertmanager }}"
+  uid: "{{ uid_alertmanager }}"
+  group: "{{ group_alertmanager }}"
+  groups: ""
+  home: "/data/{{ user_alertmanager }}"
+  create_home: "no"
+  system: "yes"
+  shell: /sbin/nologin

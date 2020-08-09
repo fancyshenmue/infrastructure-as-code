@@ -1,0 +1,15 @@
+---
+# group info
+group_wheel: wheel
+group_automation: 'automation'
+gid_automation: '60001'
+
+# account info
+user_ansible: 'ansible'
+uid_ansible: '60001'
+
+# required directory
+home_root: "/home"
+home_automation: "{{ home_root }}/automation"
+home_ansible: "{{ home_automation }}/ansible"
+home_ansible_dev: "{{ home_ansible }}/dev"

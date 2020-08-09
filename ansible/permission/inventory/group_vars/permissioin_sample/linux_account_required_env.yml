@@ -1,0 +1,4 @@
+---
+linux_account_required_env:
+- path: "{{ home_ansible }}/.bashrc"
+  template: "{{ bashrc_template }}"
