@@ -1,0 +1,30 @@
+source /etc/bash_completion.d/git
+
+BASH_MY_GRAY="\[\033[1;36m\]"
+BASH_MY_YELLOW="\[\033[1;33m\]"
+BASH_MY_WHITE="\[\033[1;37m\]"
+BASH_MY_GREEN="\[\033[1;32m\]"
+BASH_MY_RED="\[\033[1;31m\]"
+BASH_MY_SILVER="\[\033[0m\]"
+BASH_MY_CYAN="\[\033[0;36m\]"
+BASH_MY_PURPLE="\[\033[0;35m\]"
+
+function parse_git_branch {
+    ref=$(git symbolic-ref HEAD 2> /dev/null) || return;
+    echo "("${ref#refs/heads/}") ";
+}
+
+# online ls & grep color
+export PS1="${BASH_MY_YELLOW}\u${BASH_MY_WHITE}@${BASH_MY_CYAN}\h${BASH_MY_WHITE}:${BASH_MY_RED}\w ${BASH_MY_CYAN}\$(parse_git_branch)${BASH_MY_GRAY}\n\$ ${BASH_MY_SILVER}";
+
+alias ls='ls -F -N --color=auto'
+alias ll='ls -lh'
+alias la='ls -lha'
+alias grep='grep --color=auto'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+umask 002
+
+HISTTIMEFORMAT="%Y/%m/%d %T "

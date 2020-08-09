@@ -1,0 +1,53 @@
+---
+# set_variables
+- include_tasks: "{{ role_path }}/tasks/common/variables/set_variables.yml"
+  tags:
+    - always
+
+# include_variables
+- include_tasks: "{{ role_path }}/tasks/common/variables/include_variables.yml"
+  tags:
+    - always
+
+# required_group
+- include_tasks: "{{ role_path }}/tasks/common/group/required_group.yml"
+
+# specific_group
+- include_tasks: "{{ role_path }}/tasks/common/group/specific_group.yml"
+
+# required_directory
+- include_tasks: "{{ role_path }}/tasks/common/directory/required_directory.yml"
+
+# required_user
+- include_tasks: "{{ role_path }}/tasks/common/user/required_user.yml"
+
+# specific_user
+- include_tasks: "{{ role_path }}/tasks/common/user/specific_user.yml"
+
+# specific_directory
+- include_tasks: "{{ role_path }}/tasks/common/directory/specific_directory.yml"
+
+# required_auth
+- include_tasks: "{{ role_path }}/tasks/common/auth/required_auth.yml"
+  tags:
+    - always
+
+# specific_auth
+- include_tasks: "{{ role_path }}/tasks/common/auth/specific_auth.yml"
+
+# required_env
+- include_tasks: "{{ role_path }}/tasks/common/env/required_env.yml"
+
+# specific_env
+- include_tasks: "{{ role_path }}/tasks/common/env/specific_env.yml"
+
+# update hosts
+- include_tasks: "{{ role_path }}/tasks/common/hosts/update_hosts.yml"
+
+# required_data
+- include_tasks: "{{ role_path }}/tasks/common/data/required_data.yml"
+
+# remove user
+- include_tasks: "{{ role_path }}/tasks/common/user/remove_user.yml"
+  tags:
+    - always

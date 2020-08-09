@@ -1,0 +1,24 @@
+---
+specific_group:
+- name: "{{ group_jenkins }}"
+  gid: "{{ gid_jenkins }}"
+
+specific_user:
+- name: '{{ user_jenkins }}'
+  uid: '{{ uid_jenkins }}'
+  group: '{{ group_jenkins }}'
+  groups: ''
+  home: '/data/{{ user_jenkins }}'
+
+specific_auth:
+- name: "{{ user_jenkins }}"
+  key: 'ssh_public_key/jenkins.pub'
+
+specific_env_data:
+- src: "{{ template_sudoers }}"
+  dest: "/etc/sudoers.d/jenkins"
+  owner: root
+  group: root
+  mode: "0600"
+  info:
+    - "jenkins        ALL=(ALL)        NOPASSWD: ALL"

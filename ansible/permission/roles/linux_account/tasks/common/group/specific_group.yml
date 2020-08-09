@@ -1,0 +1,11 @@
+---
+# specific group | linux_account
+- name: specific group | linux_account
+  group:
+    name: "{{ item.name }}"
+    gid: "{{ item.gid }}"
+    state: "{{ item.state | default('present') }}"
+  with_items:
+    - "{{ linux_account_specific_group }}"
+  when:
+    linux_account_specific_group is defined

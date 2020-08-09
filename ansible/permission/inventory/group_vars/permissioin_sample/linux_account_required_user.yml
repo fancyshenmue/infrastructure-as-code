@@ -1,0 +1,8 @@
+---
+linux_account_required_user:
+- name: '{{ user_ansible }}'
+  uid: '{{ uid_ansible }}'
+  group: '{{ group_automation }}'
+  groups: '{{ group_wheel }}'
+  append: "no"
+  home: '{{ home_automation }}/{{ user_ansible }}'

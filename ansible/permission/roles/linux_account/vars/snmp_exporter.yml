@@ -1,0 +1,14 @@
+---
+specific_group:
+- name: "{{ group_snmp_exporter }}"
+  gid: "{{ gid_snmp_exporter }}"
+
+specific_user:
+- name: "{{ user_snmp_exporter }}"
+  uid: "{{ uid_snmp_exporter }}"
+  group: "{{ group_snmp_exporter }}"
+  groups: ""
+  home: "/data/{{ user_snmp_exporter }}"
+  create_home: "no"
+  system: "yes"
+  shell: /sbin/nologin

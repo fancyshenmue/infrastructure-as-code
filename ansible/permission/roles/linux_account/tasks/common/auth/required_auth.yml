@@ -1,0 +1,14 @@
+---
+# required auth | linux_account
+- name: required auth | linux_account
+  authorized_key:
+    user: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+    key: "{{ lookup('file', 'files/{{ item.key }}') }}"
+    exclusive: "{{ item.exclusive | default('no') }}"
+  with_items:
+    - "{{ linux_account_required_auth }}"
+  when:
+    linux_account_required_auth is defined
+  tags:
+    - required_auth
