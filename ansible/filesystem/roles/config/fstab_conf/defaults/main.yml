@@ -1,0 +1,3 @@
+---
+fstab: "/etc/fstab"
+fstab_j2: "fstab.j2"
