@@ -1,5 +1,5 @@
 # permission
-[permissioin_sample]
+[permission_sample]
 permission-sample-001 ansible_user=root ansible_ssh_host=10.0.0.11
 permission-sample-002 ansible_user=root ansible_ssh_host=10.0.0.12
 permission-sample-003 ansible_user=root ansible_ssh_host=10.0.0.13
