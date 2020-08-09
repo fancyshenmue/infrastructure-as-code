@@ -10,6 +10,7 @@
   - [ ] Kubernetes
   - [ ] Jenkins
   - [ ] Prometheus
+  - [X] Permission
 - [ ] Terraform
 - [ ] Kubernetes
   - [ ] Kustomize
