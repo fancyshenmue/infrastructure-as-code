@@ -1,0 +1,6 @@
+# filesystem
+[filesystem_sample]
+filesystem-sample-001 ansible_user=root ansible_ssh_host=10.0.0.11
+filesystem-sample-002 ansible_user=root ansible_ssh_host=10.0.0.12
+filesystem-sample-003 ansible_user=root ansible_ssh_host=10.0.0.13
+# end of filesystem
