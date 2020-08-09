@@ -79,13 +79,6 @@ home_ansible_dev: "{{ home_ansible }}/dev"
 ## group_vars/\<group_name\>/linux_account_required_group.yml
 ``` yaml
 ---
-# group wheel
-group_wheel: wheel
-
-# group admin gid
-group_automation: 'automation'
-gid_automation: '60001'
-
 linux_account_required_group:
 - name: "{{ group_automation }}"
   gid: "{{ gid_automation }}"
