@@ -11,6 +11,8 @@
   - [ ] Jenkins
   - [ ] Prometheus
   - [X] Permission
+  - [ ] FileSystem
+    - [X] LVM
 - [ ] Terraform
 - [ ] Kubernetes
   - [ ] Kustomize
