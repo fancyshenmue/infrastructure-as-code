@@ -4,4 +4,4 @@
   become_user: root
   become_method: sudo
   roles:
-    - role: roles/filesystem/lvm
+    - role: roles/filesystem/lvm_filesystem
