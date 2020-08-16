@@ -1,0 +1,27 @@
+---
+# set variables
+- include_tasks: "{{ role_path }}/tasks/common/set_variables.yml"
+
+# include variables
+- include_tasks: "{{ role_path }}/tasks/common/include_variables.yml"
+
+# include distribution
+- include_tasks: "{{ role_path }}/tasks/common/include_distribution.yml"
+
+# required directory
+- include_tasks: "{{ role_path }}/tasks/common/required_directory.yml"
+
+# required data
+- include_tasks: "{{ role_path }}/tasks/common/required_data.yml"
+
+# command | before
+- include_tasks: "{{ role_path }}/tasks/common/command_before.yml"
+
+# install package
+- include_tasks: "{{ role_path }}/tasks/distribution/{{ distribution }}/required_package.yml"
+
+# command | after
+- include_tasks: "{{ role_path }}/tasks/common/command_after.yml"
+
+# systemd
+- include_tasks: "{{ role_path }}/tasks/common/systemd.yml"

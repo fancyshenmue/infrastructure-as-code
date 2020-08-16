@@ -1,0 +1,4 @@
+---
+- hosts: '{{ hn }}'
+  roles:
+    - role: roles/packages/nvm

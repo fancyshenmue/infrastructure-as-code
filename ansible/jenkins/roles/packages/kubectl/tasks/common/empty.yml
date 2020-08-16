@@ -1,0 +1,7 @@
+---
+- name: distribution not support | kubectl
+  debug:
+    msg: distribution not support
+
+- name: end proecess | kubectl
+  meta: end_play

@@ -1,0 +1,14 @@
+---
+# required directory | jenkins_conf
+- name: required directory | jenkins_conf
+  file:
+    path: "{{ item.path }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    state: directory
+  with_items:
+    - "{{ jenkins_conf_required_directory }}"
+  when: jenkins_conf_required_directory is defined
+  tags:
+    - initial

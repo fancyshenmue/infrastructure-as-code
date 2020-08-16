@@ -1,0 +1,11 @@
+---
+# jenkins
+- name: restart jenkins
+  systemd:
+    name: jenkins
+    state: restarted
+
+# systemd daemon-reload
+- name: systemd daemon-reload
+  systemd:
+    daemon_reload: yes

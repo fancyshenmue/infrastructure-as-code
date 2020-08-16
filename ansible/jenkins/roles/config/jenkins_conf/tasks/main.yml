@@ -1,0 +1,51 @@
+---
+# set variables
+- include_tasks: "{{ role_path }}/tasks/common/set_variables.yml"
+  tags:
+    - always
+
+# include variables
+- include_tasks: "{{ role_path }}/tasks/common/include_variables.yml"
+  tags:
+    - always
+
+# sysctl conf
+- include_tasks: "{{ role_path }}/tasks/common/update_sysctl_conf.yml"
+
+# security limits
+- include_tasks: "{{ role_path }}/tasks/common/update_security_limits_conf.yml"
+
+# required directory
+- include_tasks: "{{ role_path }}/tasks/common/required_directory.yml"
+  tags:
+    - always
+
+# required data
+- include_tasks: "{{ role_path }}/tasks/common/required_data.yml"
+  tags:
+    - always
+
+# update conf
+- include_tasks: "{{ role_path }}/tasks/common/update_conf.yml"
+  tags:
+    - always
+
+# systemd
+- include_tasks: "{{ role_path }}/tasks/common/systemd.yml"
+  tags:
+    - always
+
+# plugins
+- include_tasks: "{{ role_path }}/tasks/common/plugins.yml"
+  tags:
+    - always
+
+# credentials
+- include_tasks: "{{ role_path }}/tasks/common/credentials.yml"
+  tags:
+    - always
+
+# custom env
+- include_tasks: "{{ role_path }}/tasks/common/custom_env.yml"
+  tags:
+    - always

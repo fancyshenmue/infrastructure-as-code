@@ -1,0 +1,26 @@
+---
+# cleanup | local | helm
+- name: cleanup | local | helm
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ helm_cleanup_local }}"
+  when: helm_cleanup_local is defined
+  run_once: true
+  delegate_to: localhost
+
+# cleanup | remote | helm
+- name: cleanup | remote | helm
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ helm_cleanup_remote }}"
+  when: helm_cleanup_remote is defined

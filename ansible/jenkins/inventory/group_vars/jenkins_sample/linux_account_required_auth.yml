@@ -1,0 +1,6 @@
+---
+linux_account_required_auth:
+- name: ansible
+  key: "{{ inventory_dir }}/group_vars/{{ group_names[0] }}/files/ssh_public/ansible.pub"
+- name: jenkins
+  key: "{{ inventory_dir }}/group_vars/{{ group_names[0] }}/files/ssh_public/jenkins.pub"

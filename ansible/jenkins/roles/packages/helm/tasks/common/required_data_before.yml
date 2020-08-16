@@ -1,0 +1,22 @@
+---
+# required data | before | download | local | helm
+- name: required data | before | download | local | helm
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode | default('0644') }}"
+  with_items:
+    - "{{ helm_required_data_before_download_local }}"
+  run_once: True
+  delegate_to: localhost
+  when: helm_required_data_before_download_local is defined
+
+# required data | before | download | remote | helm
+- name: required data | before | download | remote | helm
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode | default('0644') }}"
+  with_items:
+    - "{{ helm_required_data_before_download_remote }}"
+  when: helm_required_data_before_download_remote is defined

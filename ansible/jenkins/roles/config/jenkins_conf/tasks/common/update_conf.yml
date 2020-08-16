@@ -1,0 +1,32 @@
+---
+# update conf | template | jenkins_conf
+- name: update conf | template | jenkins_conf
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ jenkins_conf }}"
+  when: jenkins_conf is defined
+#   notify:
+#     - restart jenkins
+  tags:
+    - initial
+
+# update conf | custom | jenkins_conf
+- name: update conf | custom | jenkins_conf
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ jenkins_conf_custom }}"
+  when: jenkins_conf_custom is defined
+#   notify:
+#     - restart jenkins
+  tags:
+    - initial

@@ -1,0 +1,17 @@
+---
+- name: command | after | pyenv
+  become: yes
+  become_user: "{{ username | default('root') }}"
+  shell: "{{ item.command }}"
+  args:
+    "{{ item.args_param }}"
+  with_items:
+    - "{{ pyenv_command_after }}"
+  when:
+    pyenv_command_after is defined
+  register: pyenv_command_after_output
+
+- name: command | after | output | pyenv
+  debug:
+    msg:
+      "{{ pyenv_command_after_output }}"

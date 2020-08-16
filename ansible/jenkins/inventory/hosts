@@ -1,0 +1,3 @@
+[jenkins_sample]
+jekins-master.sample.com  ansible_user=root
+jekins-slave01.sample.com ansible_user=root

@@ -1,0 +1,9 @@
+---
+# check vars yml exist | pyenv
+- name: check vars yml exist | pyenv
+  local_action: stat path="{{ role_path }}/vars/{{ distribution }}/main.yml"
+  register: vars_yml
+
+# include vars yml if exist | pyenv
+- include_vars: "{{ role_path }}/vars/{{ distribution }}/main.yml"
+  when: vars_yml.stat.exists == True

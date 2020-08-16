@@ -1,0 +1,13 @@
+---
+# update sysctl | nvm
+- name: update sysctl | nvm
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    sysctl_set: "{{ item.sysctl_set }}"
+    sysctl_file: "{{ item.sysctl_file }}"
+    state: "{{ item.state }}"
+    reload: "{{ item.reload }}"
+  with_items:
+    - "{{ nvm_sysctl_conf }}"
+  when: nvm_sysctl_conf is defined

@@ -1,0 +1,17 @@
+---
+- name: command | before | nvm
+  become: yes
+  become_user: "{{ username | default('root') }}"
+  shell: "{{ item.command }}"
+  args:
+    "{{ item.args_param }}"
+  with_items:
+    - "{{ nvm_command_before }}"
+  when:
+    nvm_command_before is defined
+  register: nvm_command_before_output
+
+- name: command | before | output | nvm
+  debug:
+    msg:
+      "{{ nvm_command_before_output }}"

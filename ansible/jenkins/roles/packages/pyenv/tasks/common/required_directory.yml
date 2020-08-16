@@ -1,0 +1,12 @@
+---
+# required directory | pyenv
+- name: required directory | pyenv
+  file:
+    path: "{{ item.path }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    state: directory
+  with_items:
+    - "{{ pyenv_required_directory }}"
+  when: pyenv_required_directory is defined

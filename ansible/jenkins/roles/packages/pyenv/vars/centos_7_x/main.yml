@@ -1,0 +1,19 @@
+---
+pyenv_required_package:
+- name: "@Development tools"
+- name: gcc
+- name: zlib-devel
+- name: bzip2
+- name: bzip2-devel
+- name: readline-devel
+- name: sqlite
+- name: sqlite-devel
+- name: openssl-devel
+- name: tk-devel
+- name: libffi-devel
+
+pyenv_command_after:
+- command: |
+    test -d ~/.pyenv || git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+  args_param:
+      executable: /bin/bash

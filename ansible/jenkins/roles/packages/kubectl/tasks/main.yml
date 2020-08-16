@@ -1,0 +1,15 @@
+---
+# set variables
+- include_tasks: "{{ role_path }}/tasks/common/set_variables.yml"
+
+# include variables
+- include_tasks: "{{ role_path }}/tasks/common/include_variables.yml"
+
+# include distribution
+- include_tasks: "{{ role_path }}/tasks/common/include_distribution.yml"
+
+# required data
+- include_tasks: "{{ role_path }}/tasks/common/required_data.yml"
+
+# install package
+- include_tasks: "{{ role_path }}/tasks/distribution/{{ distribution }}/required_package.yml"

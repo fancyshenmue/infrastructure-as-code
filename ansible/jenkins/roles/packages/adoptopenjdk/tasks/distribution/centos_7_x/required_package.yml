@@ -1,0 +1,8 @@
+---
+- name: required package | adoptopenjdk
+  yum:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+  with_items:
+    - "{{ adoptopenjdk_required_package }}"
+  when: adoptopenjdk_required_package is defined

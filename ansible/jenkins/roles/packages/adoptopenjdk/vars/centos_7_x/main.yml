@@ -1,0 +1,44 @@
+---
+adoptopenjdk_required_directory:
+- path: /usr/java/openjdk11
+  owner: root
+  group: root
+  mode: "0755"
+
+adoptopenjdk_required_data_before_download_local:
+- url: "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7%2B10/OpenJDK11U-jdk_x64_linux_hotspot_11.0.7_10.tar.gz"
+  dest: "{{ role_path }}/files/OpenJDK11U-jdk_x64_linux_hotspot_11.0.7_10.tar.gz"
+
+# adoptopenjdk_required_data_remote_download_remote:
+# - url: "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7%2B10/OpenJDK11U-jdk_x64_linux_hotspot_11.0.7_10.tar.gz"
+#   dest: "/tmp/OpenJDK11U-jdk_x64_linux_hotspot_11.0.7_10.tar.gz"
+
+adoptopenjdk_required_data:
+- src: "{{ role_path }}/files/OpenJDK11U-jdk_x64_linux_hotspot_11.0.7_10.tar.gz"
+  dest: "/tmp/OpenJDK11U-jdk_x64_linux_hotspot_11.0.7_10.tar.gz"
+  owner: root
+  group: root
+  mode: "0644"
+
+adoptopenjdk_unarchive_data:
+- src: /tmp/OpenJDK11U-jdk_x64_linux_hotspot_11.0.7_10.tar.gz
+  dest: /usr/java/openjdk11
+  owner: root
+  group: root
+  extra_opts:
+    - "--strip-components=1"
+  remote_src: "yes"
+
+# command | after
+adoptopenjdk_command_after:
+- command: |
+    sudo $(which update-alternatives) --install /usr/bin/java java /usr/java/openjdk11/bin/java 1
+  args_param:
+    executable: /bin/bash
+
+# cleanup
+adoptopenjdk_cleanup_local:
+- path: "{{ role_path }}/files/OpenJDK11U-jdk_x64_linux_hotspot_11.0.7_10.tar.gz"
+
+adoptopenjdk_cleanup_remote:
+- path: /tmp/OpenJDK11U-jdk_x64_linux_hotspot_11.0.7_10.tar.gz

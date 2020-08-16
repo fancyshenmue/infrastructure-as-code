@@ -1,0 +1,12 @@
+---
+gvm_required_package:
+- name: "@Development tools"
+
+gvm_command_after:
+  - command: |
+      test -d ~/.gvm || \
+      (curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer -o /tmp/gvm-installer
+       bash /tmp/gvm-installer
+       rm -f /tmp/gvm-installer)
+    args_param:
+      executable: /bin/bash

@@ -1,0 +1,43 @@
+---
+jenkins_costom_env_command:
+# gvm
+- username: jenkins
+  command: |
+    source ~/.bashrc
+    test -d ~/.gvm/gos/go1.14.3 || gvm install go1.14.3 -B
+  args_param:
+    executable: /bin/bash
+
+# pyenv
+- username: jenkins
+  command: |
+    source ~/.bashrc
+    test -d ~/.pyenv/versions/2.7.18 || pyenv install 2.7.18
+  args_param:
+    executable: /bin/bash
+- username: jenkins
+  command: |
+    source ~/.bashrc
+    test -d ~/.pyenv/versions/3.6.5 || pyenv install 3.6.5
+    pyenv global 3.6.5
+  args_param:
+    executable: /bin/bash
+
+# nvm
+- username: jenkins
+  command: |
+    source ~/.bashrc
+    test -d ~/.nvm/versions/node/v8.16.0 || nvm install v8.16.0
+    nvm alias default 8.16.0
+    nvm use default
+    npm install yarn -g
+  args_param:
+    executable: /bin/bash
+- username: jenkins
+  command: |
+    source ~/.bashrc
+    test -d ~/.nvm/versions/node/v12.16.3 || nvm install v12.16.3
+    nvm use 12.16.3
+    npm install yarn -g
+  args_param:
+    executable: /bin/bash

@@ -1,0 +1,14 @@
+---
+linux_account_required_directory_after:
+- path: /data/jenkins/dev
+  owner: jenkins
+  group: jenkins
+  mode: "0755"
+- path: /data/jenkins/bin
+  owner: jenkins
+  group: jenkins
+  mode: "0755"
+- path: /data/jenkins/ci-workspace
+  owner: jenkins
+  group: jenkins
+  mode: "0755"

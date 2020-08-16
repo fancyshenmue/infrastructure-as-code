@@ -1,0 +1,8 @@
+---
+- name: update systemd status | gvm
+  systemd:
+    name: "{{ item.name }}"
+    enabled: "{{ item.enabled | default('yes') }}"
+  with_items:
+    - "{{ gvm_service }}"
+  when: gvm_service is defined

@@ -1,0 +1,12 @@
+---
+- name: create lvm | lvm_filesystem
+  lvol:
+    vg: "{{ item.vg }}"
+    lv: "{{ item.lv }}"
+    size: "{{ item.size }}"
+    pvs: "{{ item.pvs }}"
+    shrink: "{{ item.shrink | default('no') }}"
+    force: "{{ item.force | default('no') }}"
+  with_items:
+    - "{{ lvm_filesystem }}"
+  when: lvm_filesystem is defined

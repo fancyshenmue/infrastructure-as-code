@@ -1,0 +1,12 @@
+---
+jenkins_conf_plugins:
+- name: gitlab-plugin
+- name: slack
+- name: simple-theme-plugin
+- name: ssh-agent
+- name: ansicolor
+- name: ansible
+- name: scm-sync-configuration
+- name: thinBackup
+- name: kubernetes-cli
+- name: blueocean

@@ -1,0 +1,8 @@
+---
+- name: required package | pyenv
+  yum:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+  with_items:
+    - "{{ pyenv_required_package }}"
+  when: pyenv_required_package is defined

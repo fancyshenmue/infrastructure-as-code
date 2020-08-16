@@ -1,0 +1,12 @@
+---
+- name: update env | append | pyenv
+  become: yes
+  become_user: "{{ username | default('root') }}"
+  blockinfile:
+    dest: "{{ item.dest }}"
+    marker: "{{ item.marker }}"
+    content: |
+      {{ lookup('template', item.content) }}
+  with_items:
+    - "{{ pyenv_update_env_append }}"
+  when: pyenv_update_env_append is defined

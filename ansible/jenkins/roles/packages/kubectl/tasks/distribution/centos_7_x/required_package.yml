@@ -1,0 +1,8 @@
+---
+- name: required package | kubectl
+  yum:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+  with_items:
+    - "{{ kubectl_required_package }}"
+  when: kubectl_required_package is defined

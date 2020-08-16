@@ -1,0 +1,17 @@
+---
+- name: command | after | jenkins
+  become: yes
+  become_user: "{{ username | default('root') }}"
+  shell: "{{ item.command }}"
+  args:
+    "{{ item.args_param }}"
+  with_items:
+    - "{{ jenkins_command_after }}"
+  when:
+    jenkins_command_after is defined
+  register: jenkins_command_after_output
+
+- name: command | after | output | jenkins
+  debug:
+    msg:
+      "{{ jenkins_command_after_output }}"

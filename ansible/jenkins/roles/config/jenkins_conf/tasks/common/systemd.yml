@@ -1,0 +1,11 @@
+---
+- name: update systemd status | jenkins_conf
+  systemd:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default(omit) }}"
+    enabled: "{{ item.enabled | default('yes') }}"
+  with_items:
+    - "{{ jenkins_conf_service }}"
+  when: jenkins_conf_service is defined
+  tags:
+    - initial

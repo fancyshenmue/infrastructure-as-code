@@ -1,0 +1,12 @@
+---
+# update security limit | nvm
+- name: update security limit | nvm
+  pam_limits:
+    domain: "{{ item.domain }}"
+    limit_type: "{{ item.limit_type }}"
+    limit_item: "{{ item.limit_item }}"
+    value: "{{ item.value }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - "{{ nvm_security_limit }}"
+  when: nvm_security_limit is defined
