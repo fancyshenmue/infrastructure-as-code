@@ -1,0 +1,8 @@
+---
+- name: update systemd status | nvm
+  systemd:
+    name: "{{ item.name }}"
+    enabled: "{{ item.enabled | default('yes') }}"
+  with_items:
+    - "{{ nvm_service }}"
+  when: nvm_service is defined

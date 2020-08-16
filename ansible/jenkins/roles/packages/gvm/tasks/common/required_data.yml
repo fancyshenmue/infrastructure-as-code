@@ -1,0 +1,24 @@
+---
+# required data | gvm
+- name: required data | gvm
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ gvm_required_data }}"
+  when: gvm_required_data is defined
+
+# required data | template | gvm
+- name: required data | template | gvm
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ gvm_required_data_template }}"
+  when: gvm_required_data_template is defined

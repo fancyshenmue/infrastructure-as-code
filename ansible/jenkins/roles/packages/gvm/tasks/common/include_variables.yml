@@ -1,0 +1,9 @@
+---
+# check vars yml exist | gvm
+- name: check vars yml exist | gvm
+  local_action: stat path="{{ role_path }}/vars/main/{{ distribution }}/main.yml"
+  register: vars_yml
+
+# include vars yml if exist | gvm
+- include_vars: "{{ role_path }}/vars/main/{{ distribution }}/main.yml"
+  when: vars_yml.stat.exists == True

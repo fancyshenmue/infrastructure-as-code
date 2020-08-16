@@ -1,0 +1,26 @@
+---
+# cleanup | local | jenkins
+- name: cleanup | local | jenkins
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ jenkins_cleanup_local }}"
+  when: jenkins_cleanup_local is defined
+  run_once: true
+  delegate_to: localhost
+
+# cleanup | remote | jenkins
+- name: cleanup | remote | jenkins
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ jenkins_cleanup_remote }}"
+  when: jenkins_cleanup_remote is defined

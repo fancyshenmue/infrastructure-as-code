@@ -1,0 +1,19 @@
+---
+- name: plugins | jenkins_conf
+  jenkins_plugin:
+    name: "{{ item.name }}"
+    url: "{{ jenkins_url }}"
+    url_username: "{{ jenkins_user }}"
+    url_password: "{{ jenkins_password }}"
+    validate_certs: "{{ item.validate_certs | default(False) }}"
+    state: "{{ item.state | default('present') }}"
+    jenkins_home: "{{ jenkins_home | default('/var/lib/jenkins') }}"
+  with_items:
+    - "{{ jenkins_conf_plugins }}"
+  when:
+    - jenkins_conf_plugins is defined
+    - jenkins_url is defined
+    - jenkins_user is defined
+    - jenkins_password is defined
+  tags:
+    - plugins

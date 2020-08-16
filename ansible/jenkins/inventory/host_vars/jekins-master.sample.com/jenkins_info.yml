@@ -1,0 +1,6 @@
+---
+jenkins_url: http://jekins-master.sample.com:8080
+jenkins_home: /data/jenkins
+jenkins_user: admin
+jenkins_password: sample
+jenkins_api_token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

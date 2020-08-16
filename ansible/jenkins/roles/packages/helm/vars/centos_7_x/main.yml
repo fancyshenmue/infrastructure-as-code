@@ -1,0 +1,44 @@
+---
+helm_required_directory:
+- path: /tmp/helm/linux-amd64
+  owner: root
+  group: root
+  mode: "0755"
+
+helm_required_data_before_download_local:
+- url: "https://get.helm.sh/helm-v3.3.0-linux-amd64.tar.gz"
+  dest: "{{ role_path }}/files/helm-v3.3.0-linux-amd64.tar.gz"
+
+helm_required_data:
+- src: "{{ role_path }}/files/helm-v3.3.0-linux-amd64.tar.gz"
+  dest: "/tmp/helm-v3.3.0-linux-amd64.tar.gz"
+  owner: root
+  group: root
+  mode: "0644"
+
+# unarchive
+helm_unarchive_data:
+- src: /tmp/helm-v3.3.0-linux-amd64.tar.gz
+  dest: /tmp/helm/linux-amd64
+  owner: root
+  group: root
+  extra_opts:
+    - "--strip-components=1"
+  remote_src: "yes"
+
+helm_required_data_after:
+- src: /tmp/helm/linux-amd64/helm
+  dest: /usr/bin/helm
+  owner: root
+  group: root
+  mode: "0755"
+  remote_src: yes
+  force: no
+
+# cleanup
+helm_cleanup_local:
+- path: "{{ role_path }}/files/helm-v3.3.0-linux-amd64.tar.gz"
+
+helm_cleanup_remote:
+- path: /tmp/helm-v3.3.0-linux-amd64.tar.gz
+- path: /tmp/helm

@@ -1,0 +1,9 @@
+---
+linux_account_specific_env_data:
+- src: sudoers.j2
+  dest: /etc/sudoers.d/jenkins
+  owner: root
+  group: root
+  mode: "0600"
+  info:
+    - "jenkins        ALL=(ALL)        NOPASSWD: ALL"

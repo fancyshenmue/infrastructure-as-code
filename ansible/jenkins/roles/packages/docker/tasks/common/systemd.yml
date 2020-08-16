@@ -1,0 +1,11 @@
+---
+- name: update systemd status | docker
+  systemd:
+    name: "{{ item.name }}"
+    enabled: "{{ item.enabled | default('yes') }}"
+    state: "{{ item.state | default(omit) }}"
+    daemon_reload: "{{ item.daemon_reload | default('no') }}"
+    masked: "{{ item.masked | default('no') }}"
+  with_items:
+    - "{{ docker_service }}"
+  when: docker_service is defined

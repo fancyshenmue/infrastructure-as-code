@@ -1,0 +1,6 @@
+# service
+service_name: "jenkins"
+
+# template
+template_jenkins: etc/sysconfig/jenkins.j2
+template_config: ssh/config.j2

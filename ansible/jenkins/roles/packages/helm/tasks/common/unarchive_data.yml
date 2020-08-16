@@ -1,0 +1,15 @@
+---
+- name: unarchive data | helm
+  unarchive:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode | default(omit) }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    extra_opts:
+      "{{ item.extra_opts }}"
+    remote_src: "{{ item.remote_src | default('yes') }}"
+  with_items:
+    - "{{ helm_unarchive_data }}"
+  when:
+    helm_unarchive_data is defined

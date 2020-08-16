@@ -1,0 +1,17 @@
+---
+- name: command | after | adoptopenjdk
+  become: yes
+  become_user: "{{ username | default('root') }}"
+  shell: "{{ item.command }}"
+  args:
+    "{{ item.args_param }}"
+  with_items:
+    - "{{ adoptopenjdk_command_after }}"
+  when:
+    adoptopenjdk_command_after is defined
+  register: adoptopenjdk_command_after_output
+
+- name: command | after | output | adoptopenjdk
+  debug:
+    msg:
+      "{{ adoptopenjdk_command_after_output }}"

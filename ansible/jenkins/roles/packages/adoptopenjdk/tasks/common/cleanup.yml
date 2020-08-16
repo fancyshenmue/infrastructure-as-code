@@ -1,0 +1,26 @@
+---
+# cleanup | local | adoptopenjdk
+- name: cleanup | local | adoptopenjdk
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ adoptopenjdk_cleanup_local }}"
+  when: adoptopenjdk_cleanup_local is defined
+  run_once: true
+  delegate_to: localhost
+
+# cleanup | remote | adoptopenjdk
+- name: cleanup | remote | adoptopenjdk
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ adoptopenjdk_cleanup_remote }}"
+  when: adoptopenjdk_cleanup_remote is defined

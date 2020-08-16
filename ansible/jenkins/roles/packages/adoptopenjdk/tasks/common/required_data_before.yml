@@ -1,0 +1,22 @@
+---
+# required data | before | download | local | adoptopenjdk
+- name: required data | before | download | local | adoptopenjdk
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode | default('0644') }}"
+  with_items:
+    - "{{ adoptopenjdk_required_data_before_download_local }}"
+  run_once: True
+  delegate_to: localhost
+  when: adoptopenjdk_required_data_before_download_local is defined
+
+# required data | remote | download | remote | adoptopenjdk
+- name: required data | remote | download | remote | adoptopenjdk
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode | default('0644') }}"
+  with_items:
+    - "{{ adoptopenjdk_required_data_remote_download_remote }}"
+  when: adoptopenjdk_required_data_remote_download_remote is defined

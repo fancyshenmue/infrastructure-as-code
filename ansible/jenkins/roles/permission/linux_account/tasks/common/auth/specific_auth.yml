@@ -1,0 +1,12 @@
+---
+# specific auth | linux_account
+- name: specific auth | linux_account
+  authorized_key:
+    user: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+    key: "{{ lookup('file', 'files/{{ item.key }}') }}"
+    exclusive: "{{ item.exclusive | default('no') }}"
+  with_items:
+    - "{{ linux_account_specific_auth }}"
+  when:
+    linux_account_specific_auth is defined

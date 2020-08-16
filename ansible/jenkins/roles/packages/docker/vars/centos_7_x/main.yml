@@ -1,0 +1,35 @@
+---
+version: 19.03.5-3.el7
+
+docker_command_before:
+- command: |
+    yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  args_param:
+    executable: /bin/bash
+
+docker_required_package_before:
+- name: epel-release
+- name: yum-utils
+- name: device-mapper-persistent-data
+- name: lvm2
+
+docker_required_package:
+- name: "docker-ce-{{ version }}"
+
+docker_required_directory_after:
+- path: /etc/docker
+  owner: root
+  group: root
+  mode: "0755"
+
+docker_required_data_after:
+- src: daemon.json
+  dest: /etc/docker/daemon.json
+  owner: root
+  group: root
+  mode: "0644"
+
+docker_service:
+- name: docker
+  state: started
+  daemon_reload: yes

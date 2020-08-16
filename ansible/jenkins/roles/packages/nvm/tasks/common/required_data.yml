@@ -1,0 +1,24 @@
+---
+# required data | nvm
+- name: required data | nvm
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ nvm_required_data }}"
+  when: nvm_required_data is defined
+
+# required data | template | nvm
+- name: required data | template | nvm
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ nvm_required_data_template }}"
+  when: nvm_required_data_template is defined

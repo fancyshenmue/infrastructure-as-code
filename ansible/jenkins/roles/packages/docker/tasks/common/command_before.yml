@@ -1,0 +1,17 @@
+---
+- name: command | before | docker
+  become: yes
+  become_user: "{{ item.username | default('root') }}"
+  shell: "{{ item.command }}"
+  args:
+    "{{ item.args_param }}"
+  with_items:
+    - "{{ docker_command_before }}"
+  when:
+    docker_command_before is defined
+  register: docker_command_before_output
+
+- name: command | before | output | docker
+  debug:
+    msg:
+      "{{ docker_command_before_output }}"

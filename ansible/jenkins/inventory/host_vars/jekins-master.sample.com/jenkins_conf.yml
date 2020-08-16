@@ -1,0 +1,15 @@
+---
+jenkins_conf:
+- src: "{{ template_jenkins }}"
+  dest: /etc/sysconfig/jenkins
+  owner: root
+  group: root
+  mode: "0644"
+  info:
+    jenkinsHome: /data/jenkins
+
+- src: "{{ template_config }}"
+  dest: /data/jenkins/.ssh/config
+  owner: jenkins
+  group: jenkins
+  mode: "0600"

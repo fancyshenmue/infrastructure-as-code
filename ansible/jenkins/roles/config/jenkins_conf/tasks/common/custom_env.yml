@@ -1,0 +1,22 @@
+---
+# custom | env | command | jenkins_conf
+- name: custom | env | command | jenkins_conf
+  become: yes
+  become_user: "{{ item.username | default('root') }}"
+  shell: "{{ item.command }}"
+  args:
+    "{{ item.args_param }}"
+  with_items:
+    - "{{ jenkins_costom_env_command }}"
+  when:
+    jenkins_costom_env_command is defined
+  register: jenkins_costom_env_command_output
+  tags:
+    - custom_env
+
+- name: custom | env | command | output | jenkins_conf
+  debug:
+    msg:
+      "{{ jenkins_costom_env_command_output }}"
+  tags:
+    - custom_env

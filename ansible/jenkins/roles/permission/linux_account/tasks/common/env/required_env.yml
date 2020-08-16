@@ -1,0 +1,12 @@
+---
+# required env | linux_account
+- name: required env | linux_account
+  blockinfile:
+    dest: "{{ item.path }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+    content: |
+      {{ lookup('template', item.template) }}
+  with_items:
+    - "{{ linux_account_required_env }}"
+  when:
+    linux_account_required_env is defined

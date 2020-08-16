@@ -1,0 +1,12 @@
+---
+- name: update env | append | nvm
+  become: yes
+  become_user: "{{ username | default('root') }}"
+  blockinfile:
+    dest: "{{ item.dest }}"
+    marker: "{{ item.marker }}"
+    content: |
+      {{ lookup('template', item.content) }}
+  with_items:
+    - "{{ nvm_update_env_append }}"
+  when: nvm_update_env_append is defined

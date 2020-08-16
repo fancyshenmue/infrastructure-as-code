@@ -1,0 +1,12 @@
+---
+# update security limit | gvm
+- name: update security limit | gvm
+  pam_limits:
+    domain: "{{ item.domain }}"
+    limit_type: "{{ item.limit_type }}"
+    limit_item: "{{ item.limit_item }}"
+    value: "{{ item.value }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - "{{ gvm_security_limit }}"
+  when: gvm_security_limit is defined

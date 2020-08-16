@@ -1,0 +1,24 @@
+---
+# required data | after | docker
+- name: required data | after | docker
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ docker_required_data_after }}"
+  when: docker_required_data_after is defined
+
+# required data | template | after | docker
+- name: required data | template | after | docker
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ docker_required_data_after_template }}"
+  when: docker_required_data_after_template is defined

@@ -1,0 +1,17 @@
+---
+- name: command | after | kustomize
+  become: yes
+  become_user: "{{ item.username | default('root') }}"
+  shell: "{{ item.command }}"
+  args:
+    "{{ item.args_param }}"
+  with_items:
+    - "{{ kustomize_command_after }}"
+  when:
+    kustomize_command_after is defined
+  register: kustomize_command_after_output
+
+- name: command | after | output | kustomize
+  debug:
+    msg:
+      "{{ kustomize_command_after_output }}"

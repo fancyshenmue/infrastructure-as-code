@@ -1,0 +1,9 @@
+---
+- name: mkfs | lvm_filesystem
+  filesystem:
+    fstype: "{{ item.fstype }}"
+    dev: "{{ item.dev }}"
+    force: "{{ item.force }}"
+  with_items:
+    - "{{ lvm_filesystem }}"
+  when: lvm_filesystem is defined

@@ -1,0 +1,12 @@
+---
+# required data | kubectl
+- name: required data | kubectl
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ kubectl_required_data }}"
+  when: kubectl_required_data is defined

@@ -1,0 +1,9 @@
+---
+kustomize_command_after:
+- username: jenkins
+  command: |
+    test -f ~/bin/kustomize || \
+    (curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash)
+  args_param:
+    executable: /bin/bash
+    chdir: ~/bin

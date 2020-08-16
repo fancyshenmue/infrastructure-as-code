@@ -1,0 +1,9 @@
+---
+# check vars yml exist | kubectl
+- name: check vars yml exist | kubectl
+  local_action: stat path="{{ role_path }}/vars/main/{{ distribution }}/main.yml"
+  register: vars_yml
+
+# include variables if exist | kubectl
+- include_vars: "{{ role_path }}/vars/main/{{ distribution }}/main.yml"
+  when: vars_yml.stat.exists == True

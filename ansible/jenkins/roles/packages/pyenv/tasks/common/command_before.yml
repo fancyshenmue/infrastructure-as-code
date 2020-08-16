@@ -1,0 +1,17 @@
+---
+- name: command | before | pyenv
+  become: yes
+  become_user: "{{ username | default('root') }}"
+  shell: "{{ item.command }}"
+  args:
+    "{{ item.args_param }}"
+  with_items:
+    - "{{ pyenv_command_before }}"
+  when:
+    pyenv_command_before is defined
+  register: pyenv_command_before_output
+
+- name: command | before | output | pyenv
+  debug:
+    msg:
+      "{{ pyenv_command_before_output }}"

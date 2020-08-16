@@ -1,0 +1,12 @@
+---
+# required directory | after | linux_account
+- name: required directory | after | linux_account
+  file:
+    path: "{{ item.path }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    state: "directory"
+  with_items:
+    - "{{ linux_account_required_directory_after }}"
+  when: linux_account_required_directory_after is defined

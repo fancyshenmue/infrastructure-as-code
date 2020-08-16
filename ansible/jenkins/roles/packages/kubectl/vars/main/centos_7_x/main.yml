@@ -1,0 +1,12 @@
+---
+version: "1.17.0-0"
+
+kubectl_required_data:
+- src: kubernetes.repo
+  dest: /etc/yum.repos.d/kubernetes.repo
+  owner: root
+  group: root
+  mode: "644"
+
+kubectl_required_package:
+- name: "kubectl-{{ version }}"

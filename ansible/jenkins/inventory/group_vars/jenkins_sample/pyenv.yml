@@ -1,0 +1,5 @@
+---
+pyenv_update_env_append:
+- dest: "/data/jenkins/.bashrc"
+  marker: "# {mark} Ansible PYENV Management"
+  content: "bashrc.j2"

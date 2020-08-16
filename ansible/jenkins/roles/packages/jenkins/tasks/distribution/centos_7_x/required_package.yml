@@ -1,0 +1,16 @@
+---
+- name: required package | key | jenkins
+  rpm_key:
+    state: "{{ item.state | default('present') }}"
+    key: "{{ item.key }}"
+  with_items:
+    - "{{ jenkins_required_package_key }}"
+  when: jenkins_required_package_key is defined
+
+- name: required package | jenkins
+  yum:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+  with_items:
+    - "{{ jenkins_required_package }}"
+  when: jenkins_required_package is defined

@@ -1,0 +1,8 @@
+---
+- name: update systemd status | pyenv
+  systemd:
+    name: "{{ item.name }}"
+    enabled: "{{ item.enabled | default('yes') }}"
+  with_items:
+    - "{{ pyenv_service }}"
+  when: pyenv_service is defined
