@@ -1,0 +1,6 @@
+---
+linux_account_required_directory:
+- path: /data
+  owner: root
+  group: root
+  mode: "0755"

@@ -1,0 +1,7 @@
+---
+linux_account_required_group:
+- name: zookeeper
+  gid: "65001"
+
+- name: kafka
+  gid: "65002"

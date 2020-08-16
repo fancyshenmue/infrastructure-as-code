@@ -1,0 +1,3 @@
+---
+lvm_required_package:
+- name: lvm2

@@ -1,0 +1,17 @@
+---
+linux_account_required_user:
+- name: zookeeper
+  uid: "65001"
+  group: zookeeper
+  home: /data/zookeeper
+  create_home: no
+  system: yes
+  shell: /sbin/nologin
+
+- name: kafka
+  uid: "65002"
+  group: kafka
+  home: /data/kafka
+  create_home: no
+  system: yes
+  shell: /sbin/nologin
