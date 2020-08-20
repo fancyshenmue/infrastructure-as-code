@@ -83,7 +83,7 @@ export _PLAYBOOK="playbook/packages/adoptopenjdk.yml"
 ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK} --ask-vault-pass
 ```
 
-## Initail Jenkins Congigure (on Master)
+## Initail Jenkins Configure (on Master)
 ``` shell
 export _INVENTORY="inventory/hosts"
 export _HN="jekins-master.sample.com"
