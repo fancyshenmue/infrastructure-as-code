@@ -1,0 +1,197 @@
+properties([
+  buildDiscarder(
+      logRotator(
+          numToKeepStr: '30'
+      )
+  )
+])
+
+pipeline {
+  agent {
+    label 'slave01'
+  }
+
+  options {
+      ansiColor('xterm')
+  }
+
+  parameters {
+    string(name: 'BRANCH',
+      defaultValue: 'master',
+      description: 'GIT BRANCH'
+    )
+    string(name: 'INVENTORY',
+      defaultValue: 'NOTSUPPORT',
+      description: 'INPUT INVENTORY'
+    )
+    choice(name: 'MODULE',
+      choices: [
+        'NOTSUPPORT',
+        'ping',
+        'shell',
+        'systemd'
+      ],
+      description: 'CHOOSE MODULE'
+    )
+    string(name: 'HOST',
+      defaultValue: '',
+      description: 'INPUT HOST'
+    )
+    string(name: 'MODULE_PARAMS',
+      defaultValue: '',
+      description: 'INPUT MODULE PARAMS'
+    )
+    string(name: 'BECOME_USER',
+      defaultValue: 'root',
+      description: 'INPUT BECOME USER'
+    )
+    string(name: 'FORKS',
+      defaultValue: '5',
+      description: 'INPUT FORKS'
+    )
+  }
+
+  environment {
+    // define git repo info
+    GIT_REPO                  = "git@gitlab.nexiosoft.com:devops/ansible.git"
+    BRANCH                    = "${params.BRANCH}"
+    GITKEY                    = "gitlab_deploy_key"
+    // ansible key
+    _ANSIBLE_SSH_KEY          = "ansible"
+    _ANSIBLE_VAULT_KEY        = "ansible-vault-pass"
+    // define environment
+    _INVENTORY                = "${params.INVENTORY}"
+    _HOST                     = "${params.HOST}"
+    _MODULE                   = "${params.MODULE}"
+    _BECOME_USER              = "${params.BECOME_USER}"
+    _FORKS                    = "${params.FORKS}"
+    // define workspace
+    _WORKSPACE_DIR            = "${WORKSPACE}/${BUILD_ID}"
+  }
+
+  stages {
+    // setup environment
+    stage('Setup Environment') {
+      steps {
+        // block if selected INVENTORY not supported
+        script {
+          if (params.INVENTORY == "NOTSUPPORT") {
+              error('INVENTORY not supported')
+          }
+        }
+
+        // block if selected MODULE not supported
+        script {
+          if (params.MODULE == "NOTSUPPORT") {
+              error('MODULE not supported')
+          }
+        }
+
+        // declare module parameters
+        script {
+          if (!params.MODULE_PARAMS) {
+            env._MODULE_PARAMS = ""
+          } else {
+            env._MODULE_PARAMS = "${params.MODULE_PARAMS}"
+          }
+        }
+
+        // git repo info
+        sh("echo Git Repo: ${GIT_REPO}")
+        sh("echo Branch: ${BRANCH}")
+        // ansible
+        sh("echo Inventory: ${_INVENTORY}")
+        sh("echo Host: ${_HOST}")
+        sh("echo Module: ${_MODULE}")
+        sh("echo Module Parameters: ${_MODULE_PARAMS}")
+        sh("echo Become User: ${_BECOME_USER}")
+        sh("echo Forks: ${_FORKS}")
+        sh("echo Ansible SSH Key: ${_ANSIBLE_SSH_KEY}")
+        // workspace
+        sh("echo workspace directory: ${_WORKSPACE_DIR}")
+      }
+    } // end of setup environment
+
+    // git checkout
+    stage('Git checkout') {
+      steps {
+        dir(_WORKSPACE_DIR) {
+          git url: "${GIT_REPO}",
+              credentialsId: "${GITKEY}",
+              branch: "${BRANCH}"
+        }
+      }
+    } // end of stage
+
+    // ansible module ping
+    stage('Ping Module') {
+      when {
+        expression {
+          "${_MODULE}" == "ping"
+        }
+      }
+
+      steps {
+        dir(_WORKSPACE_DIR) {
+          step(
+            [
+              $class: 'AnsibleAdHocCommandBuilder',
+              hostPattern: "${_HOST}",
+              inventory: [
+                  $class: 'InventoryPath',
+                  path: "${_INVENTORY}"
+              ],
+              module: "${_MODULE}",
+              forks: "${_FORKS}",
+              credentialsId: "${_ANSIBLE_SSH_KEY}",
+              hostKeyChecking: false,
+              vaultCredentialsId: "${_ANSIBLE_VAULT_KEY}",
+              colorizedOutput: true
+            ]
+          )
+        }
+      }
+    } // end of stage
+
+    // ansible module shell
+    stage('Module') {
+      when {
+        expression {
+          "${_MODULE}" != "ping"
+        }
+      }
+
+      steps {
+        dir(_WORKSPACE_DIR) {
+          step(
+            [
+              $class: 'AnsibleAdHocCommandBuilder',
+              hostPattern: "${_HOST}",
+              inventory: [
+                  $class: 'InventoryPath',
+                  path: "${_INVENTORY}"
+              ],
+              module: "${_MODULE}",
+              forks: "${_FORKS}",
+              credentialsId: "${_ANSIBLE_SSH_KEY}",
+              hostKeyChecking: false,
+              vaultCredentialsId: "${_ANSIBLE_VAULT_KEY}",
+              becomeUser: "${_BECOME_USER}",
+              command: "${_MODULE_PARAMS}",
+              colorizedOutput: true
+            ]
+          )
+        }
+      }
+    } // end of stage
+
+    // cleanup
+    stage('Cleanup') {
+      steps {
+        dir(_WORKSPACE_DIR) {
+          deleteDir()
+        }
+      }
+    } // end of stage
+  }
+}
