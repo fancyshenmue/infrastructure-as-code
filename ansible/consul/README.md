@@ -11,7 +11,6 @@
   - [Config Consul](#config-consul)
   - [Start Consul Service](#start-consul-service)
 - [consul-template](#consul-template)
-  - [Clone Repo](#clone-repo)
   - [Add Permission](#add-permission-1)
   - [Install consul-template](#install-consul-template)
   - [Config consul-template](#config-consul-template)
@@ -111,15 +110,6 @@ ansible -i ${_INVENTORY} ${_HN} -m ${_MODULE} -a "${_MODULE_PARAM}"
 ```
 
 # consul-template
-
-## Clone Repo
-``` shell
-export _GIT_REPO="git@gitlab.nexiosoft.com:devops/nexiosoft-infrastructure-as-code.git"
-export _REPO_DIRECTORY="nexiosoft-infrastructure-as-code"
-export _WORKING_DIRECTORY="ansilbe/consul"
-git clone ${_GIT_REPO}
-cd ${_REPO_DIRECTORY}/${_WORKING_DIRECTORY}
-```
 
 ## Add Permission
 ``` shell
