@@ -1,0 +1,39 @@
+---
+consul_template_required_directory:
+- path: /data
+  owner: root
+  group: root
+  mode: "0755"
+- path: /data/consul-template
+  owner: consul-template
+  group: consul-template
+  mode: "0755"
+- path: /data/consul-template/template
+  owner: consul-template
+  group: consul-template
+  mode: "0755"
+
+consul_template_required_data_before_download_local:
+- url: "https://releases.hashicorp.com/consul-template/0.25.1/consul-template_0.25.1_linux_386.tgz"
+  dest: "{{ role_path }}/files/consul-template_0.25.1_linux_386.tgz"
+
+consul_template_required_data:
+- src: "{{ role_path }}/files/consul-template_0.25.1_linux_386.tgz"
+  dest: "/tmp/consul-template_0.25.1_linux_386.tgz"
+  owner: root
+  group: root
+  mode: "0644"
+
+consul_template_unarchive_data:
+- src: /tmp/consul-template_0.25.1_linux_386.tgz
+  dest: /data/consul-template
+  owner: root
+  group: root
+  remote_src: "yes"
+
+# cleanup
+consul_template_cleanup_local:
+- path: "{{ role_path }}/files/consul-template_0.25.1_linux_386.tgz"
+
+consul_template_cleanup_remote:
+- path: /tmp/consul-template_0.25.1_linux_386.tgz

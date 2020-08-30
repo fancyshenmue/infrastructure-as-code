@@ -1,0 +1,28 @@
+---
+# update conf | template | consul_conf
+- name: update conf | template | consul_conf
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ consul_conf }}"
+  when: consul_conf is defined
+  notify:
+    - systemd daemon-reload
+
+# update conf | custom | consul_conf
+- name: update conf | custom | consul_conf
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ consul_conf_custom }}"
+  when: consul_conf_custom is defined
+  notify:
+    - systemd daemon-reload

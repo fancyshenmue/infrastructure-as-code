@@ -1,0 +1,14 @@
+---
+linux_account_required_user:
+- name: ansible
+  uid: "10501"
+  group: automation
+  groups: wheel
+  home: /home/automation/ansible
+
+- name: consul-template
+  uid: "65001"
+  group: consul-template
+  home: /data/consul-template
+  create_home: no
+  system: yes

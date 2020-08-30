@@ -1,0 +1,9 @@
+---
+# required directory
+- include_tasks: "{{ role_path }}/tasks/common/required_directory.yml"
+
+# required data
+- include_tasks: "{{ role_path }}/tasks/common/required_data.yml"
+
+# update conf
+- include_tasks: "{{ role_path }}/tasks/common/update_conf.yml"

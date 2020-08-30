@@ -1,0 +1,14 @@
+---
+- name: unarchive data | consul_template
+  unarchive:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode | default(omit) }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    extra_opts: "{{ item.extra_opts | default(omit) }}"
+    remote_src: "{{ item.remote_src | default('yes') }}"
+  with_items:
+    - "{{ consul_template_unarchive_data }}"
+  when:
+    consul_template_unarchive_data is defined

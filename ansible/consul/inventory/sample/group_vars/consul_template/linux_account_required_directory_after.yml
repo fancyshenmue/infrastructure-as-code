@@ -1,0 +1,6 @@
+---
+linux_account_required_directory_after:
+- path: /data/consul-template
+  owner: consul-template
+  group: consul-template
+  mode: "0755"

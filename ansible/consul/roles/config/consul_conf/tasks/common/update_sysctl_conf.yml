@@ -1,0 +1,13 @@
+---
+# update sysctl | consul_conf
+- name: update sysctl | consul_conf
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    sysctl_set: "{{ item.sysctl_set }}"
+    sysctl_file: "{{ item.sysctl_file }}"
+    state: "{{ item.state }}"
+    reload: "{{ item.reload }}"
+  with_items:
+    - "{{ consul_conf_sysctl_conf }}"
+  when: consul_conf_sysctl_conf is defined

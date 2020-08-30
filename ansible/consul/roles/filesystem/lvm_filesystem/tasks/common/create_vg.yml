@@ -1,0 +1,11 @@
+---
+- name: create vg | lvm_filesystem
+  lvg:
+    vg: "{{ item.vg }}"
+    pvs: "{{ item.pvs }}"
+    pesize: "{{ item.pesize }}"
+    force: "{{ item.force | default('no') }}"
+    state: "{{ item.state | default('present') }}"
+  with_items:
+    - "{{ lvm_filesystem }}"
+  when: lvm_filesystem is defined

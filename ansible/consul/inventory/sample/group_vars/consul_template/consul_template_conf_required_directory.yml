@@ -1,0 +1,6 @@
+---
+consul_template_conf_required_directory:
+- path: /data/consul-template/template
+  owner: consul-template
+  group: consul-template
+  mode: "0755"

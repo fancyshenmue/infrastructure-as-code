@@ -1,0 +1,26 @@
+---
+# cleanup | local | consul
+- name: cleanup | local | consul
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ consul_cleanup_local }}"
+  when: consul_cleanup_local is defined
+  run_once: true
+  delegate_to: localhost
+
+# cleanup | remote | consul
+- name: cleanup | remote | consul
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ consul_cleanup_remote }}"
+  when: consul_cleanup_remote is defined

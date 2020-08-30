@@ -1,0 +1,6 @@
+---
+consul_conf_required_directory:
+- path: /data/consul/data
+  owner: consul
+  group: consul
+  mode: "0755"

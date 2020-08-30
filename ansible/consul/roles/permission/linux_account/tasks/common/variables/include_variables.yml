@@ -1,0 +1,19 @@
+---
+# include variables
+- name: check vars yml exist
+  local_action: stat path="{{ role_path }}/vars/{{ env }}.yml"
+  register: vars_yml
+
+- include_vars: "{{ role_path }}/vars/{{ env }}.yml"
+  when: vars_yml.stat.exists == True
+
+# include extra variables
+- name: check extra vars yml exist
+  local_action: stat path="{{ role_path }}/vars/{{ include_permisssion }}.yml"
+  register: extra_vars_yml
+  when: include_permisssion is defined
+
+- include_vars: "{{ role_path }}/vars/{{ include_permisssion }}.yml"
+  when:
+    include_permisssion is defined and
+    extra_vars_yml.stat.exists == True

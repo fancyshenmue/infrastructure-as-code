@@ -1,0 +1,24 @@
+---
+# required data | consul
+- name: required data | consul
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ consul_required_data }}"
+  when: consul_required_data is defined
+
+# required data | template | consul
+- name: required data | template | consul
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ consul_required_data_template }}"
+  when: consul_required_data_template is defined

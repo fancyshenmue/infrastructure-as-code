@@ -1,0 +1,8 @@
+---
+- name: required package | consul
+  yum:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+  with_items:
+    - "{{ consul_required_package }}"
+  when: consul_required_package is defined

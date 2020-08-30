@@ -1,0 +1,6 @@
+---
+linux_account_required_directory_after:
+- path: /data/consul
+  owner: consul
+  group: consul
+  mode: "0755"

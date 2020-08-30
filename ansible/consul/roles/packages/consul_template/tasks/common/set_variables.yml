@@ -1,0 +1,5 @@
+---
+# set variables | consul_template
+- name: set variables | consul_template
+  set_fact:
+    distribution: "{{ ansible_distribution.lower() }}_{{ ansible_distribution_major_version }}_x"

@@ -1,0 +1,59 @@
+---
+consul_service:
+- name: consul
+  daemon_reload: yes
+
+consul_required_directory:
+- path: /data
+  owner: root
+  group: root
+  mode: "0755"
+- path: /data/consul
+  owner: consul
+  group: consul
+  mode: "0755"
+- path: /data/consul/consul.d
+  owner: consul
+  group: consul
+  mode: "0755"
+
+consul_required_data_before_download_local:
+- url: "https://releases.hashicorp.com/consul/1.8.3/consul_1.8.3_linux_amd64.zip"
+  dest: "{{ role_path }}/files/consul_1.8.3_linux_amd64.zip"
+
+consul_required_data:
+- src: "{{ role_path }}/files/consul_1.8.3_linux_amd64.zip"
+  dest: "/tmp/consul_1.8.3_linux_amd64.zip"
+  owner: root
+  group: root
+  mode: "0644"
+
+consul_unarchive_data:
+- src: /tmp/consul_1.8.3_linux_amd64.zip
+  dest: /data/consul
+  owner: root
+  group: root
+#   extra_opts:
+#     - "--strip-components=1"
+  remote_src: "yes"
+
+consul_required_data_after_template:
+- src: "centos_7_x/consul.service.j2"
+  dest: "/etc/systemd/system/consul.service"
+  owner: root
+  group: root
+  mode: "0644"
+
+consul_environment:
+  user: consul
+  group: consul
+  binary: /data/consul/consul
+  config_dir: /data/consul/consul.d
+  config_file: /data/consul/consul.d/consul.hcl
+
+# cleanup
+consul_cleanup_local:
+- path: "{{ role_path }}/files/consul_1.8.3_linux_amd64.zip"
+
+consul_cleanup_remote:
+- path: /tmp/consul_1.8.3_linux_amd64.zip

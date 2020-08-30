@@ -1,0 +1,7 @@
+---
+linux_account_required_group:
+- name: automation
+  gid: "10501"
+
+- name: consul
+  gid: "65001"

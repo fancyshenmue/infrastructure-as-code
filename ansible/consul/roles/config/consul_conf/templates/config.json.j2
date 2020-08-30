@@ -1,0 +1,56 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+{
+    "advertise_addr": "{{ ansible_default_ipv4.address }}",
+    "bind_addr": "{{ ansible_default_ipv4.address }}",
+    "bootstrap_expect": {{ groups[group_names[0]] | length }},
+    "client_addr": "0.0.0.0",
+    "datacenter": "{{ item.info.datacenter | default('DC1') }}",
+    "data_dir": "{{ item.info.data_dir }}",
+    "domain": "{{ item.info.domain }}",
+    "enable_script_checks": {{ item.info.enable_script_checks | default('true') }},
+    "dns_config": {
+        "enable_truncate": true,
+        "only_passing": true
+    },
+    "enable_syslog": {{ item.info.enable_syslog | default('true') }},
+    "encrypt": "{{ item.info.encrypt }}",
+    "leave_on_terminate": {{ item.info.leave_on_terminate | default('true') }},
+    "log_level": "INFO",
+    "rejoin_after_leave": {{ item.info.rejoin_after_leave | default('true') }},
+    "retry_join": [
+    {% if item.info.retry_join is defined %}
+        {% for i in item.info.retry_join %}
+        "{{ i }}"{% if not loop.last %},
+        {% else %}
+
+        {% endif %}
+        {% endfor %}
+    {% else %}
+        {% for i in groups[group_names[0]] %}
+        "{{ hostvars[i]['ansible_hostname'] }}"{% if not loop.last %},
+        {% else %}
+
+        {% endif %}
+        {% endfor %}
+    {% endif %}
+    ],
+    "server": {{ item.info.server | default('true') }},
+    "start_join": [
+    {% if item.info.start_join is defined %}
+        {% for i in item.info.start_join %}
+        "{{ i }}"{% if not loop.last %},
+        {% else %}
+
+        {% endif %}
+        {% endfor %}
+    {% else %}
+        {% for i in groups[group_names[0]] %}
+        "{{ hostvars[i]['ansible_hostname'] }}"{% if not loop.last %},
+        {% else %}
+
+        {% endif %}
+        {% endfor %}
+    {% endif %}
+    ],
+    "ui": {{ item.info.ui | default('true') }}
+}

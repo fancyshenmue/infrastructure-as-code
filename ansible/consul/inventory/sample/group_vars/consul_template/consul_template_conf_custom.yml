@@ -1,0 +1,7 @@
+---
+consul_template_conf_custom:
+- src: "{{ inventory_dir }}/group_vars/{{ group_names[0] }}/files/consul-template/nginx.vhost.tpl"
+  dest: /data/consul-template/template/nginx.vhost.tpl
+  owner: consul-template
+  group: consul-template
+  mode: "0644"

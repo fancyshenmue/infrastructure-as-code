@@ -1,0 +1,8 @@
+[consul]
+consul01.sample.com
+consul02.sample.com
+consul03.sample.com
+
+[consul_template]
+consul-template01.sample.com
+consul-template02.sample.com

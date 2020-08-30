@@ -1,0 +1,34 @@
+---
+consul_conf:
+# config
+- src: config.json.j2
+  dest: /data/consul/consul.d/config.json
+  owner: consul
+  group: consul
+  mode: "0644"
+  info:
+    datacenter: TW_ZONE1
+    data_dir: /data/consul/data
+    domain: consul.pf.stg
+    encrypt: zspVsNIdDBilNeAPypgrCGU9Wrsd8Vx8bpVTNVTTD3Y=
+    retry_join:
+      - consul01.sample.com
+      - consul02.sample.com
+      - consul03.sample.com
+    start_join:
+      - consul01.sample.com
+      - consul02.sample.com
+      - consul03.sample.com
+
+# systemd
+- src: consul.service.j2
+  dest: /etc/systemd/system/consul.service
+  owner: root
+  group: root
+  mode: "0644"
+  info:
+    user: consul
+    group: consul
+    binary: /data/consul/consul
+    config_dir: /data/consul/consul.d
+    config_file: /data/consul/consul.d/config.json

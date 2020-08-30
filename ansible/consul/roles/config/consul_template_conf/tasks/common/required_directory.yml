@@ -1,0 +1,12 @@
+---
+# required directory | consul_template_conf
+- name: required directory | consul_template_conf
+  file:
+    path: "{{ item.path }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    state: directory
+  with_items:
+    - "{{ consul_template_conf_required_directory }}"
+  when: consul_template_conf_required_directory is defined

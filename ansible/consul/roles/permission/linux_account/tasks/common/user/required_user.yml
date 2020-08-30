@@ -1,0 +1,18 @@
+---
+# required user | linux_account
+- name: required user | linux_account
+  user:
+    name: "{{ item.name }}"
+    uid: "{{ item.uid }}"
+    group: "{{ item.group }}"
+    groups: "{{ item.groups | default(omit) }}"
+    home: "{{ item.home | default(omit) }}"
+    shell: "{{ item.shell | default('/bin/bash') }}"
+    create_home: "{{ item.create_home | default('yes') }}"
+    system: "{{ item.system | default(omit) }}"
+    append: "{{ item.append | default('yes') }}"
+    password: "{{ item.password | default(omit) }}"
+  with_items:
+    - "{{ linux_account_required_user }}"
+  when:
+    linux_account_required_user is defined

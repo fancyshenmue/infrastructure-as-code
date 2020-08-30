@@ -1,0 +1,8 @@
+---
+- name: update systemd status | consul
+  systemd:
+    name: "{{ item.name }}"
+    enabled: "{{ item.enabled | default('yes') }}"
+  with_items:
+    - "{{ consul_service }}"
+  when: consul_service is defined

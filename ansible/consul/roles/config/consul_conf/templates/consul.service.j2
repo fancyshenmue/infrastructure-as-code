@@ -1,0 +1,21 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+[Unit]
+Description="HashiCorp Consul - A service mesh solution"
+Documentation=https://www.consul.io/
+Requires=network-online.target
+After=network-online.target
+ConditionFileNotEmpty={{ item.info.config_file | default('/data/consul/consul.d/consul.hcl') }}
+
+[Service]
+Type=simple
+User={{ item.info.user | default('consul') }}
+Group={{ item.info.group | default('consul') }}
+ExecStart={{ item.info.binary | default('/data/consul/consul') }} agent -config-dir={{ item.info.config_dir | default('/data/consul/consul.d') }}
+ExecReload={{ item.info.binary | default('/data/consul/consul') }} reload
+ExecStop={{ item.info.binary | default('/data/consul/consul') }} leave
+KillMode=process
+Restart=on-failure
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
