@@ -1,0 +1,8 @@
+---
+- name: update systemd status | etcd
+  systemd:
+    name: "{{ item.name }}"
+    enabled: "{{ item.enabled | default('yes') }}"
+  with_items:
+    - "{{ etcd_service }}"
+  when: etcd_service is defined

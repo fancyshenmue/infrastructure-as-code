@@ -1,0 +1,72 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+{# Member #}
+{% if item.info.member is defined %}
+[Member]
+  {% for i in item.info.member %}
+{{ i }}
+  {% endfor %}
+{% endif %}
+
+{# Clustering #}
+{% if item.info.clustering is defined %}
+[Clustering]
+  {% for i in item.info.clustering %}
+{{ i }}
+  {% endfor %}
+{% endif %}
+
+{# Proxy #}
+{% if item.info.proxy is defined %}
+[Proxy]
+  {% for i in item.info.proxy %}
+{{ i }}
+  {% endfor %}
+{% endif %}
+
+{# Security #}
+{% if item.info.security is defined %}
+[Security]
+  {% for i in item.info.security %}
+{{ i }}
+  {% endfor %}
+{% endif %}
+
+{# Logging #}
+{% if item.info.logging is defined %}
+[Logging]
+  {% for i in item.info.logging %}
+{{ i }}
+  {% endfor %}
+{% endif %}
+
+{# Unsafe #}
+{% if item.info.unsafe is defined %}
+[Unsafe]
+  {% for i in item.info.unsafe %}
+{{ i }}
+  {% endfor %}
+{% endif %}
+
+{# Version #}
+{% if item.info.version is defined %}
+[Version]
+  {% for i in item.info.version %}
+{{ i }}
+  {% endfor %}
+{% endif %}
+
+{# Profiling #}
+{% if item.info.profiling is defined %}
+[Profiling]
+  {% for i in item.info.profiling %}
+{{ i }}
+  {% endfor %}
+{% endif %}
+
+{# Auth #}
+{% if item.info.auth is defined %}
+[Auth]
+  {% for i in item.info.auth %}
+{{ i }}
+  {% endfor %}
+{% endif %}

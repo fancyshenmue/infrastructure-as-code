@@ -1,0 +1,9 @@
+---
+# check variables exist | cfssl
+- name: check variables exist | cfssl
+  local_action: stat path="{{ role_path }}/vars/main/{{ distribution }}/main.yml"
+  register: vars_yml
+
+# include variables if exist | cfssl
+- include_vars: "{{ role_path }}/vars/main/{{ distribution }}/main.yml"
+  when: vars_yml.stat.exists == True

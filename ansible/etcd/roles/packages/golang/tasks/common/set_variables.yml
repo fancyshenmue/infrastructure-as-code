@@ -1,0 +1,5 @@
+---
+# set variables | golang
+- name: set variables | golang
+  set_fact:
+    distribution: "{{ ansible_distribution.lower() }}_{{ ansible_distribution_major_version }}_x"

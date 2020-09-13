@@ -1,0 +1,17 @@
+---
+etcd_service:
+- name: etcd
+
+version: 3.3.11-2.el7.centos
+
+etcd_required_package:
+- name: etcd-{{ version }}
+
+etcd_required_data_after:
+- src: /etc/etcd/etcd.conf
+  dest: /etc/etcd/etcd.conf.orig
+  owner: root
+  group: root
+  mode: "0644"
+  remote_src: yes
+  force: no

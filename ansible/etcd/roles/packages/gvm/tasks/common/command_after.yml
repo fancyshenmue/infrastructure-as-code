@@ -1,0 +1,17 @@
+---
+- name: command | after | gvm
+  become: yes
+  become_user: "{{ username | default('root') }}"
+  shell: "{{ item.command }}"
+  args:
+    "{{ item.args_param }}"
+  with_items:
+    - "{{ gvm_command_after }}"
+  when:
+    gvm_command_after is defined
+  register: gvm_command_after_output
+
+- name: command | after | output | gvm
+  debug:
+    msg:
+      "{{ gvm_command_after_output }}"

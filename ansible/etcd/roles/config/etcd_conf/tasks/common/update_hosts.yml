@@ -1,0 +1,7 @@
+---
+- name: add {{ etc_hosts }}
+  blockinfile:
+    dest: "{{ etc_hosts }}"
+    marker: "# {mark} Ansible ETCD Management"
+    content: |
+      {{ lookup('template', template_hosts) }}

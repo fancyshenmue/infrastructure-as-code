@@ -1,0 +1,9 @@
+---
+# check variables exist | etcd
+- name: check variables exist | etcd
+  local_action: stat path="{{ role_path }}/vars/{{ distribution }}/main.yml"
+  register: vars_yml
+
+# include variables if exist | etcd
+- include_vars: "{{ role_path }}/vars/{{ distribution }}/main.yml"
+  when: vars_yml.stat.exists == True

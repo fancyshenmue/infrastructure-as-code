@@ -1,0 +1,9 @@
+---
+# check variables exist | golang
+- name: check variables exist | golang
+  local_action: stat path="{{ role_path }}/vars/{{ distribution }}/main.yml"
+  register: vars_yml
+
+# include variables if exist | golang
+- include_vars: "{{ role_path }}/vars/{{ distribution }}/main.yml"
+  when: vars_yml.stat.exists == True

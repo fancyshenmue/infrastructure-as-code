@@ -1,0 +1,25 @@
+---
+# required data | before | etcd
+- name: required data | before | etcd
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    remote_src: "{{ item.remote_src | default('no') }}"
+  with_items:
+    - "{{ etcd_required_data_before }}"
+  when: etcd_required_data_before is defined
+
+# required data | before | template | etcd
+- name: required data | before | template | etcd
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ etcd_required_data_before_template }}"
+  when: etcd_required_data_before_template is defined
