@@ -1,0 +1,24 @@
+---
+# specific env | linux_account
+- name: specific env | linux_account
+  blockinfile:
+    dest: "{{ item.path }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+    content: |
+      {{ lookup('template', item.template) }}
+  with_items:
+    - "{{ linux_account_specific_env }}"
+  when:
+    linux_account_specific_env is defined
+
+# specific env | data | linux_account
+- name: specific env | data | linux_account
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ linux_account_specific_env_data }}"
+  when: linux_account_specific_env_data is defined

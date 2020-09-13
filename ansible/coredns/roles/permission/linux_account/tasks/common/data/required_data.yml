@@ -1,0 +1,24 @@
+---
+# required data | linux_account
+- name: required data | linux_account
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ linux_account_required_data }}"
+  when: linux_account_required_data is defined
+
+# required data | template | linux_account
+- name: required data | template | linux_account
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ linux_account_required_data_template }}"
+  when: linux_account_required_data_template is defined

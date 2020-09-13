@@ -1,0 +1,30 @@
+---
+# update conf | template | coredns_conf
+- name: update conf | template | coredns_conf
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ coredns_conf }}"
+  when: coredns_conf is defined
+  notify:
+    - systemd daemon-reload
+    - reload coredns
+
+# update conf | custom | coredns_conf
+- name: update conf | custom | coredns_conf
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ coredns_conf_custom }}"
+  when: coredns_conf_custom is defined
+  notify:
+    - systemd daemon-reload
+    - reload coredns

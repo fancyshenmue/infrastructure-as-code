@@ -1,0 +1,8 @@
+---
+linux_account_required_user:
+- name: coredns
+  uid: "65001"
+  group: coredns
+  home: /data/coredns
+  create_home: no
+  system: yes

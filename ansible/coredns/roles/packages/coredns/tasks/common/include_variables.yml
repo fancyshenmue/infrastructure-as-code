@@ -1,0 +1,9 @@
+---
+# check vars yml exist | coredns
+- name: check vars yml exist | coredns
+  local_action: stat path="{{ role_path }}/vars/{{ distribution }}/main.yml"
+  register: vars_yml
+
+# include vars yml if exist | coredns
+- include_vars: "{{ role_path }}/vars/{{ distribution }}/main.yml"
+  when: vars_yml.stat.exists == True

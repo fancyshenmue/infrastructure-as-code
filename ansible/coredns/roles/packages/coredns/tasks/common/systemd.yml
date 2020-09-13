@@ -1,0 +1,8 @@
+---
+- name: update systemd status | coredns
+  systemd:
+    name: "{{ item.name }}"
+    enabled: "{{ item.enabled | default('yes') }}"
+  with_items:
+    - "{{ coredns_service }}"
+  when: coredns_service is defined

@@ -1,0 +1,29 @@
+---
+coredns_conf:
+# config
+- src: Corefile.j2
+  dest: /data/coredns/config/Corefile
+  owner: coredns
+  group: coredns
+  mode: "0644"
+  info:
+    zone:
+      etcd:
+        - name: .
+          path: /coredns/sample
+          endpoint: http://10.0.0.11:2379 http://10.0.0.12:2379 http://10.0.0.13:2379
+          credentials:
+            username: coredns
+            password: 'corednspasswd'
+
+# systemd
+- src: coredns.service.j2
+  dest: /etc/systemd/system/coredns.service
+  owner: root
+  group: root
+  mode: "0644"
+  info:
+    user: coredns
+    binary: /data/coredns/coredns
+    WorkingDirectory: /data/coredns/data
+    config_file: /data/coredns/config/Corefile

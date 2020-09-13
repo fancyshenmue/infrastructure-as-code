@@ -1,0 +1,4 @@
+---
+linux_account_required_group:
+- name: coredns
+  gid: "65001"

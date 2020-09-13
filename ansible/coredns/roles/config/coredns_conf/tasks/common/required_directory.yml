@@ -1,0 +1,12 @@
+---
+# required directory | coredns_conf
+- name: required directory | coredns_conf
+  file:
+    path: "{{ item.path }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    state: directory
+  with_items:
+    - "{{ coredns_conf_required_directory }}"
+  when: coredns_conf_required_directory is defined

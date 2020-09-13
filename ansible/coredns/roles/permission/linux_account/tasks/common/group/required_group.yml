@@ -1,0 +1,11 @@
+---
+# required group | linux_account
+- name: required group | linux_account
+  group:
+    name: "{{ item.name }}"
+    gid: "{{ item.gid }}"
+    state: "{{ item.state | default('present') }}"
+  with_items:
+    - "{{ linux_account_required_group }}"
+  when:
+    linux_account_required_group is defined
