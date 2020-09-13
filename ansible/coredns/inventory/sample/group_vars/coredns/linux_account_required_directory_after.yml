@@ -1,0 +1,6 @@
+---
+linux_account_required_directory_after:
+- path: /data/coredns
+  owner: coredns
+  group: coredns
+  mode: "0755"

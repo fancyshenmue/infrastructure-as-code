@@ -1,0 +1,12 @@
+---
+# /etc/hosts
+etc_hosts: /etc/hosts
+template_hosts: hosts.j2
+
+# /etc/sudoers
+template_sudoers: sudoers.j2
+
+# account env
+bashrc_template: "user_bashrc.j2"
+bashrc_nogitparse_template: "user_bashrc_nogitparse.j2"
+template_ssh_config: "ssh_config.j2"

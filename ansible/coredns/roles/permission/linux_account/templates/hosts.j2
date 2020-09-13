@@ -1,0 +1,10 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+{% for i in groups[group_names[0]] %}
+{{ hostvars[i]['ansible_default_ipv4']['address'] }} {{ hostvars[i]['ansible_hostname'] }}
+{% endfor %}
+{# custom_hosts #}
+{% if custom_hosts is defined %}
+    {% for i in custom_hosts['line'] %}
+        {{- i }}
+    {% endfor %}
+{% endif %}

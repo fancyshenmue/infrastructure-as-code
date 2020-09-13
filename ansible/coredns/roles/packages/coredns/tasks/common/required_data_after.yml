@@ -1,0 +1,26 @@
+---
+# required data | after | coredns
+- name: required data | after | coredns
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    remote_src: "{{ item.remote_src | default('no') }}"
+    force: "{{ item.force | default('yes') }}"
+  with_items:
+    - "{{ coredns_required_data_after }}"
+  when: coredns_required_data_after is defined
+
+# required data | after | template | coredns
+- name: required data | after | template | coredns
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ coredns_required_data_after_template }}"
+  when: coredns_required_data_after_template is defined

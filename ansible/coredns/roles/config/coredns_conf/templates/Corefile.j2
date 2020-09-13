@@ -1,0 +1,22 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+{% if item.info.zone.etcd is defined %}
+    {% for zone in item.info.zone.etcd %}
+{{ zone.name }} {
+    etcd {
+        stubzones
+        path {{ zone.path }}
+        endpoint {{ zone.endpoint }}
+        {% if zone.credentials is defined %}
+        credentials {{ zone.credentials.username }} {{ zone.credentials.password }}
+        {% endif %}
+        upstream {{ item.info.forward | default('8.8.8.8:53 168.95.1.1:53') }}
+        fallthrough
+    }
+    prometheus 0.0.0.0:9153
+    cache
+    loadbalance
+    forward . {{ item.info.forward | default('8.8.8.8:53 168.95.1.1:53') }}
+    log
+}
+    {% endfor %}
+{% endif %}

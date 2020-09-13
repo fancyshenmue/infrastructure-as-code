@@ -1,0 +1,63 @@
+---
+coredns_service:
+- name: coredns
+  daemon_reload: yes
+
+coredns_required_directory:
+- path: /data
+  owner: root
+  group: root
+  mode: "0755"
+- path: /data/coredns
+  owner: coredns
+  group: coredns
+  mode: "0755"
+- path: /data/coredns/config
+  owner: coredns
+  group: coredns
+  mode: "0755"
+- path: /data/coredns/data
+  owner: coredns
+  group: coredns
+  mode: "0755"
+
+coredns_required_data_before_download_local:
+- url: "https://github.com/coredns/coredns/releases/download/v1.7.0/coredns_1.7.0_linux_amd64.tgz"
+  dest: "{{ role_path }}/files/coredns_1.7.0_linux_amd64.tgz"
+
+coredns_required_data:
+- src: "{{ role_path }}/files/coredns_1.7.0_linux_amd64.tgz"
+  dest: "/tmp/coredns_1.7.0_linux_amd64.tgz"
+  owner: root
+  group: root
+  mode: "0644"
+
+coredns_unarchive_data:
+- src: /tmp/coredns_1.7.0_linux_amd64.tgz
+  dest: /data/coredns
+  owner: root
+  group: root
+#   extra_opts:
+#     - "--strip-components=1"
+  remote_src: "yes"
+
+coredns_required_data_after_template:
+- src: "centos_7_x/coredns.service.j2"
+  dest: "/etc/systemd/system/coredns.service"
+  owner: root
+  group: root
+  mode: "0644"
+
+coredns_environment:
+  user: coredns
+  group: coredns
+  binary: /data/coredns/coredns
+  config_file: /data/coredns/config/Corefile
+  WorkingDirectory: /data/coredns/data
+
+# cleanup
+coredns_cleanup_local:
+- path: "{{ role_path }}/files/coredns_1.7.0_linux_amd64.tgz"
+
+coredns_cleanup_remote:
+- path: /tmp/coredns_1.7.0_linux_amd64.tgz

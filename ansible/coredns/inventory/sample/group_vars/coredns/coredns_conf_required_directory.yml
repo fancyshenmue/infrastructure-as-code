@@ -1,0 +1,10 @@
+---
+coredns_conf_required_directory:
+- path: /data/coredns/data
+  owner: coredns
+  group: coredns
+  mode: "0755"
+- path: /data/coredns/config
+  owner: coredns
+  group: coredns
+  mode: "0755"

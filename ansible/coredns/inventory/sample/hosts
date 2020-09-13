@@ -1,0 +1,3 @@
+[coredns]
+coredns01.sample.com ansible_user=root ansible_host=10.0.0.1
+coredns02.sample.com ansible_user=root ansible_host=10.0.0.2

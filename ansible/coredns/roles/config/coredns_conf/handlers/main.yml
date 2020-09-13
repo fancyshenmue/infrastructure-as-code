@@ -1,0 +1,11 @@
+---
+# coredns
+- name: reload coredns
+  systemd:
+    name: coredns
+    state: reloaded
+
+# systemd daemon-reload
+- name: systemd daemon-reload
+  systemd:
+    daemon_reload: yes
