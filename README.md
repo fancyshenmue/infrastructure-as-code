@@ -1,18 +1,25 @@
+# Table of Contents
+- [Table of Contents](#table-of-contents)
+- [Infrastructure as Code](#infrastructure-as-code)
+
 # Infrastructure as Code
 - [ ] Ansible
-  - [x] Mongodb
+  - [X] Consul
+  - [X] CoreDNS
   - [ ] Elasticsearch
-  - [x] Kafka
-  - [ ] RabbitMQ
-  - [ ] Redis
-  - [ ] MySQL
-  - [ ] PostgreSQL
-  - [ ] Kubernetes
-  - [ ] Jenkins
-  - [ ] Prometheus
-  - [X] Permission
+  - [X] ETCD
   - [ ] FileSystem
     - [X] LVM
+  - [X] Jenkins
+  - [X] Kafka
+  - [ ] Kubernetes
+  - [X] Mongodb
+  - [ ] MySQL
+  - [X] Permission
+  - [ ] PostgreSQL
+  - [x] Prometheus
+  - [ ] RabbitMQ
+  - [ ] Redis
 - [ ] Terraform
 - [ ] Kubernetes
   - [ ] Kustomize
