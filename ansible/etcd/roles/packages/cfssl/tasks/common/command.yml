@@ -1,0 +1,15 @@
+---
+- name: command | cfssl
+  shell: "{{ item.command }}"
+  args:
+    "{{ item.args_param }}"
+  with_items:
+    - "{{ cfssl_command }}"
+  when:
+    cfssl_command is defined
+  register: command_output
+
+- name: command | output | cfssl
+  debug:
+    msg:
+      "{{ command_output }}"

@@ -1,0 +1,11 @@
+# service
+service_name: "etcd"
+
+template_hosts: hosts.j2
+etc_hosts: /etc/hosts
+
+# etcd.conf
+template_etcd_conf_conf: etcd.conf.j2
+template_config_json: config.json.j2
+
+template_override_conf: override.conf.j2

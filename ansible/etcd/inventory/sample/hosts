@@ -1,0 +1,4 @@
+[etcd]
+etcd01.sample.com ansible_user=root
+etcd02.sample.com ansible_user=root
+etcd03.sample.com ansible_user=root

@@ -1,0 +1,12 @@
+---
+# required directory | cfssl
+- name: required directory | cfssl
+  file:
+    path: "{{ item.path }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    state: directory
+  with_items:
+    - "{{ cfssl_required_directory }}"
+  when: cfssl_required_directory is defined

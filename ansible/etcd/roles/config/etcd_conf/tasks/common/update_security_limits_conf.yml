@@ -1,0 +1,12 @@
+---
+# update security limit | etcd_conf
+- name: update security limit | etcd_conf
+  pam_limits:
+    domain: "{{ item.domain }}"
+    limit_type: "{{ item.limit_type }}"
+    limit_item: "{{ item.limit_item }}"
+    value: "{{ item.value }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - "{{ etcd_conf_security_limit }}"
+  when: etcd_conf_security_limit is defined

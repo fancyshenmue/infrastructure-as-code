@@ -1,0 +1,17 @@
+---
+- name: command | before | gvm
+  become: yes
+  become_user: "{{ username | default('root') }}"
+  shell: "{{ item.command }}"
+  args:
+    "{{ item.args_param }}"
+  with_items:
+    - "{{ gvm_command_before }}"
+  when:
+    gvm_command_before is defined
+  register: gvm_command_before_output
+
+- name: command | before | output | gvm
+  debug:
+    msg:
+      "{{ gvm_command_before_output }}"

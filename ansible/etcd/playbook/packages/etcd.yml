@@ -1,0 +1,7 @@
+---
+- hosts: '{{ hn }}'
+  roles:
+    - role: roles/packages/etcd
+      become: True
+      become_user: root
+      become_method: sudo

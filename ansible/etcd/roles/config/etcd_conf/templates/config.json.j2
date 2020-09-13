@@ -1,0 +1,19 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+{
+    "CN": "{{ hostvars[inventory_hostname]['ansible_hostname'] }}",
+    "hosts": [
+        "{{ hostvars[inventory_hostname]['ansible_hostname'] }}",
+        "{{ ansible_default_ipv4.address }}"
+    ],
+    "key": {
+        "algo": "ecdsa",
+        "size": 256
+    },
+    "names": [
+        {
+            "C": "US",
+            "ST": "CA",
+            "L": "San Francisco"
+        }
+    ]
+}

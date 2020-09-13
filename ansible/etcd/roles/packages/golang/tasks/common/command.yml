@@ -1,0 +1,17 @@
+---
+- name: command | golang
+  become: yes
+  become_user: "{{ username | default('root') }}"
+  shell: "{{ item.command }}"
+  args:
+    "{{ item.args_param }}"
+  with_items:
+    - "{{ golang_command }}"
+  when:
+    golang_command is defined
+  register: command_output
+
+- name: command | output | golang
+  debug:
+    msg:
+      "{{ command_output }}"

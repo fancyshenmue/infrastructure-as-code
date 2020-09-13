@@ -1,0 +1,19 @@
+{
+    "CN": "etcd-sample-001"
+    "hosts": [
+        "etcd-sample-001",
+        "10.10.10.176"
+    ],
+    "key": {
+        "algo": "ecdsa",
+        "size": 256
+    },
+    "names": [
+        {
+            "C": "US",
+            "ST": "CA",
+            "L": "San Francisco"
+        }
+    ]
+}
+

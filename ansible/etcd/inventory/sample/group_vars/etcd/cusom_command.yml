@@ -1,0 +1,16 @@
+---
+golang_command:
+- command: |
+    source ~/.gvm/scripts/gvm
+    gvm install go1.14.3 -B
+  args_param:
+    executable: /bin/bash
+
+cfssl_command:
+- command: |
+    source  ~/.gvm/scripts/gvm
+    gvm use go1.14.3
+    go get -u github.com/cloudflare/cfssl/cmd/cfssl
+    go get -u github.com/cloudflare/cfssl/cmd/cfssljson
+  args_param:
+    executable: /bin/bash
