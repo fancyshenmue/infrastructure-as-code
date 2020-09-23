@@ -9,7 +9,7 @@ consul_conf:
   info:
     datacenter: TW_ZONE1
     data_dir: /data/consul/data
-    domain: consul.pf.stg
+    domain: consul.sample.com
     encrypt: zspVsNIdDBilNeAPypgrCGU9Wrsd8Vx8bpVTNVTTD3Y=
     retry_join:
       - consul01.sample.com
