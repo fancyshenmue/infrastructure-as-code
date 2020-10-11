@@ -1,0 +1,58 @@
+---
+vault_service:
+- name: vault
+  daemon_reload: yes
+
+vault_required_directory:
+- path: /data
+  owner: root
+  group: root
+  mode: "0755"
+- path: /data/vault
+  owner: vault
+  group: vault
+  mode: "0755"
+- path: /data/vault/vault.d
+  owner: vault
+  group: vault
+  mode: "0755"
+
+vault_required_data_before_download_local:
+- url: "https://releases.hashicorp.com/vault/1.5.4/vault_1.5.4_linux_amd64.zip"
+  dest: "{{ role_path }}/files/vault_1.5.4_linux_amd64.zip"
+
+vault_required_data:
+- src: "{{ role_path }}/files/vault_1.5.4_linux_amd64.zip"
+  dest: "/tmp/vault_1.5.4_linux_amd64.zip"
+  owner: vault
+  group: vault
+  mode: "0644"
+
+vault_unarchive_data:
+- src: /tmp/vault_1.5.4_linux_amd64.zip
+  dest: /data/vault
+  owner: vault
+  group: vault
+#   extra_opts:
+#     - "--strip-components=1"
+  remote_src: "yes"
+
+vault_required_data_after_template:
+- src: "centos_7_x/vault.service.j2"
+  dest: "/etc/systemd/system/vault.service"
+  owner: root
+  group: root
+  mode: "0644"
+
+vault_environment:
+  user: vault
+  group: vault
+  binary: /data/vault/vault
+  config_file: /data/vault/vault.d/vault.hcl
+
+# cleanup
+vault_cleanup_local:
+- path: "{{ role_path }}/files/vault_1.5.4_linux_amd64.zip"
+
+vault_cleanup_remote:
+- path: /tmp/vault_1.5.4_linux_amd64.zip

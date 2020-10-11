@@ -1,0 +1,6 @@
+---
+linux_account_required_group:
+- name: consul
+  gid: "65001"
+- name: vault
+  gid: "65002"

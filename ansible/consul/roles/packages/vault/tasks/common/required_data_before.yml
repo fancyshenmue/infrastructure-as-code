@@ -1,0 +1,22 @@
+---
+# required data | before | download | local | vault
+- name: required data | before | download | local | vault
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode | default('0644') }}"
+  with_items:
+    - "{{ vault_required_data_before_download_local }}"
+  run_once: True
+  delegate_to: localhost
+  when: vault_required_data_before_download_local is defined
+
+# required data | remote | download | remote | vault
+- name: required data | remote | download | remote | vault
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode | default('0644') }}"
+  with_items:
+    - "{{ vault_required_data_remote_download_remote }}"
+  when: vault_required_data_remote_download_remote is defined

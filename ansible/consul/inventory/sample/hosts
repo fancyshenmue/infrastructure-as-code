@@ -6,3 +6,7 @@ consul03.sample.com
 [consul_template]
 consul-template01.sample.com
 consul-template02.sample.com
+
+[consul_vault]
+vault01.sample.com
+vault02.sample.com

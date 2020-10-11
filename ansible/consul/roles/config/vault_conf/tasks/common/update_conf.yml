@@ -1,0 +1,28 @@
+---
+# update conf | template | vault_conf
+- name: update conf | template | vault_conf
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ vault_conf }}"
+  when: vault_conf is defined
+  # notify:
+  #   - reload vault
+
+# update conf | custom | vault_conf
+- name: update conf | custom | vault_conf
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ vault_conf_custom }}"
+  when: vault_conf_custom is defined
+  # notify:
+  #   - reload vault

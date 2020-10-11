@@ -1,0 +1,7 @@
+---
+- hosts: '{{ hn }}'
+  become: True
+  become_user: root
+  become_method: sudo
+  roles:
+    - role: roles/config/vault_conf

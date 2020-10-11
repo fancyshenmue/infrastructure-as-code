@@ -1,0 +1,24 @@
+---
+# required data | vault
+- name: required data | vault
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ vault_required_data }}"
+  when: vault_required_data is defined
+
+# required data | template | vault
+- name: required data | template | vault
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ vault_required_data_template }}"
+  when: vault_required_data_template is defined

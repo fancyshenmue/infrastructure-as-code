@@ -1,0 +1,8 @@
+---
+- name: update systemd status | vault
+  systemd:
+    name: "{{ item.name }}"
+    enabled: "{{ item.enabled | default('yes') }}"
+  with_items:
+    - "{{ vault_service }}"
+  when: vault_service is defined
