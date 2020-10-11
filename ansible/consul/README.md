@@ -18,6 +18,15 @@
   - [Add Permission](#add-permission-2)
   - [Install vault](#install-vault)
   - [Config vault](#config-vault)
+  - [Initial Vault](#initial-vault)
+    - [operator init (on one vault node)](#operator-init-on-one-vault-node)
+    - [output](#output)
+    - [unseal (repeat three times with different unseal key on all vault node)](#unseal-repeat-three-times-with-different-unseal-key-on-all-vault-node)
+    - [output (first unseal)](#output-first-unseal)
+    - [output (unseal three times)](#output-unseal-three-times)
+      - [active node](#active-node)
+      - [standby node](#standby-node)
+  - [Status](#status)
 
 # consul
 
@@ -169,4 +178,102 @@ export _HN="consul_vault"
 export _PLAYBOOK="playbook/config/vault_conf.yml"
 
 ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK}
+```
+
+## Initial Vault
+### operator init (on one vault node)
+``` shell
+export VAULT_ADDR=http://127.0.0.1:8200
+export _VAULT_BIN=/data/vault/vault
+
+${_VAULT_BIN} operator init
+```
+### output
+``` shell
+Unseal Key 1: mK3KawqyUfzaxF+cvH7PjvUQENhWSawvydi9aZpcJZpO
+Unseal Key 2: Ptzj1SuPwY/kMl2soujwnelBiMP6oizAMDkEN9O/5EKd
+Unseal Key 3: 4BTEyTEU+ffDQMKZzTIuZcbZfH0jKEk8nN04RDiTI4z9
+Unseal Key 4: zi8m4wlzya6PKV8fFdl//OtIPrmascpBnfcKAlwdx3MM
+Unseal Key 5: 264hCHpfTC4N/dURRjht9RyFsW0tUq647q3A022Z+qyC
+
+Initial Root Token: s.NiJ2kO6H49ckdNBsMiXyo7uR
+
+Vault initialized with 5 key shares and a key threshold of 3. Please securely
+distribute the key shares printed above. When the Vault is re-sealed,
+restarted, or stopped, you must supply at least 3 of these keys to unseal it
+before it can start servicing requests.
+
+Vault does not store the generated master key. Without at least 3 key to
+reconstruct the master key, Vault will remain permanently sealed!
+
+It is possible to generate new unseal keys, provided you have a quorum of
+existing unseal keys shares. See "vault operator rekey" for more information.
+```
+
+### unseal (repeat three times with different unseal key on all vault node)
+``` shell
+export VAULT_ADDR=http://127.0.0.1:8200
+export _VAULT_BIN=/data/vault/vault
+export _UNSEAL_KEY="mK3KawqyUfzaxF+cvH7PjvUQENhWSawvydi9aZpcJZpO"
+
+${_VAULT_BIN} operator unseal ${_UNSEAL_KEY}
+```
+
+### output (first unseal)
+``` shell
+Key                Value
+---                -----
+Seal Type          shamir
+Initialized        true
+Sealed             true
+Total Shares       5
+Threshold          3
+Unseal Progress    1/3
+Unseal Nonce       644e7e64-5218-f738-89a2-f26397c2af0a
+Version            1.5.4
+HA Enabled         true
+```
+
+### output (unseal three times)
+#### active node
+``` shell
+Key                    Value
+---                    -----
+Seal Type              shamir
+Initialized            true
+Sealed                 false
+Total Shares           5
+Threshold              3
+Version                1.5.4
+Cluster Name           vault-cluster-5f9488de
+Cluster ID             4175d4b0-58d4-f60d-1488-9860f2d53e9b
+HA Enabled             true
+HA Cluster             http://10.0.0.11:8201
+HA Mode                active
+```
+
+#### standby node
+``` shell
+Key                    Value
+---                    -----
+Seal Type              shamir
+Initialized            true
+Sealed                 false
+Total Shares           5
+Threshold              3
+Version                1.5.4
+Cluster Name           vault-cluster-5f9488de
+Cluster ID             4175d4b0-58d4-f60d-1488-9860f2d53e9b
+HA Enabled             true
+HA Cluster             http://10.0.0.11:8201
+HA Mode                standby
+Active Node Address    http://10.0.0.11:8200
+```
+
+## Status
+``` shell
+export VAULT_ADDR=http://127.0.0.1:8200
+export _VAULT_BIN=/data/vault/vault
+
+${_VAULT_BIN} status
 ```
