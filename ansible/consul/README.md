@@ -18,6 +18,7 @@
   - [Add Permission](#add-permission-2)
   - [Install vault](#install-vault)
   - [Config vault](#config-vault)
+  - [Start Vault Service](#start-vault-service)
   - [Initial Vault](#initial-vault)
     - [operator init (on one vault node)](#operator-init-on-one-vault-node)
     - [output](#output)
@@ -178,6 +179,16 @@ export _HN="consul_vault"
 export _PLAYBOOK="playbook/config/vault_conf.yml"
 
 ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK}
+```
+
+## Start Vault Service
+``` shell
+export _INVENTORY="inventory/sample/hosts"
+export _HN="consul_vault"
+export _MODULE=systemd
+export _MODULE_PARAM="name=vault state=started"
+
+ansible -i ${_INVENTORY} ${_HN} -m ${_MODULE} -a "${_MODULE_PARAM}"
 ```
 
 ## Initial Vault
