@@ -1,0 +1,14 @@
+---
+linux_account_required_user:
+- name: consul
+  uid: "65001"
+  group: consul
+  home: /data/consul
+  create_home: no
+  system: yes
+- name: vault
+  uid: "65002"
+  group: vault
+  home: /data/vault
+  create_home: no
+  system: yes

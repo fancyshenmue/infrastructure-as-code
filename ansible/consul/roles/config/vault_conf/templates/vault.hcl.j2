@@ -1,0 +1,19 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+ui = true
+
+listener "tcp" {
+  address          = "{{ item.info.listener.address | default('0.0.0.0:8200') }}"
+  cluster_address  = "{{ item.info.listener.cluster_address | default(ansible_default_ipv4.address + ':8201') }}"
+  tls_disable      = "{{ item.info.listener.tls_disable | default('true') }}"
+}
+
+{% if item.info.storage is defined %}
+storage "{{ item.info.storage.type }}" {
+  address = "{{ item.info.storage.address | default('127.0.0.1:8500') }}"
+  path    = "{{ item.info.storage.path | default('vault/') }}"
+  token   = "{{ item.info.storage.token | default('') }}"
+}
+{% endif %}
+
+api_addr = "{{ item.info.api_addr | default('http://' + ansible_default_ipv4.address + ':8200') }}"
+cluster_addr = "{{ item.info.cluster_addr | default('http://' + ansible_default_ipv4.address + ':8201') }}"

@@ -1,0 +1,26 @@
+---
+# cleanup | local | vault
+- name: cleanup | local | vault
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ vault_cleanup_local }}"
+  when: vault_cleanup_local is defined
+  run_once: true
+  delegate_to: localhost
+
+# cleanup | remote | vault
+- name: cleanup | remote | vault
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ vault_cleanup_remote }}"
+  when: vault_cleanup_remote is defined

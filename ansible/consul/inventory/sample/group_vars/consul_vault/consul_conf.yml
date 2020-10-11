@@ -1,0 +1,39 @@
+---
+consul_conf:
+# config
+- src: config.json.j2
+  dest: /data/consul/consul.d/config.json
+  owner: consul
+  group: consul
+  mode: "0644"
+  info:
+    datacenter: SAMPLE
+    data_dir: /data/consul/data
+    domain: consul.sample.com
+    encrypt: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    retry_join:
+      - consul01.sample.com
+      - consul02.sample.com
+      - consul03.sample.com
+    start_join:
+      - consul01.sample.com
+      - consul02.sample.com
+      - consul03.sample.com
+    acl:
+      default_policy: deny
+      token: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+    server: "false"
+    bootstrap_expect: "0"
+
+# systemd
+- src: consul.service.j2
+  dest: /etc/systemd/system/consul.service
+  owner: root
+  group: root
+  mode: "0644"
+  info:
+    user: consul
+    group: consul
+    binary: /data/consul/consul
+    config_dir: /data/consul/consul.d
+    config_file: /data/consul/consul.d/config.json

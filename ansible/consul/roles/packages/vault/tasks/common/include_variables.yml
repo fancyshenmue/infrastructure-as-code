@@ -1,0 +1,9 @@
+---
+# check vars yml exist | vault
+- name: check vars yml exist | vault
+  local_action: stat path="{{ role_path }}/vars/{{ distribution }}/main.yml"
+  register: vars_yml
+
+# include vars yml if exist | vault
+- include_vars: "{{ role_path }}/vars/{{ distribution }}/main.yml"
+  when: vars_yml.stat.exists == True

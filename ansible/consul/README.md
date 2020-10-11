@@ -14,6 +14,10 @@
   - [Add Permission](#add-permission-1)
   - [Install consul-template](#install-consul-template)
   - [Config consul-template](#config-consul-template)
+- [vault](#vault)
+  - [Add Permission](#add-permission-2)
+  - [Install vault](#install-vault)
+  - [Config vault](#config-vault)
 
 # consul
 
@@ -23,7 +27,7 @@ export _INVENTORY="inventory/sample/hosts"
 export _HN="consul"
 export _PLAYBOOK="playbook/packages/lvm.yml"
 
-ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK} --ask-vault-pass
+ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK}
 ```
 
 ## Create LVM (options)
@@ -32,7 +36,7 @@ export _INVENTORY="inventory/sample/hosts"
 export _HN="consul"
 export _PLAYBOOK="playbook/filesystem/lvm_filesystem.yml"
 
-ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK} --ask-vault-pass
+ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK}
 ```
 
 ## Mount Volumne (options)
@@ -41,7 +45,7 @@ export _INVENTORY="inventory/sample/hosts"
 export _HN="consul"
 export _PLAYBOOK="playbook/config/fstab_conf.yml"
 
-ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK} --ask-vault-pass
+ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK}
 ```
 
 ## Add Permission
@@ -50,7 +54,7 @@ export _INVENTORY="inventory/sample/hosts"
 export _HN="consul"
 export _PLAYBOOK="playbook/permission/linux_account.yml"
 
-ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK} --ask-vault-pass
+ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK}
 ```
 
 ## Install consul
@@ -59,7 +63,7 @@ export _INVENTORY="inventory/sample/hosts"
 export _HN="consul"
 export _PLAYBOOK="playbook/packages/consul.yml"
 
-ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK} --ask-vault-pass
+ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK}
 ```
 
 ## Generator Consul Keygen
@@ -93,7 +97,7 @@ export _INVENTORY="inventory/sample/hosts"
 export _HN="consul"
 export _PLAYBOOK="playbook/config/consul_conf.yml"
 
-ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK} --ask-vault-pass
+ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK}
 ```
 
 ## Start Consul Service
@@ -117,7 +121,7 @@ export _INVENTORY="inventory/sample/hosts"
 export _HN="consul_template"
 export _PLAYBOOK="playbook/permission/linux_account.yml"
 
-ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK} --ask-vault-pass
+ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK}
 ```
 
 ## Install consul-template
@@ -126,7 +130,7 @@ export _INVENTORY="inventory/sample/hosts"
 export _HN="consul_template"
 export _PLAYBOOK="playbook/packages/consul_template.yml"
 
-ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK} --ask-vault-pass
+ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK}
 ```
 
 ## Config consul-template
@@ -134,6 +138,35 @@ ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK} --ask-vault-pass
 export _INVENTORY="inventory/sample/hosts"
 export _HN="consul_template"
 export _PLAYBOOK="playbook/config/consul_template_conf.yml"
+
+ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK}
+```
+
+# vault
+
+## Add Permission
+``` shell
+export _INVENTORY="inventory/sample/hosts"
+export _HN="consul_vault"
+export _PLAYBOOK="playbook/permission/linux_account.yml"
+
+ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK}
+```
+
+## Install vault
+``` shell
+export _INVENTORY="inventory/sample/hosts"
+export _HN="consul_vault"
+export _PLAYBOOK="playbook/packages/vault.yml"
+
+ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK}
+```
+
+## Config vault
+``` shell
+export _INVENTORY="inventory/sample/hosts"
+export _HN="consul_vault"
+export _PLAYBOOK="playbook/config/vault_conf.yml"
 
 ansible-playbook -i ${_INVENTORY} -e hn=${_HN} ${_PLAYBOOK}
 ```

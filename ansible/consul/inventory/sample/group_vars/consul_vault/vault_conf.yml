@@ -1,0 +1,26 @@
+---
+vault_conf:
+# config
+- src: vault.hcl.j2
+  dest: /data/vault/vault.d/vault.hcl
+  owner: vault
+  group: vault
+  mode: "0644"
+  info:
+    storage:
+      type: consul
+      address: 127.0.0.1:8500
+      path: vault/
+      token: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+
+# systemd
+- src: centos_7_x/vault.service.j2
+  dest: /etc/systemd/system/vault.service
+  owner: root
+  group: root
+  mode: "0644"
+  info:
+    user: vault
+    group: vault
+    binary: /data/vault/vault
+    config_file: /data/vault/vault.d/vault.hcl

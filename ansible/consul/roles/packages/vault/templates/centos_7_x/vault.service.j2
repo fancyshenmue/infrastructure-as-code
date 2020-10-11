@@ -1,0 +1,37 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+[Unit]
+Description="HashiCorp Vault - A tool for managing secrets"
+Documentation=https://www.vaultproject.io/docs/
+Requires=network-online.target
+After=network-online.target
+ConditionFileNotEmpty={{ vault_environment.config_file | default('/data/vault/vault.d/vault.hcl') }}
+StartLimitIntervalSec=60
+StartLimitBurst=3
+
+[Service]
+User={{ vault_environment.user | default('vault') }}
+Group={{ vault_environment.group | default('vault') }}
+ProtectSystem=full
+ProtectHome=read-only
+PrivateTmp=yes
+PrivateDevices=yes
+SecureBits=keep-caps
+AmbientCapabilities=CAP_IPC_LOCK
+Capabilities=CAP_IPC_LOCK+ep
+CapabilityBoundingSet=CAP_SYSLOG CAP_IPC_LOCK
+NoNewPrivileges=yes
+ExecStart={{ vault_environment.binary | default('/data/vault/vault') }} server -config={{ vault_environment.config_file | default('/data/vault/vault.d/vault.hcl') }}
+ExecReload=/bin/kill --signal HUP $MAINPID
+KillMode=process
+KillSignal=SIGINT
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+StartLimitInterval=60
+StartLimitIntervalSec=60
+StartLimitBurst=3
+LimitNOFILE=65536
+LimitMEMLOCK=infinity
+
+[Install]
+WantedBy=multi-user.target

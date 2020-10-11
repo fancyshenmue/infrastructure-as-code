@@ -2,7 +2,7 @@
 {
     "advertise_addr": "{{ ansible_default_ipv4.address }}",
     "bind_addr": "{{ ansible_default_ipv4.address }}",
-    "bootstrap_expect": {{ groups[group_names[0]] | length }},
+    "bootstrap_expect": {{ item.info.bootstrap_expect | default(groups[group_names[0]] | length) }},
     "client_addr": "0.0.0.0",
     "datacenter": "{{ item.info.datacenter | default('DC1') }}",
     "data_dir": "{{ item.info.data_dir }}",
@@ -52,5 +52,16 @@
         {% endfor %}
     {% endif %}
     ],
-    "ui": {{ item.info.ui | default('true') }}
+    "ui": {{ item.info.ui | default('true') }},
+    "acl": {
+        {% if item.info.acl.token is defined %}
+        "tokens": {
+            "agent": "{{ item.info.acl.token }}"
+        },
+        {% endif %}
+        "enabled": {{ item.info.acl.enabled | default('true') }},
+        "default_policy": "{{ item.info.acl.default_policy | default('allow') }}",
+        "down_policy": "{{ item.info.acl.down_policy | default('extend-cache') }}",
+        "enable_token_persistence": {{ item.info.acl.enable_token_persistence | default('true') }}
+    }
 }
