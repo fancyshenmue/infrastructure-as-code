@@ -1,0 +1,37 @@
+---
+elasticsearch_conf_required_directory:
+# directory | data | root
+- path: /data
+  owner: root
+  group: root
+  mode: "0755"
+# directory | data | root | elasticsearch
+- path: /data/elasticsearch
+  owner: elasticsearch
+  group: elasticsearch
+  mode: "2750"
+# directory | logs | root
+- path: /logs
+  owner: root
+  group: root
+  mode: "0755"
+# directory | logs | elasticsearch
+- path: /logs/elasticsearch
+  owner: elasticsearch
+  group: elasticsearch
+  mode: "2750"
+# directory | data | elasticsearch
+- path: /data/elasticsearch/data
+  owner: elasticsearch
+  group: elasticsearch
+  mode: "2750"
+# directory | pid | elasticsearch
+- path: /data/elasticsearch/pid
+  owner: elasticsearch
+  group: elasticsearch
+  mode: "2750"
+# directory | systemd | elasticsearch
+- path: /etc/systemd/system/elasticsearch.service.d
+  owner: root
+  group: root
+  mode: "0755"

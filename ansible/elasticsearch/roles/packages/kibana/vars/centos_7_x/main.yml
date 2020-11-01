@@ -1,0 +1,29 @@
+---
+kibana_required_data:
+- src: centos_7_x/kibana.repo
+  dest: /etc/yum.repos.d/kibana.repo
+  owner: root
+  group: root
+  mode: "0644"
+
+kibana_required_package:
+- name: kibana-7.9.3-1.x86_64
+
+kibana_required_data_after:
+- src: "/etc/kibana/kibana.yml"
+  dest: "/etc/kibana/kibana.yml.orig"
+  owner: root
+  group: kibana
+  mode: "0660"
+  remote_src: yes
+  force: no
+- src: "/etc/kibana/node.options"
+  dest: "/etc/kibana/node.options.orig"
+  owner: root
+  group: kibana
+  mode: "0644"
+  remote_src: yes
+  force: no
+
+kibana_service:
+- name: kibana

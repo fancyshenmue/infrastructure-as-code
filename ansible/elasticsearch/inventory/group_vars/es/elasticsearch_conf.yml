@@ -1,0 +1,33 @@
+---
+elasticsearch_conf:
+# elasticsearch.yml
+- src: elasticsearch.yml.j2
+  dest: /etc/elasticsearch/elasticsearch.yml
+  owner: root
+  group: elasticsearch
+  mode: "0660"
+  info:
+    path_data: /data/elasticsearch/data
+    path_logs: /logs/elasticsearch
+    discovery_seed_hosts: []
+    cluster_initial_master_nodes:
+    - es-master01.sample.com
+    - es-master02.sample.com
+    - es-master03.sample.com
+
+# jvm.options
+- src: jvm.options.j2
+  dest: /etc/elasticsearch/jvm.options.d/jvm.options
+  owner: root
+  group: elasticsearch
+  mode: "0660"
+
+# override.conf
+- src: override.conf.j2
+  dest: /etc/systemd/system/elasticsearch.service.d/override.conf
+  owner: root
+  group: root
+  mode: "0644"
+  info:
+    LimitNOFILE: "200000"
+    LimitMEMLOCK: infinity

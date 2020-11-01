@@ -1,0 +1,14 @@
+---
+# required data | after | elasticsearch
+- name: required data | after | elasticsearch
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    remote_src: "{{ item.remote_src | default('no') }}"
+    force: "{{ item.force | default('yes') }}"
+  with_items:
+    - "{{ elasticsearch_required_data_after }}"
+  when: elasticsearch_required_data_after is defined

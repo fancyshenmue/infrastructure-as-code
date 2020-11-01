@@ -1,0 +1,8 @@
+---
+- name: update systemd status | elasticsearch
+  systemd:
+    name: "{{ item.name }}"
+    enabled: "{{ item.enabled | default('yes') }}"
+  with_items:
+    - "{{ elasticsearch_service }}"
+  when: elasticsearch_service is defined

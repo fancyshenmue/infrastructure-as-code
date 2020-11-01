@@ -1,0 +1,11 @@
+---
+# kibana
+- name: restart kibana
+  systemd:
+    name: kibana
+    state: restarted
+
+# systemd daemon-reload
+- name: systemd daemon-reload
+  systemd:
+    daemon_reload: yes

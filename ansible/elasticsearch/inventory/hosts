@@ -1,0 +1,10 @@
+[es]
+es-master01.sample.com  ansible_user=root
+es-master02.sample.com  ansible_user=root
+es-master03.sample.com  ansible_user=root
+es-coordinating01.sample.com  ansible_user=root
+es-coordinating02.sample.com  ansible_user=root
+es-data01.sample.com  ansible_user=root
+es-data02.sample.com  ansible_user=root
+es-data03.sample.com  ansible_user=root
+es-data04.sample.com  ansible_user=root

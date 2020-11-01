@@ -1,0 +1,9 @@
+---
+# check vars yml exist | elasticsearch_conf
+- name: check vars yml exist | elasticsearch_conf
+  local_action: stat path="{{ role_path }}/vars/{{ env }}/{{ env_group }}/{{ var_file_name }}.yml"
+  register: vars_yml
+
+# include vars yml if exist | elasticsearch_conf
+- include_vars: "{{ role_path }}/vars/{{ env }}/{{ env_group }}/{{ var_file_name }}.yml"
+  when: vars_yml.stat.exists == True

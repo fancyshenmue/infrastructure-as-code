@@ -1,0 +1,10 @@
+---
+kibana_conf:
+- src: kibana.yml.j2
+  dest: /etc/kibana/kibana.yml
+  owner: root
+  group: kibana
+  mode: "0664"
+  info:
+    server_host: "{{ inventory_hostname }}"
+    elasticsearch_hosts: http://localhost:9200

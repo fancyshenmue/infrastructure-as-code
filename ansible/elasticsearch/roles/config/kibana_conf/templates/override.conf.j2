@@ -1,0 +1,13 @@
+[Service]
+{# LimitCORE #}
+{% if item.info.LimitCORE is defined %}
+LimitCORE={{ item.info.LimitCORE }}
+{% endif %}
+{# LimitNOFILE #}
+{% if item.info.LimitNOFILE is defined %}
+LimitNOFILE={{ item.info.LimitNOFILE }}
+{% endif %}
+{# LimitNPROC #}
+{% if item.info.LimitNPROC is defined %}
+LimitNPROC={{ item.info.LimitNPROC }}
+{% endif %}

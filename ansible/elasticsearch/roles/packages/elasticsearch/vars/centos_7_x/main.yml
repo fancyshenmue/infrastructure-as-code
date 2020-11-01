@@ -1,0 +1,73 @@
+---
+elasticsearch_required_data:
+- src: centos_7_x/elasticsearch.repo
+  dest: /etc/yum.repos.d/elasticsearch.repo
+  owner: root
+  group: root
+  mode: "0644"
+
+elasticsearch_required_package:
+- name: java-11-openjdk-11.0.8.10-0.el7_8.x86_64
+- name: elasticsearch-7.9.3-1.x86_64
+  enablerepo: elasticsearch
+
+elasticsearch_required_data_after:
+- src: "/etc/elasticsearch/elasticsearch.keystore"
+  dest: "/etc/elasticsearch/elasticsearch.keystore.orig"
+  owner: root
+  group: root
+  mode: "0644"
+  remote_src: yes
+  force: no
+- src: "/etc/elasticsearch/elasticsearch.yml"
+  dest: "/etc/elasticsearch/elasticsearch.yml.orig"
+  owner: root
+  group: root
+  mode: "0644"
+  remote_src: yes
+  force: no
+- src: "/etc/elasticsearch/jvm.options"
+  dest: "/etc/elasticsearch/jvm.options.orig"
+  owner: root
+  group: root
+  mode: "0644"
+  remote_src: yes
+  force: no
+- src: "/etc/elasticsearch/log4j2.properties"
+  dest: "/etc/elasticsearch/log4j2.properties.orig"
+  owner: root
+  group: root
+  mode: "0644"
+  remote_src: yes
+  force: no
+- src: "/etc/elasticsearch/role_mapping.yml"
+  dest: "/etc/elasticsearch/role_mapping.yml.orig"
+  owner: root
+  group: root
+  mode: "0644"
+  remote_src: yes
+  force: no
+- src: "/etc/elasticsearch/roles.yml"
+  dest: "/etc/elasticsearch/roles.yml.orig"
+  owner: root
+  group: root
+  mode: "0644"
+  remote_src: yes
+  force: no
+- src: "/etc/elasticsearch/users"
+  dest: "/etc/elasticsearch/users.orig"
+  owner: root
+  group: root
+  mode: "0644"
+  remote_src: yes
+  force: no
+- src: "/etc/elasticsearch/users_roles"
+  dest: "/etc/elasticsearch/users_roles.orig"
+  owner: root
+  group: root
+  mode: "0644"
+  remote_src: yes
+  force: no
+
+elasticsearch_service:
+- name: elasticsearch

@@ -1,0 +1,12 @@
+---
+# required directory | elasticsearch_conf
+- name: required directory | elasticsearch_conf
+  file:
+    path: "{{ item.path }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    state: directory
+  with_items:
+    - "{{ elasticsearch_conf_required_directory }}"
+  when: elasticsearch_conf_required_directory is defined

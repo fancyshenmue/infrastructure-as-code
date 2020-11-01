@@ -1,0 +1,7 @@
+---
+# set variables | elasticsearch_conf
+- name: set variables | elasticsearch_conf
+  set_fact:
+    env: "{{ inventory_dir | dirname | basename }}"
+    env_group: "{{ inventory_dir | basename }}"
+    var_file_name: "{{ group_names[0] }}"

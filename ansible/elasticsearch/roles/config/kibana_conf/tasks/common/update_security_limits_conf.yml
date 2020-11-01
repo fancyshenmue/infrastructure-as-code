@@ -1,0 +1,12 @@
+---
+# update security limit | kibana_conf
+- name: update security limit | kibana_conf
+  pam_limits:
+    domain: "{{ item.domain }}"
+    limit_type: "{{ item.limit_type }}"
+    limit_item: "{{ item.limit_item }}"
+    value: "{{ item.value }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - "{{ kibana_conf_security_limit }}"
+  when: kibana_conf_security_limit is defined

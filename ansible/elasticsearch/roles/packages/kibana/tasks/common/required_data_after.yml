@@ -1,0 +1,14 @@
+---
+# required data | after | kibana
+- name: required data | after | kibana
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    remote_src: "{{ item.remote_src | default('no') }}"
+    force: "{{ item.force | default('yes') }}"
+  with_items:
+    - "{{ kibana_required_data_after }}"
+  when: kibana_required_data_after is defined

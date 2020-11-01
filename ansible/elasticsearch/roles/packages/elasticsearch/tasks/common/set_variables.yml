@@ -1,0 +1,5 @@
+---
+# set variables | elasticsearch
+- name: set variables | elasticsearch
+  set_fact:
+    distribution: "{{ ansible_distribution.lower() }}_{{ ansible_distribution_major_version }}_x"

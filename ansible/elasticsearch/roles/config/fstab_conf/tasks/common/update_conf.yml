@@ -1,0 +1,11 @@
+---
+- name: add {{ fstab }} | fstab_conf
+  blockinfile:
+    dest: "{{ fstab }}"
+    marker: "# {mark} ANSIBLE MANAGED FSTAB BLOCK"
+    content: |
+      {{ lookup('template', fstab_j2) }}
+  when:
+    - fstab_conf is defined
+  notify:
+    - mount all

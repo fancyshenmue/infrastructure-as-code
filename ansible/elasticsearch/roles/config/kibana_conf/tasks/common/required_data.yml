@@ -1,0 +1,24 @@
+---
+# required data | kibana_conf
+- name: required data | kibana_conf
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ kibana_conf_required_data }}"
+  when: kibana_conf_required_data is defined
+
+# required data | template | kibana_conf
+- name: required data | template | kibana_conf
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ kibana_conf_required_data_template }}"
+  when: kibana_conf_required_data_template is defined
