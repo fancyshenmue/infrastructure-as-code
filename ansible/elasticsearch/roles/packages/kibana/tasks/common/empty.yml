@@ -1,0 +1,7 @@
+---
+- name: distribution not support
+  debug:
+    msg: distribution not support
+
+- name: end proecess
+  meta: end_play

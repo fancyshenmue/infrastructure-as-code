@@ -1,0 +1,8 @@
+---
+- name: update systemd status | kibana
+  systemd:
+    name: "{{ item.name }}"
+    enabled: "{{ item.enabled | default('yes') }}"
+  with_items:
+    - "{{ kibana_service }}"
+  when: kibana_service is defined

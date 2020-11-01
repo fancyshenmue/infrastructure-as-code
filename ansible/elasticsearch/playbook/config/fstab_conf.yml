@@ -1,0 +1,8 @@
+---
+- hosts: '{{ hn }}'
+  roles:
+    - role: ansible/elasticsearch/roles/config/fstab_conf
+      gather_facts: no
+      become: True
+      become_user: root
+      become_method: sudo

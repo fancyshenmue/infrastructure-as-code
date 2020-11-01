@@ -1,0 +1,21 @@
+[Service]
+{# LimitCORE #}
+{% if item.info.LimitCORE is defined %}
+LimitCORE={{ item.info.LimitCORE }}
+{% endif %}
+{# end of LimitCORE #}
+{# LimitNOFILE #}
+{% if item.info.LimitNOFILE is defined %}
+LimitNOFILE={{ item.info.LimitNOFILE }}
+{% endif %}
+{# end of LimitNOFILE #}
+{# LimitNPROC #}
+{% if item.info.LimitNPROC is defined %}
+LimitNPROC={{ item.info.LimitNPROC }}
+{% endif %}
+{# end of LimitNPROC #}
+{# LimitMEMLOCK #}
+{% if item.info.LimitMEMLOCK is defined %}
+LimitMEMLOCK={{ item.info.LimitMEMLOCK }}
+{% endif %}
+{# end of LimitMEMLOCK #}

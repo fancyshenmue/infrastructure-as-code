@@ -1,0 +1,9 @@
+---
+# create vg
+- include_tasks: "{{ role_path }}/tasks/common/create_vg.yml"
+
+# create lvm
+- include_tasks: "{{ role_path }}/tasks/common/create_lvm.yml"
+
+# mkfs
+- include_tasks: "{{ role_path }}/tasks/common/mkfs.yml"
