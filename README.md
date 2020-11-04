@@ -6,7 +6,7 @@
 - [ ] Ansible
   - [X] Consul
   - [X] CoreDNS
-  - [ ] Elasticsearch
+  - [X] Elasticsearch
   - [X] ETCD
   - [ ] FileSystem
     - [X] LVM
