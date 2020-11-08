@@ -10,8 +10,8 @@
   with_items:
     - "{{ kafka_conf }}"
   when: kafka_conf is defined
-  # notify:
-  #   - <notify_name>
+  notify:
+    - systemd daemon-reload
 
 # update conf | custom | kafka_conf
 - name: update conf | custom | kafka_conf
@@ -24,5 +24,5 @@
   with_items:
     - "{{ kafka_conf_custom }}"
   when: kafka_conf_custom is defined
-  # notify:
-  #   - <notify_name>
+  notify:
+    - systemd daemon-reload

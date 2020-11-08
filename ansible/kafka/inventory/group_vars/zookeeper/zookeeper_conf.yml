@@ -1,7 +1,7 @@
 ---
 zookeeper_conf:
 # zoo.cfg
-- src: "{{ template_zoo_cfg }}"
+- src: zoo.cfg.j2
   dest: /data/zookeeper/service/conf/zoo.cfg
   owner: zookeeper
   group: zookeeper
@@ -12,23 +12,23 @@ zookeeper_conf:
     cluster: "true"
 
 # myid
-- src: "{{ template_myid }}"
+- src: myid.j2
   dest: /data/zookeeper/data/myid
   owner: zookeeper
   group: zookeeper
   mode: "0644"
 
 # java.env
-- src: "{{ template_java_env }}"
+- src: java.env.j2
   dest: /data/zookeeper/service/conf/java.env
   owner: zookeeper
   group: zookeeper
   mode: "0644"
   info:
-    jvmflags: "-Xmx1024m -Xms1024m"
+    jvmflags: "-Xmx2048m -Xms2048m"
 
 # systemd
-- src: "{{ template_zookeeper_service }}"
+- src: zookeeper.service.j2
   dest: /etc/systemd/system/zookeeper.service
   owner: root
   group: root

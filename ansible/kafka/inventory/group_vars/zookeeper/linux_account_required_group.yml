@@ -1,0 +1,4 @@
+---
+linux_account_required_group:
+- name: zookeeper
+  gid: "65001"

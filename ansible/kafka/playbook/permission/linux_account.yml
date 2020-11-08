@@ -2,7 +2,7 @@
 - hosts: '{{ hn }}'
   gather_facts: no
   roles:
-    - role: roles/permission/linux_account
+    - role: "{{ (playbook_dir + '/linux_account') | replace('playbook', 'roles') }}"
       become: True
       become_user: root
       become_method: sudo

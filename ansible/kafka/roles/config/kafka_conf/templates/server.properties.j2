@@ -20,7 +20,7 @@
 ############################# Server Basics #############################
 
 # The id of the broker. This must be set to a unique integer for each broker.
-{% if (item.info.cluster is defined) and (item.info.cluster == "true") %}
+{% if item.info.cluster is defined %}
 broker.id={{ count }}
 {% else %}
 broker.id=0
@@ -35,7 +35,7 @@ broker.id=0
 #   EXAMPLE:
 #     listeners = PLAINTEXT://your.host.name:9092
 {% if (item.info.cluster is defined) and (item.info.cluster == "true") %}
-PLAINTEXT://{{ ansible_hostname }}:9092
+PLAINTEXT://{{ inventory_hostname }}:9092
 {% else %}
 #listeners=PLAINTEXT://:9092
 {% endif %}
@@ -71,7 +71,7 @@ socket.request.max.bytes={{ item.info.socketRequestMaxBytes | default(104857600)
 ############################# Log Basics #############################
 
 # A comma separated list of directories under which to store log files
-log.dirs={{ item.info.logDirs | default('/tmp/kafka-logs') }}
+log.dirs={{ item.info.log_dirs | default('/tmp/kafka-logs') }}
 
 # The default number of log partitions per topic. More partitions allow greater
 # parallelism for consumption, but this will also result in more files across
@@ -134,9 +134,9 @@ log.retention.check.interval.ms={{ item.info.logRetentionCheckIntervalMs | defau
 # server. e.g. "127.0.0.1:3000,127.0.0.1:3001,127.0.0.1:3002".
 # You can also append an optional chroot string to the urls to specify the
 # root directory for all kafka znodes.
-{% if (item.info.cluster is defined) and (item.info.cluster == "true") %}
-    {% if item.info.zookeeperConnect is defined %}
-zookeeper.connect={{ item.info.zookeeperConnect | join(",") }}
+{% if item.info.cluster is defined %}
+    {% if item.info.cluster.zookeeperConnect is defined %}
+zookeeper.connect={{ item.info.cluster.zookeeperConnect | join(",") }}
     {% else %}
 zookeeper.connect={% for i in groups[group_names[0]] %}{{ hostvars[i]['ansible_hostname'] }}:2181{% if not loop.last %},{% endif %}{% endfor %}
     {% endif %}
