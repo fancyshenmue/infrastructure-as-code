@@ -23,6 +23,10 @@ zookeeper_required_directory:
   owner: zookeeper
   group: zookeeper
   mode: "0755"
+- path: /data/zookeeper/datalog
+  owner: zookeeper
+  group: zookeeper
+  mode: "0755"
 - path: /data/zookeeper/logs
   owner: zookeeper
   group: zookeeper

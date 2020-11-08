@@ -1,21 +1,13 @@
 # Role Name
 ## kafka
 
-## Table of contents
-- [Role Name](#role-name)
-  - [kafka](#kafka)
-  - [Table of contents](#table-of-contents)
-- [Usage](#usage)
-- [Example Playbook](#example-playbook)
-- [Example Inventory](#example-inventory)
-
 # Usage
 ``` shell
-export _INVENTORY=</path>/<to>/<inventory>
-export _HN=<host_name>
-export _PLAYBOOK=<path>/<to>/<playbook>
+export INVENTORY=</path>/<to>/<inventory>
+export HN=<host_name>
+export PLAYBOOK=<path>/<to>/<playbook>
 
-ansible-playbook -i ${_INVENTORY} -e "hn=${_HN}" ${_PLAYBOOK}
+ansible-playbook -i ${INVENTORY} -e "hn=${HN}" ${PLAYBOOK}
 ```
 
 # Example Playbook

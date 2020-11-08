@@ -24,6 +24,20 @@ kafka_conf_required_directory:
   owner: kafka
   group: kafka
   mode: "0755"
+
+- path: /logs
+  owner: root
+  group: root
+  mode: "0755"
+- path: /logs/kafka
+  owner: kafka
+  group: kafka
+  mode: "0755"
+- path: /logs/kafka/logs
+  owner: kafka
+  group: kafka
+  mode: "0755"
+
 - path: /data/kafka/jmx_exporter
   owner: kafka
   group: kafka

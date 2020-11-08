@@ -1,11 +1,11 @@
 ---
-# <service_name>
-- name: reload <service_name>
-  systemd:
-    name: <service_name>
-    state: reloaded
-
 # systemd daemon-reload
 - name: systemd daemon-reload
   systemd:
     daemon_reload: yes
+
+# kafka
+- name: reload kafka
+  systemd:
+    name: kafka
+    state: reloaded

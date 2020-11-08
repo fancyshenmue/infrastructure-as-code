@@ -1,14 +1,18 @@
 ---
 kafka_conf:
-# zoo.cfg
-- src: "{{ template_server_properties }}"
+# server.properties
+- src: "server.properties.j2"
   dest: /data/kafka/service/config/server.properties
   owner: kafka
   group: kafka
   mode: "0644"
   info:
-    cluster: "true"
-    logDirs: "/data/kafka/kafka-logs"
+    cluster:
+      zookeeperConnect:
+      - "zookeeper01.sample.com:2181"
+      - "zookeeper02.sample.com:2181"
+      - "zookeeper03.sample.com:2181"
+    log_dirs: /data/kafka/kafka-logs
     # numNetworkThreads: "3"
     # numIoThreads: "8"
     # socketSendBufferBytes: "102400"
@@ -22,10 +26,6 @@ kafka_conf:
     # logRetentionHours: "168"
     # logSegmentBytes: "1073741824"
     # logRetentionCheckIntervalMs: "300000"
-    zookeeperConnect:
-      - "kafka-sample-001:2181"
-      - "kafka-sample-002:2181"
-      - "kafka-sample-003:2181"
     # zookeeperConnectionTimeoutMs: "6000"
     # groupInitialRebalanceDelayMs: "0"
     # autoCreateTopicsEnable: "true"
@@ -33,14 +33,14 @@ kafka_conf:
     # defaultReplicationFactor: "3"
 
 # myid
-- src: "{{ template_myid }}"
+- src: "myid.j2"
   dest: /data/kafka/data/myid
   owner: kafka
   group: kafka
   mode: "0644"
 
 # systemd
-- src: "{{ template_kafka_service }}"
+- src: "kafka.service.j2"
   dest: /etc/systemd/system/kafka.service
   owner: root
   group: root
@@ -55,6 +55,6 @@ kafka_conf:
     limitfsize: infinity
     environment:
       javaHome: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.252.b09-2.el7_8.x86_64/jre
-      logDir: /data/kafka/logs
+      logDir: /logs/kafka/logs
       kafkaOpts: "-javaagent:/data/kafka/jmx_exporter/jmx_prometheus_javaagent-0.13.0.jar=6060:/data/kafka/jmx_exporter/jmx_exporter.yml"
       jmxPort: "9999"

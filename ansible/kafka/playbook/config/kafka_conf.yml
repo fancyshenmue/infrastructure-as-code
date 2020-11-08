@@ -1,7 +1,8 @@
 ---
-- hosts: "{{ hn }}"
+- hosts: '{{ hn }}'
   roles:
-    - role: roles/config/kafka_conf
+    - role: "{{ (playbook_dir + '/kafka_conf') | replace('playbook', 'roles') }}"
+      gather_facts: no
       become: True
       become_user: root
       become_method: sudo

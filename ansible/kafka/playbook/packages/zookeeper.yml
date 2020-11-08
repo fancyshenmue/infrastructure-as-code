@@ -1,13 +1,7 @@
 ---
 - hosts: '{{ hn }}'
   roles:
-    - role: roles/permission/linux_account
-      become: True
-      become_user: root
-      become_method: sudo
-      vars:
-        include_permisssion: zookeeper
-    - role: roles/packages/zookeeper
+    - role: "{{ (playbook_dir + '/zookeeper') | replace('playbook', 'roles') }}"
       become: True
       become_user: root
       become_method: sudo

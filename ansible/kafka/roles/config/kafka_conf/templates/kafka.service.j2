@@ -23,11 +23,11 @@ Environment="JMX_PORT={{ item.info.environment.jmxPort }}"
 {% endif %}
 Environment=JAVA_HOME={{ item.info.environment.javaHome }}
 Environment=LOG_DIR={{ item.info.environment.logDir }}
-User={{ item.info.user }}
-Group={{ item.info.group }}
-ExecStart={{ item.info.execstart }}
-ExecStop={{ item.info.execstop }}
-SyslogIdentifier={{ item.info.syslogidentifier }}
+User={{ item.info.user | default('kafka') }}
+Group={{ item.info.group | default('kafka') }}
+ExecStart={{ item.info.execstart | default('/data/kafka/service/bin/kafka-server-start.sh /data/kafka/service/config/server.properties') }}
+ExecStop={{ item.info.execstop | default('/data/kafka/service/bin/kafka-server-stop.sh') }}
+SyslogIdentifier={{ item.info.syslogidentifier | default('kafka') }}
 LimitNOFILE={{ item.info.limitnofile | default(300000) }}
 LimitFSIZE={{ item.info.limitfsize | default('infinity') }}
 
