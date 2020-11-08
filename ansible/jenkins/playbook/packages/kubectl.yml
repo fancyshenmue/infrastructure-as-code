@@ -1,7 +1,7 @@
 ---
 - hosts: '{{ hn }}'
   roles:
-    - role: roles/packages/kubectl
+    - role: "{{ (playbook_dir + '/kubectl') | replace('playbook', 'roles') }}"
       become: True
       become_user: root
       become_method: sudo

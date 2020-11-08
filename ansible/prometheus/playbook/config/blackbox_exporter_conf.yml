@@ -1,7 +1,7 @@
 ---
 - hosts: "{{ hn }}"
   roles:
-    - role: roles/config/blackbox_exporter_conf
+    - role: "{{ (playbook_dir + '/blackbox_exporter_conf') | replace('playbook', 'roles') }}"
       become: True
       become_user: root
       become_method: sudo

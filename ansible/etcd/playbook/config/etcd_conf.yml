@@ -1,7 +1,7 @@
 ---
 - hosts: '{{ hn }}'
   roles:
-    - role: roles/config/etcd_conf
+    - role: "{{ (playbook_dir + '/etcd_conf') | replace('playbook', 'roles') }}"
       become: True
       become_user: root
       become_method: sudo

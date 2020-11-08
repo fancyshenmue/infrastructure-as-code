@@ -1,7 +1,7 @@
 ---
 - hosts: '{{ hn }}'
   roles:
-    - role: roles/packages/golang
+    - role: "{{ (playbook_dir + '/golang') | replace('playbook', 'roles') }}"
       become: True
       become_user: root
       become_method: sudo

@@ -1,7 +1,7 @@
 ---
 - hosts: '{{ hn }}'
-  become: True
-  become_user: root
-  become_method: sudo
   roles:
-    - role: roles/config/vault_conf
+    - role: "{{ (playbook_dir + '/vault_conf') | replace('playbook', 'roles') }}"
+      become: True
+      become_user: root
+      become_method: sudo

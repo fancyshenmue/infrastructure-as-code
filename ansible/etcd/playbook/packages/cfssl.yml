@@ -1,7 +1,7 @@
 ---
 - hosts: '{{ hn }}'
   roles:
-    - role: roles/packages/cfssl
+    - role: "{{ (playbook_dir + '/cfssl') | replace('playbook', 'roles') }}"
       become: True
       become_user: root
       become_method: sudo

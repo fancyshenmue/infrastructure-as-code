@@ -1,4 +1,4 @@
 ---
 - hosts: '{{ hn }}'
   roles:
-    - role: roles/packages/kustomize
+    - role: "{{ (playbook_dir + '/kustomize') | replace('playbook', 'roles') }}"
