@@ -1,8 +1,8 @@
 ---
 - hosts: '{{ hn }}'
-  gather_facts: no
-  become: True
-  become_user: root
-  become_method: sudo
   roles:
-    - role: roles/config/coredns_conf
+    - role: "{{ (playbook_dir + '/coredns_conf') | replace('playbook', 'roles') }}"
+      gather_facts: no
+      become: True
+      become_user: root
+      become_method: sudo

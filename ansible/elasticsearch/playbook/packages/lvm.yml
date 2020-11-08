@@ -1,7 +1,7 @@
 ---
 - hosts: '{{ hn }}'
   roles:
-    - role: ansible/elasticsearch/roles/packages/lvm
+    - role: "{{ (playbook_dir + '/lvm') | replace('playbook', 'roles') }}"
       become: True
       become_user: root
       become_method: sudo

@@ -1,8 +1,8 @@
 ---
 - hosts: '{{ hn }}'
   gather_facts: no
-  become: True
-  become_user: root
-  become_method: sudo
   roles:
-    - role: roles/config/consul_template_conf
+    - role: "{{ (playbook_dir + '/consul_template_conf') | replace('playbook', 'roles') }}"
+      become: True
+      become_user: root
+      become_method: sudo

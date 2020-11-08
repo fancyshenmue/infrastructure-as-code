@@ -1,4 +1,4 @@
 ---
 - hosts: '{{ hn }}'
   roles:
-    - role: roles/packages/nvm
+    - role: "{{ (playbook_dir + '/nvm') | replace('playbook', 'roles') }}"

@@ -1,4 +1,4 @@
 ---
 - hosts: '{{ hn }}'
   roles:
-    - role: roles/packages/pyenv
+    - role: "{{ (playbook_dir + '/pyenv') | replace('playbook', 'roles') }}"

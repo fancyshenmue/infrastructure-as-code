@@ -1,7 +1,7 @@
 ---
 - hosts: '{{ hn }}'
   roles:
-    - role: roles/config/mongodb_conf
+    - role: "{{ (playbook_dir + '/mongodb_conf') | replace('playbook', 'roles') }}"
       become: True
       become_user: root
       become_method: sudo
