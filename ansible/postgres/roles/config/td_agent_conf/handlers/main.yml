@@ -1,0 +1,18 @@
+---
+# systemd daemon-reload
+- name: systemd daemon-reload
+  systemd:
+    daemon_reload: yes
+
+# nginx
+- name: check td_agent
+  shell: "td-agent --dry-run -c /etc/td-agent/td-agent.conf"
+  register: td_agent_check_status
+
+- name: reload td_agent
+  systemd:
+    name: td-agent
+    state: reloaded
+  when:
+    - td_agent_check_status is defined
+    - td_agent_check_status.rc == 0

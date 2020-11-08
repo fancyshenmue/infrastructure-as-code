@@ -1,0 +1,9 @@
+---
+- name: update systemd status | node_exporter
+  systemd:
+    name: "{{ item.name }}"
+    enabled: "{{ item.enabled | default('yes') }}"
+    daemon_reload: "{{ item.daemon_reload | default('no') }}"
+  with_items:
+    - "{{ node_exporter_service }}"
+  when: node_exporter_service is defined

@@ -1,0 +1,3 @@
+---
+template_postgresql_conf: postgresql.conf.j2
+template_master_pg_hba_conf: pg_hba.conf.j2

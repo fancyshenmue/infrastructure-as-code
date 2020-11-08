@@ -1,0 +1,18 @@
+---
+# cleanup | before
+- include_tasks: "{{ role_path }}/tasks/common/cleanup_before.yml"
+
+# sysctl conf
+- include_tasks: "{{ role_path }}/tasks/common/update_sysctl_conf.yml"
+
+# security limits
+- include_tasks: "{{ role_path }}/tasks/common/update_security_limits_conf.yml"
+
+# required directory
+- include_tasks: "{{ role_path }}/tasks/common/required_directory.yml"
+
+# required data
+- include_tasks: "{{ role_path }}/tasks/common/required_data.yml"
+
+# update conf
+- include_tasks: "{{ role_path }}/tasks/common/update_conf.yml"

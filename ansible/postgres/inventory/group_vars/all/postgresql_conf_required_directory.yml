@@ -1,0 +1,6 @@
+---
+postgresql_conf_required_directory:
+- path: /backup/postgres/archive_wal
+  owner: postgres
+  group: postgres
+  mode: "0755"

@@ -1,0 +1,12 @@
+---
+td_agent_conf_custom:
+- src: "{{ inventory_dir }}/group_vars/all/files/td-agent/config.d/td-agent.conf"
+  dest: "/etc/td-agent/td-agent.conf"
+  owner: root
+  group: root
+  mode: "0755"
+- src: "{{ inventory_dir }}/group_vars/all/files/td-agent/config.d/monitoring.conf"
+  dest: "/etc/td-agent/config.d/monitoring.conf"
+  owner: root
+  group: root
+  mode: "0755"

@@ -1,0 +1,4 @@
+---
+linux_account_required_auth:
+- name: ansible
+  key: "{{ inventory_dir }}/group_vars/all/files/ssh_public/ansible.pub"

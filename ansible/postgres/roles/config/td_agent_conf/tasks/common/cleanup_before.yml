@@ -1,0 +1,26 @@
+---
+# cleanup | before | local | td_agent_conf
+- name: cleanup | local | td_agent_conf
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ td_agent_conf_cleanup_before_local }}"
+  when: td_agent_conf_cleanup_before_local is defined
+  run_once: true
+  delegate_to: localhost
+
+# cleanup | before | remote | td_agent_conf
+- name: cleanup | remote | td_agent_conf
+  become: True
+  become_user: root
+  become_method: sudo
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ td_agent_conf_cleanup_before_remote }}"
+  when: td_agent_conf_cleanup_before_remote is defined

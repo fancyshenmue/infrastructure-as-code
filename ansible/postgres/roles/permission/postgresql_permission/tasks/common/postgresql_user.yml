@@ -1,0 +1,34 @@
+---
+- name: postgresql user | developer
+  postgresql_user:
+    login_host: "{{ login_host }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password | default(omit) }}"
+    db:  "{{ item.db }}"
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    priv: "{{ item.priv }}"
+    state: "{{ item.state | default('present') }}"
+  delegate_to: localhost
+  run_once: yes
+  with_items:
+    - "{{ postgresql_permission_developer }}"
+  when:
+    postgresql_permission_developer is defined
+
+- name: postgresql user | application
+  postgresql_user:
+    db: "{{ item.db | default('postgres') }}"
+    login_host: "{{ login_host }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password | default(omit) }}"
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    role_attr_flags: "{{ item.role_attr_flags | default('LOGIN') }}"
+    state: "{{ item.state | default('present') }}"
+  delegate_to: localhost
+  run_once: yes
+  with_items:
+    - "{{ postgresql_permission_application }}"
+  when:
+    postgresql_permission_application is defined

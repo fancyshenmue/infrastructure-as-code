@@ -1,0 +1,10 @@
+---
+linux_account_specific_env_data:
+- src: sudoers.j2
+  dest: /etc/sudoers.d/postgres
+  owner: root
+  group: root
+  mode: "0440"
+  info:
+    - '# wheel group no password'
+    - '%wheel          ALL=(ALL)        NOPASSWD: ALL'

@@ -1,0 +1,8 @@
+---
+- hosts: '{{ hn }}'
+  roles:
+    - role: "{{ (playbook_dir + '/fstab_conf') | replace('playbook', 'roles') }}"
+      gather_facts: no
+      become: True
+      become_user: root
+      become_method: sudo

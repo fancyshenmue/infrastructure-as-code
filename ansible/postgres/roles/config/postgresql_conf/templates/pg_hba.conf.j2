@@ -1,0 +1,248 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+# PostgreSQL Client Authentication Configuration File
+# ===================================================
+#
+# Refer to the "Client Authentication" section in the PostgreSQL
+# documentation for a complete description of this file.  A short
+# synopsis follows.
+#
+# This file controls: which hosts are allowed to connect, how clients
+# are authenticated, which PostgreSQL user names they can use, which
+# databases they can access.  Records take one of these forms:
+#
+# local      DATABASE  USER  METHOD  [OPTIONS]
+# host       DATABASE  USER  ADDRESS  METHOD  [OPTIONS]
+# hostssl    DATABASE  USER  ADDRESS  METHOD  [OPTIONS]
+# hostnossl  DATABASE  USER  ADDRESS  METHOD  [OPTIONS]
+#
+# (The uppercase items must be replaced by actual values.)
+#
+# The first field is the connection type: "local" is a Unix-domain
+# socket, "host" is either a plain or SSL-encrypted TCP/IP socket,
+# "hostssl" is an SSL-encrypted TCP/IP socket, and "hostnossl" is a
+# plain TCP/IP socket.
+#
+# DATABASE can be "all", "sameuser", "samerole", "replication", a
+# database name, or a comma-separated list thereof. The "all"
+# keyword does not match "replication". Access to replication
+# must be enabled in a separate record (see example below).
+#
+# USER can be "all", a user name, a group name prefixed with "+", or a
+# comma-separated list thereof.  In both the DATABASE and USER fields
+# you can also write a file name prefixed with "@" to include names
+# from a separate file.
+#
+# ADDRESS specifies the set of hosts the record matches.  It can be a
+# host name, or it is made up of an IP address and a CIDR mask that is
+# an integer (between 0 and 32 (IPv4) or 128 (IPv6) inclusive) that
+# specifies the number of significant bits in the mask.  A host name
+# that starts with a dot (.) matches a suffix of the actual host name.
+# Alternatively, you can write an IP address and netmask in separate
+# columns to specify the set of hosts.  Instead of a CIDR-address, you
+# can write "samehost" to match any of the server's own IP addresses,
+# or "samenet" to match any address in any subnet that the server is
+# directly connected to.
+#
+# METHOD can be "trust", "reject", "md5", "password", "scram-sha-256",
+# "gss", "sspi", "ident", "peer", "pam", "ldap", "radius" or "cert".
+# Note that "password" sends passwords in clear text; "md5" or
+# "scram-sha-256" are preferred since they send encrypted passwords.
+#
+# OPTIONS are a set of options for the authentication in the format
+# NAME=VALUE.  The available options depend on the different
+# authentication methods -- refer to the "Client Authentication"
+# section in the documentation for a list of which options are
+# available for which authentication methods.
+#
+# Database and user names containing spaces, commas, quotes and other
+# special characters must be quoted.  Quoting one of the keywords
+# "all", "sameuser", "samerole" or "replication" makes the name lose
+# its special character, and just match a database or username with
+# that name.
+#
+# This file is read on server startup and when the server receives a
+# SIGHUP signal.  If you edit the file on a running system, you have to
+# SIGHUP the server for the changes to take effect, run "pg_ctl reload",
+# or execute "SELECT pg_reload_conf()".
+#
+# Put your actual configuration here
+# ----------------------------------
+#
+# If you want to allow non-local connections, you need to add more
+# "host" records.  In that case you will also need to make PostgreSQL
+# listen on a non-local interface via the listen_addresses
+# configuration parameter, or via the -i or -h command line switches.
+
+
+
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+{#- declare variables #}
+{% set info_local = ['# "local" is for Unix domain socket connections only'] %}
+{% set info_user_account_ipv4 = ['# IPv4 local connections:'] %}
+{% set info_user_account_ipv6 = ['# IPv6 local connections:'] %}
+{% set info_replication = ['# Allow replication connections from localhost, by a user with the', '# replication privilege.'] %}
+{% set info_common = ['########## COMMON ##########'] %}
+{% set info_application = ['########## APPLICATION ##########'] %}
+{% set info_other = ['########## OTHER ##########'] %}
+{#- variable concatenation #}
+{% for item in master_pg_hba_conf %}
+    {% for info in item.info %}
+        {#- empty string #}
+        {% set str_info = '' %}
+        {#- local #}
+        {%- if (info.group is defined) and (info.group == "local") %}
+            {# type #}
+            {% set str_info = "%-10s" | format(info.type) %}
+            {# database #}
+            {% set str_info = str_info + info.database %}
+            {% set str_info = "%-40s" | format(str_info) %}
+            {# user #}
+            {% set str_info = str_info + info.user %}
+            {% set str_info = "%-80s" | format(str_info) %}
+            {# address #}
+            {% set str_info = str_info + info.address %}
+            {% set str_info = "%-100s" | format(str_info) %}
+            {# method #}
+            {% set str_info = str_info + info.method %}
+            {# append to info_local #}
+            {{ info_local.append(str_info) }}
+        {#- user_account_ipv4 #}
+        {%- elif (info.group is defined) and (info.group == "user_account_ipv4") %}
+            {# type #}
+            {% set str_info = "%-10s" | format(info.type) %}
+            {# database #}
+            {% set str_info = str_info + info.database %}
+            {% set str_info = "%-40s" | format(str_info) %}
+            {# user #}
+            {% set str_info = str_info + info.user %}
+            {% set str_info = "%-80s" | format(str_info) %}
+            {# address #}
+            {% set str_info = str_info + info.address %}
+            {% set str_info = "%-100s" | format(str_info) %}
+            {# method #}
+            {% set str_info = str_info + info.method %}
+            {# append to info_user_account_ipv4 #}
+            {{ info_user_account_ipv4.append(str_info) }}
+        {#- user_account_ipv6 #}
+        {%- elif (info.group is defined) and (info.group == "user_account_ipv6") %}
+            {# type #}
+            {% set str_info = "%-10s" | format(info.type) %}
+            {# database #}
+            {% set str_info = str_info + info.database %}
+            {% set str_info = "%-40s" | format(str_info) %}
+            {# user #}
+            {% set str_info = str_info + info.user %}
+            {% set str_info = "%-80s" | format(str_info) %}
+            {# address #}
+            {% set str_info = str_info + info.address %}
+            {% set str_info = "%-100s" | format(str_info) %}
+            {# method #}
+            {% set str_info = str_info + info.method %}
+            {# append to info_user_account_ipv6 #}
+            {{ info_user_account_ipv6.append(str_info) }}
+        {#- replication #}
+        {%- elif (info.group is defined) and (info.group == "replication") %}
+            {# type #}
+            {% set str_info = "%-10s" | format(info.type) %}
+            {# database #}
+            {% set str_info = str_info + info.database %}
+            {% set str_info = "%-40s" | format(str_info) %}
+            {# user #}
+            {% set str_info = str_info + info.user %}
+            {% set str_info = "%-80s" | format(str_info) %}
+            {# address #}
+            {% set str_info = str_info + info.address %}
+            {% set str_info = "%-100s" | format(str_info) %}
+            {# method #}
+            {% set str_info = str_info + info.method %}
+            {# append to info_replication #}
+            {{ info_replication.append(str_info) }}
+        {#- common #}
+        {%- elif (info.group is defined) and (info.group == "common") %}
+            {# type #}
+            {% set str_info = "%-10s" | format(info.type) %}
+            {# database #}
+            {% set str_info = str_info + info.database %}
+            {% set str_info = "%-40s" | format(str_info) %}
+            {# user #}
+            {% set str_info = str_info + info.user %}
+            {% set str_info = "%-80s" | format(str_info) %}
+            {# address #}
+            {% set str_info = str_info + info.address %}
+            {% set str_info = "%-100s" | format(str_info) %}
+            {# method #}
+            {% set str_info = str_info + info.method %}
+            {# append to common #}
+            {{ info_common.append(str_info) }}
+        {# application #}
+        {%- elif (info.group is defined) and (info.group == "application") %}
+            {# type #}
+            {% set str_info = "%-10s" | format(info.type) %}
+            {# database #}
+            {% set str_info = str_info + info.database %}
+            {% set str_info = "%-40s" | format(str_info) %}
+            {# user #}
+            {% set str_info = str_info + info.user %}
+            {% set str_info = "%-80s" | format(str_info) %}
+            {# address #}
+            {% set str_info = str_info + info.address %}
+            {% set str_info = "%-100s" | format(str_info) %}
+            {# method #}
+            {% set str_info = str_info + info.method %}
+            {# append to application #}
+            {{ info_application.append(str_info) }}
+        {#- other #}
+        {%- else %}
+            {# type #}
+            {% set str_info = "%-10s" | format(info.type) %}
+            {# database #}
+            {% set str_info = str_info + info.database %}
+            {% set str_info = "%-40s" | format(str_info) %}
+            {# user #}
+            {% set str_info = str_info + info.user %}
+            {% set str_info = "%-80s" | format(str_info) %}
+            {# address #}
+            {% set str_info = str_info + info.address %}
+            {% set str_info = "%-100s" | format(str_info) %}
+            {# method #}
+            {% set str_info = str_info + info.method %}
+            {# append to other #}
+            {{ info_other.append(str_info) }}
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+{#- generator config #}
+{#- info_local #}
+{% for i in info_local %}
+    {{- i }}
+{% endfor %}
+
+{# info_user_account_ipv4 #}
+{% for i in info_user_account_ipv4 %}
+    {{- i }}
+{% endfor %}
+
+{# info_user_account_ipv6 #}
+{% for i in info_user_account_ipv6 %}
+    {{- i }}
+{% endfor %}
+
+{# info_replication #}
+{% for i in info_replication %}
+    {{- i }}
+{% endfor %}
+
+{# info_common #}
+{% for i in info_common %}
+    {{- i }}
+{% endfor %}
+
+{# info_application #}
+{% for i in info_application %}
+    {{- i }}
+{% endfor %}
+
+{# info_other #}
+{% for i in info_other %}
+    {{- i }}
+{% endfor %}

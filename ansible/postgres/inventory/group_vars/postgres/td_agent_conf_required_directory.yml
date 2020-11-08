@@ -1,0 +1,10 @@
+---
+td_agent_conf_required_directory:
+- path: /etc/td-agent/config.d
+  owner: root
+  group: root
+  mode: "0755"
+- path: /etc/systemd/system/td-agent.service.d
+  owner: root
+  group: root
+  mode: "0755"

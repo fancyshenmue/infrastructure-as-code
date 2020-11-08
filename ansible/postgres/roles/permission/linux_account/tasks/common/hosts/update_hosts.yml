@@ -1,0 +1,10 @@
+---
+- name: add {{ etc_hosts }} | linux_account
+  blockinfile:
+    dest: "{{ etc_hosts }}"
+    marker: "# {mark} Ansible Management"
+    content: |
+      {{ lookup('template', template_hosts) }}
+  when:
+    - linux_account_hosts_conf is defined
+    - linux_account_hosts_conf == true

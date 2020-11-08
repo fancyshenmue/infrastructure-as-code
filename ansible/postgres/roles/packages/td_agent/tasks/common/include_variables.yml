@@ -1,0 +1,9 @@
+---
+# check vars yml exist | td_agent
+- name: check vars yml exist | td_agent
+  local_action: stat path="{{ role_path }}/vars/{{ distribution }}/main.yml"
+  register: vars_yml
+
+# include vars yml if exist | td_agent
+- include_vars: "{{ role_path }}/vars/{{ distribution }}/main.yml"
+  when: vars_yml.stat.exists == True

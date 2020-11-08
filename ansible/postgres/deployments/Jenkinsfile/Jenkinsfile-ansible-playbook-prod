@@ -1,0 +1,223 @@
+properties([
+  buildDiscarder(
+      logRotator(
+          numToKeepStr: '30'
+      )
+  )
+])
+
+pipeline {
+  agent {
+    label 'slave01'
+  }
+
+  options {
+      ansiColor('xterm')
+  }
+
+  parameters {
+    string(name: 'BRANCH',
+      defaultValue: 'master',
+      description: 'GIT BRANCH'
+    )
+    choice(name: 'INVENTORY',
+      choices: [
+        'NOTSUPPORT',
+        'ansible/postgres/inventory/hosts'
+      ],
+      description: 'CHOOSE INVENTORY'
+    )
+    string(name: 'HOST',
+      defaultValue: '',
+      description: 'INPUT HOST'
+    )
+    choice(name: 'PLAYBOOK',
+      choices: [
+        'NOTSUPPORT',
+        'ansible/postgres/playbook/config/postgresql_conf.yml',
+        'ansible/postgres/playbook/database/postgresql_database.yml',
+        'ansible/postgres/playbook/permission/postgresql_permission.yml'
+      ],
+      description: 'CHOOSE PLAYBOOK'
+    )
+    string(name: 'EXTRAS',
+      defaultValue: '--diff',
+      description: 'INPUT EXTRAS'
+    )
+    string(name: 'TAGS',
+      defaultValue: '',
+      description: 'INPUT TAGS'
+    )
+    string(name: 'FORKS',
+      defaultValue: '5',
+      description: 'INPUT FORKS'
+    )
+  }
+
+  environment {
+    // define git repo info
+    GIT_REPO                  = "git@github.com:fancyshenmue/infrastructure-as-code.git"
+    BRANCH                    = "${params.BRANCH}"
+    GITKEY                    = "git"
+    // ansible key
+    _ANSIBLE_SSH_KEY          = "ansible"
+    _ANSIBLE_VAULT_KEY        = "ansible-vault-pass"
+    // define environment
+    _INVENTORY                = "${params.INVENTORY}"
+    _HOST                     = "${params.HOST}"
+    _PLAYBOOK                 = "${params.PLAYBOOK}"
+    _EXTRAS                   = "${params.EXTRAS}"
+    _FORKS                    = "${params.FORKS}"
+    // define workspace
+    _WORKSPACE_DIR            = "${WORKSPACE}/${BUILD_ID}"
+  }
+
+  stages {
+    // setup environment
+    stage('Setup Environment') {
+      steps {
+        // block if selected _INVENTORY not supported
+        script {
+          if (params._INVENTORY == "NOTSUPPORT") {
+              error('_INVENTORY not supported')
+          }
+        }
+
+        // block if selected _PLAYBOOK not supported
+        script {
+          if (params._PLAYBOOK == "NOTSUPPORT") {
+              error('_PLAYBOOK not supported')
+          }
+        }
+
+        // declare tags
+        script {
+          if (!params.TAGS) {
+            env._TAGS = ""
+          } else {
+            env._TAGS = "${params.TAGS}"
+          }
+        }
+
+        // git repo info
+        sh(
+          script: "echo Git Repo: ${GIT_REPO}",
+          label: "Git Repo: ${GIT_REPO}"
+        )
+        sh(
+          script: "echo Branch: ${BRANCH}",
+          label: "Git Branch: ${BRANCH}"
+        )
+        // ansible
+        sh(
+          script: "echo Inventory: ${_INVENTORY}",
+          label: "Ansible Inventory: ${_INVENTORY}"
+        )
+        sh(
+          script: "echo Host: ${_HOST}",
+          label: "Ansible Host: ${_HOST}"
+        )
+        sh(
+          script: "echo Playbook: ${_PLAYBOOK}",
+          label: "Ansible Playbook: ${_PLAYBOOK}"
+        )
+        sh(
+          script: "echo extras: ${_EXTRAS}",
+          label: "Ansible Extras: ${_EXTRAS}"
+        )
+        sh(
+          script: "echo tags: ${_TAGS}",
+          label: "Ansible Tags: ${_TAGS}"
+        )
+        sh(
+          script: "echo Forks: ${_FORKS}",
+          label: "Ansible Fork: ${_FORKS}"
+        )
+        sh(
+          script: "echo Ansible SSH Key: ${_ANSIBLE_SSH_KEY}",
+          label: "Ansible SSH Key: ${_ANSIBLE_SSH_KEY}"
+        )
+        // workspace
+        sh(
+          script: "echo workspace directory: ${_WORKSPACE_DIR}",
+          label: "Workspace: ${_WORKSPACE_DIR}"
+        )
+      }
+    } // end of setup environment
+
+    // git checkout
+    stage('Git checkout') {
+      steps {
+        dir(_WORKSPACE_DIR) {
+          git url: "${GIT_REPO}",
+              credentialsId: "${GITKEY}",
+              branch: "${BRANCH}"
+        }
+      }
+    } // end of stage
+
+    // deploy (No Tags)
+    stage('Deploy (No Tags)') {
+      when {
+        expression {
+          "${_TAGS}" == ""
+        }
+      }
+
+      steps {
+        dir(_WORKSPACE_DIR) {
+          ansiblePlaybook(
+            credentialsId: "${_ANSIBLE_SSH_KEY}",
+            inventory: "${_INVENTORY}",
+            playbook: "${_PLAYBOOK}",
+            extraVars: [
+              hn: "${_HOST}"
+            ],
+            forks: "${_FORKS}",
+            vaultCredentialsId: "${_ANSIBLE_VAULT_KEY}",
+            hostKeyChecking: false,
+            extras: "${_EXTRAS}",
+            colorized: true
+          )
+        }
+      }
+    } // end of stage
+
+    // deploy (With Tags)
+    stage('Deploy (With Tags)') {
+      when {
+        expression {
+          "${_TAGS}" != ""
+        }
+      }
+
+      steps {
+        dir(_WORKSPACE_DIR) {
+          ansiblePlaybook(
+            credentialsId: "${_ANSIBLE_SSH_KEY}",
+            inventory: "${_INVENTORY}",
+            playbook: "${_PLAYBOOK}",
+            extraVars: [
+              hn: "${_HOST}"
+            ],
+            forks: "${_FORKS}",
+            vaultCredentialsId: "${_ANSIBLE_VAULT_KEY}",
+            hostKeyChecking: false,
+            extras: "${_EXTRAS}",
+            tags: "${_TAGS}",
+            colorized: true
+          )
+        }
+      }
+    } // end of stage
+
+    // cleanup
+    stage('Cleanup') {
+      steps {
+        dir(_WORKSPACE_DIR) {
+          deleteDir()
+        }
+      }
+    } // end of stage
+  }
+}

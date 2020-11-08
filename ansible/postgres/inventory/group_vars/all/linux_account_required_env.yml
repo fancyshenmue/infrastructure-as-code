@@ -1,0 +1,4 @@
+---
+linux_account_required_env:
+- path: /home/automation/ansible/.bashrc
+  template: user_bashrc_nogitparse.j2

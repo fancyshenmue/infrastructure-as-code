@@ -1,0 +1,12 @@
+---
+# update security limit
+- name: update security limit
+  pam_limits:
+    domain: "{{ item.domain }}"
+    limit_type: "{{ item.limit_type }}"
+    limit_item: "{{ item.limit_item }}"
+    value: "{{ item.value }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - "{{ security_limit }}"
+  when: security_limit is defined
