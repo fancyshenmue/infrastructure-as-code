@@ -1,0 +1,32 @@
+---
+# update conf | template | td_agent_conf
+- name: update conf | template | td_agent_conf
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ td_agent_conf }}"
+  when: td_agent_conf is defined
+  notify:
+    - systemd daemon-reload
+    - check td_agent
+    - reload td_agent
+
+# update conf | custom | td_agent_conf
+- name: update conf | custom | td_agent_conf
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ td_agent_conf_custom }}"
+  when: td_agent_conf_custom is defined
+  notify:
+    - systemd daemon-reload
+    - check td_agent
+    - reload td_agent

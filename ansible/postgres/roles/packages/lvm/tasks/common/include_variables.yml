@@ -1,0 +1,9 @@
+---
+# check variables exist | lvm
+- name: check variables exist | lvm
+  local_action: stat path="{{ role_path }}/vars/{{ distribution }}/main.yml"
+  register: vars_yml
+
+# include variables if exist | lvm
+- include_vars: "{{ role_path }}/vars/{{ distribution }}/main.yml"
+  when: vars_yml.stat.exists == True

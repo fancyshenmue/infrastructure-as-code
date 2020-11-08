@@ -1,0 +1,14 @@
+---
+- hosts: '{{ hn }}'
+  roles:
+    - role: "{{ (playbook_dir + '/postgresql_11') | replace('playbook', 'roles') }}"
+      become: True
+      become_user: root
+      become_method: sudo
+      vars:
+        required_package_override:
+          - name: postgresql11-11.4-1PGDG.rhel7.x86_64
+          - name: postgresql11-server-11.4-1PGDG.rhel7.x86_64
+          - name: postgresql11-contrib-11.4-1PGDG.rhel7.x86_64
+          - name: postgresql11-libs-11.4-1PGDG.rhel7.x86_64
+          - name: https://yum.postgresql.org/11/redhat/rhel-7-x86_64/postgresql11-plpython-11.4-1PGDG.rhel7.x86_64.rpm

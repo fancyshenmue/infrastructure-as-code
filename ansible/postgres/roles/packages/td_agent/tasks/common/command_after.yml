@@ -1,0 +1,17 @@
+---
+- name: command | after | td_agent
+  become: yes
+  become_user: "{{ username | default('root') }}"
+  shell: "{{ item.command }}"
+  args:
+    "{{ item.args_param }}"
+  with_items:
+    - "{{ td_agent_command_after }}"
+  when:
+    td_agent_command_after is defined
+  register: td_agent_command_after_output
+
+- name: command | after | output | td_agent
+  debug:
+    msg:
+      "{{ td_agent_command_after_output }}"

@@ -1,0 +1,15 @@
+---
+- name: command | after
+  shell: "{{ item.command }}"
+  args:
+    "{{ item.args_param }}"
+  with_items:
+    - "{{ command_after }}"
+  when:
+    command_after is defined
+  register: command_after_output
+
+- name: command | after | output
+  debug:
+    msg:
+      "{{ command_after_output }}"

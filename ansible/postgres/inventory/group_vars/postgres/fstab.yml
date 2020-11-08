@@ -1,0 +1,4 @@
+---
+fstab_conf:
+- "/dev/mapper/data-data /data xfs defaults 0 0"
+- "/dev/mapper/backup-backup /backup xfs defaults 0 0"

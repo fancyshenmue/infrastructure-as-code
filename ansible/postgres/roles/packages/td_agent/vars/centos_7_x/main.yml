@@ -1,0 +1,27 @@
+---
+td_agent_service:
+- name: td-agent
+
+td_agent_required_package:
+- name: td-agent
+
+td_agent_required_data_after:
+- src: /etc/td-agent/td-agent.conf
+  dest: /etc/td-agent/td-agent.conf.orig
+  remote_src: "yes"
+  force: "no"
+
+td_agent_required_data:
+- src: "{{ distribution }}/td.repo"
+  dest: /etc/yum.repos.d/td.repo
+  owner: root
+  group: root
+  mode: "0644"
+
+td_agent_command_after:
+- command: |
+    td-agent-gem install fluent-plugin-grok-parser
+    td-agent-gem install fluent-plugin-prometheus --version='~>1.6.1'
+  args_param:
+    executable: /bin/bash
+    chdir: /tmp

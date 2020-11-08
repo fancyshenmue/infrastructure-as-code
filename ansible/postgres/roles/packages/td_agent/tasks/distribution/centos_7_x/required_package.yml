@@ -1,0 +1,8 @@
+---
+- name: required package | td_agent
+  yum:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+  with_items:
+    - "{{ td_agent_required_package }}"
+  when: td_agent_required_package is defined

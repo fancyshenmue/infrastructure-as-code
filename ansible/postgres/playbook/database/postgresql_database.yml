@@ -1,0 +1,8 @@
+---
+- hosts: '{{ hn }}'
+  gather_facts: no
+  roles:
+    - role: "{{ (playbook_dir + '/postgresql_database') | replace('playbook', 'roles') }}"
+      become: True
+      become_user: root
+      become_method: sudo

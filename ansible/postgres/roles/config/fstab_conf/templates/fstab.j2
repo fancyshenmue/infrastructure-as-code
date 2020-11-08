@@ -1,0 +1,6 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+{% if fstab_conf is defined %}
+    {% for i in fstab_conf %}
+        {{- i }}
+    {% endfor %}
+{% endif %}

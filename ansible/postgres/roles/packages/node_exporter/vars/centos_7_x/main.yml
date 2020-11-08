@@ -1,0 +1,62 @@
+---
+node_exporter_service:
+- name: node_exporter
+  daemon_reload: yes
+
+node_exporter_required_directory:
+- path: /data
+  owner: root
+  group: root
+  mode: "0755"
+- path: /data/node_exporter
+  owner: node_exporter
+  group: node_exporter
+  mode: "0755"
+- path: /data/node_exporter/conf
+  owner: node_exporter
+  group: node_exporter
+  mode: "0755"
+- path: /data/node_exporter/textfile_collector
+  owner: node_exporter
+  group: node_exporter
+  mode: "0755"
+
+node_exporter_required_data_before_download_local:
+- url: "https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz"
+  dest: "{{ role_path }}/files/node_exporter-0.18.1.linux-amd64.tar.gz"
+
+node_exporter_required_data:
+- src: "{{ role_path }}/files/node_exporter-0.18.1.linux-amd64.tar.gz"
+  dest: "/tmp/node_exporter-0.18.1.linux-amd64.tar.gz"
+  owner: root
+  group: root
+  mode: "0644"
+- src: "node_exporter.service"
+  dest: "/etc/systemd/system/node_exporter.service"
+  owner: root
+  group: root
+  mode: "0644"
+- src: "node_exporter.env"
+  dest: "/data/node_exporter/conf/env"
+  owner: node_exporter
+  group: node_exporter
+  mode: "0644"
+
+node_exporter_unarchive_data:
+- src: /tmp/node_exporter-0.18.1.linux-amd64.tar.gz
+  dest: /data/node_exporter
+  mode: "0755"
+  owner: node_exporter
+  group: node_exporter
+  extra_opts:
+    - "--strip-components=1"
+    - "--wildcards"
+    - "*/node_exporter"
+  remote_src: "yes"
+
+# cleanup
+node_exporter_cleanup_local:
+- path: "{{ role_path }}/files/node_exporter-0.18.1.linux-amd64.tar.gz"
+
+node_exporter_cleanup_remote:
+- path: /tmp/node_exporter-0.18.1.linux-amd64.tar.gz

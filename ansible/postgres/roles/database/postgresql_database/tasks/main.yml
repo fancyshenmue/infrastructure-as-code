@@ -1,0 +1,9 @@
+---
+# set variables
+- include_tasks: "{{ role_path }}/tasks/common/set_variables.yml"
+
+# include variables
+- include_tasks: "{{ role_path }}/tasks/common/include_variables.yml"
+
+# postgresql user
+- include_tasks: "{{ role_path }}/tasks/common/postgresql_database.yml"

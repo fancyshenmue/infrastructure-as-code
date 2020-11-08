@@ -1,0 +1,13 @@
+---
+# Show manual restart message
+- name: Show restart message
+  listen: show restart message
+  debug:
+    msg: "##########  Please restart postgresql-11 service manual (systemctl restart postgresql-11)  ##########"
+
+# Reload postgresql
+- name: Reload postgresql-11
+  listen: reload postgresql
+  systemd:
+      name: postgresql-11
+      state: reloaded

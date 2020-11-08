@@ -1,0 +1,9 @@
+---
+# update modprobe | postgresql_conf
+- name: update modprobe | postgresql_conf
+  modprobe:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present')}}"
+  with_items:
+    - "{{ postgresql_conf_modprobe_conf }}"
+  when: postgresql_conf_modprobe_conf is defined

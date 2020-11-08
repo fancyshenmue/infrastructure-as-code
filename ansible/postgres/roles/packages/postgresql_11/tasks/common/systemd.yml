@@ -1,0 +1,9 @@
+---
+- name: update systemd status
+  systemd:
+    name: "{{ item.name }}"
+    enabled: "{{ item.enabled | default('yes') }}"
+    daemon_reload: "{{ item.daemon_reload | default('no') }}"
+  with_items:
+    - "{{ service }}"
+  when: service is defined

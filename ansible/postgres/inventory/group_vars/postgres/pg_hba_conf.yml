@@ -1,0 +1,104 @@
+---
+pg_hba_conf:
+- src: pg_hba.conf.j2
+  dest: /data/pgsql/11/data/pg_hba.conf
+  owner: postgres
+  group: postgres
+  mode: '0600'
+  info:
+  - type: local
+    database: all
+    user: postgres
+    address: ""
+    method: password
+    group: local
+
+  # user | ipv4
+  - type: host
+    database: all
+    user: postgres
+    address: 127.0.0.1/32
+    method: password
+    group: user_account_ipv4
+
+  # user | ipv6
+  - type: host
+    database: all
+    user: postgres
+    address: ::1/128
+    method: password
+    group: user_account_ipv6
+
+  # replication
+  - type: host
+    database: replication
+    user: pgrepmgr
+    address: 10.0.0.11/32
+    method: password
+    group: replication
+
+  - type: host
+    database: replication
+    user: pgrepmgr
+    address: 10.0.0.12/32
+    method: password
+    group: replication
+
+  - type: host
+    database: all
+    user: postgres
+    address: 10.0.0.11/32
+    method: password
+    group: replication
+
+  - type: host
+    database: all
+    user: postgres
+    address: 10.0.0.12/32
+    method: password
+    group: replication
+
+  # common
+  - type: host
+    database: common
+    user: common
+    address: 10.0.1.11/32
+    method: password
+    group: common
+
+  - type: host
+    database: common
+    user: common
+    address: 10.0.1.12/32
+    method: password
+    group: common
+
+  # application
+  - type: host
+    database: application
+    user: application
+    address: 10.0.2.11/32
+    method: password
+    group: application
+
+  - type: host
+    database: application
+    user: application
+    address: 10.0.2.12/32
+    method: password
+    group: application
+
+  # other
+  - type: host
+    database: other
+    user: other
+    address: 10.0.3.11/32
+    method: password
+    group: other
+
+  - type: host
+    database: other
+    user: other
+    address: 10.0.3.12/32
+    method: password
+    group: other

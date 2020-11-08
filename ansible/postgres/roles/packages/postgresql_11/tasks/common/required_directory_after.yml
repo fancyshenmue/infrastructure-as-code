@@ -1,0 +1,12 @@
+---
+# required directory | after
+- name: required directory | after
+  file:
+    path: "{{ item.path }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    state: directory
+  with_items:
+    - "{{ required_directory_after }}"
+  when: required_directory_after is defined

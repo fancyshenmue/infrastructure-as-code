@@ -1,0 +1,3 @@
+---
+# include tasks distribution yaml if exist
+- include_tasks: "{{ distribution_yml_path | default(role_path + '/tasks/common/empty.yml') }}"

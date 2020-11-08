@@ -1,0 +1,24 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+{% if item.info.Service is defined %}
+[Service]
+    {# User #}
+    {% if item.info.Service.User is defined %}
+User={{ item.info.Service.User }}
+    {% endif %}
+    {# Group #}
+    {% if item.info.Service.Group is defined %}
+Group={{ item.info.Service.Group }}
+    {% endif %}
+    {# LimitCORE #}
+    {% if item.info.Service.LimitCORE is defined %}
+LimitCORE={{ item.info.Service.LimitCORE }}
+    {% endif %}
+    {# LimitNOFILE #}
+    {% if item.info.Service.LimitNOFILE is defined %}
+LimitNOFILE={{ item.info.Service.LimitNOFILE }}
+    {% endif %}
+    {# LimitNPROC #}
+    {% if item.info.Service.LimitNPROC is defined %}
+LimitNPROC={{ item.info.Service.LimitNPROC }}
+    {% endif %}
+{% endif %}

@@ -1,0 +1,20 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+[Service]
+{# Environment #}
+{% if item.info.Environment is defined %}
+  {% for i in item.info.Environment %}
+{{ i }}
+  {% endfor %}
+{% endif %}
+{# LimitCORE #}
+{% if item.info.LimitCORE is defined %}
+LimitCORE={{ item.info.LimitCORE }}
+{% endif %}
+{# LimitNOFILE #}
+{% if item.info.LimitNOFILE is defined %}
+LimitNOFILE={{ item.info.LimitNOFILE }}
+{% endif %}
+{# LimitNPROC #}
+{% if item.info.LimitNPROC is defined %}
+LimitNPROC={{ item.info.LimitNPROC }}
+{% endif %}

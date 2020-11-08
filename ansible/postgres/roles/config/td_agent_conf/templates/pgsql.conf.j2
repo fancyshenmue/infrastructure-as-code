@@ -1,0 +1,100 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+<source>
+    @type tail
+    @label {{ item.info.source.label }}
+    tag {{ item.info.source.tag }}
+    path {{ item.info.source.log_path }}
+    path_key log_path
+    pos_file {{ item.info.source.pos_file }}
+    <parse>
+      @type multiline_grok
+      # CST > [967428]: [1-1] 10.0.0.11: sample@sample :LOG:  duration: 1228.707 ms  execute <unnamed>:
+      grok_pattern {{ item.info.source.parse.grok_pattern }}
+      multiline_start_regexp {{ item.info.source.parse.multiline_start_regexp }}
+      time_key {{ item.info.source.parse.time_key }}
+      time_format {{ item.info.source.parse.time_format }}
+      keep_time_key {{ item.info.source.parse.keep_time_key }}
+    </parse>
+</source>
+
+<label {{ item.info.label.name }}>
+
+  {# filter #}
+  {% if item.info.label.filter %}
+    {% for i in item.info.label.filter %}
+  <filter {{ i.id }}>
+      {# info #}
+      {% for filterInfo in i.info %}
+    {{ filterInfo }}
+      {% endfor %}
+      {# end of info #}
+      {# parse #}
+      {% if i.parse is defined %}
+    <parse>
+        {% for parseInfo in i.parse %}
+      {{ parseInfo }}
+        {% endfor %}
+    </parse>
+      {% endif %}
+      {# end of parse #}
+      {# record #}
+      {% if i.record is defined %}
+    <record>
+        {% for recordInfo in i.record %}
+      {{ recordInfo }}
+        {% endfor %}
+    </record>
+      {% endif %}
+      {# end of record #}
+  </filter>
+
+    {% endfor %}
+  {% endif %}
+  {# end of filter #}
+
+  {# match #}
+  {% if item.info.label.match is defined %}
+    {% for i in item.info.label.match %}
+  <match {{ i.id }}>
+      {# matchInfo #}
+      {% for matchInfo in i.info %}
+    {{ matchInfo }}
+      {% endfor %}
+      {# end of matchInfo #}
+      {# rule #}
+      {% if i.rule is defined %}
+    <rule>
+        {% for ruleInfo in i.rule %}
+      {{ ruleInfo }}
+        {% endfor %}
+    </rule>
+      {% endif %}
+      {# end of rule #}
+      {# store #}
+      {% if i.store is defined %}
+        {# common info #}
+        {% for storeInfo in i.store %}
+    <store>
+          {% for storeInfoCommon in storeInfo.info %}
+      {{ storeInfoCommon }}
+          {% endfor %}
+        {# end of common info #}
+        {# buffer #}
+          {% if storeInfo.buffer is defined %}
+      <buffer {{ storeInfo.buffer.id }}>
+            {% for bufferInfo in storeInfo.buffer.info %}
+        {{ bufferInfo }}
+            {% endfor %}
+      </buffer>
+          {% endif %}
+        {# end of buffer #}
+    </store>
+        {% endfor %}
+      {% endif %}
+      {# end of store #}
+  </match>
+
+    {% endfor %}
+  {% endif %}
+  {# end of match #}
+</label>

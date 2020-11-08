@@ -1,0 +1,11 @@
+---
+fstab_conf_required_directory:
+- path: "/data"
+  owner: "root"
+  group: "root"
+  mode: "0755"
+
+- path: "/backup"
+  owner: "root"
+  group: "root"
+  mode: "0755"

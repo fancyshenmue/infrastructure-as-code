@@ -1,0 +1,30 @@
+---
+# required data | td_agent_conf
+- name: required data | td_agent_conf
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ td_agent_conf_required_data }}"
+  when: td_agent_conf_required_data is defined
+  notify:
+    - check td_agent
+    - reload td_agent
+
+# required data | template | td_agent_conf
+- name: required data | template | td_agent_conf
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ td_agent_conf_required_data_template }}"
+  when: td_agent_conf_required_data_template is defined
+  notify:
+    - check td_agent
+    - reload td_agent

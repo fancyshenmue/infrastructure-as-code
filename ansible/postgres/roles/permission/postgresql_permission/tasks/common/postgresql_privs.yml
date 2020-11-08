@@ -1,0 +1,21 @@
+---
+- name: postgresql privs
+  postgresql_privs:
+    login_host: "{{ login_host }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password | default(omit) }}"
+    database:  "{{ item.database }}"
+    schema: "{{ item.schema }}"
+    type: "{{ item.type }}"
+    objs: "{{ item.objs }}"
+    privs: "{{ item.privs | default(omit) }}"
+    role: "{{ item.role }}"
+    target_roles: "{{ item.target_roles | default(omit) }}"
+    grant_option: "{{ item.grant_option | default('no') }}"
+    state: "{{ item.state | default('present') }}"
+  delegate_to: localhost
+  run_once: yes
+  with_items:
+    - "{{ postgresql_permission_privs }}"
+  when:
+    postgresql_permission_privs is defined

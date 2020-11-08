@@ -1,0 +1,7 @@
+---
+linux_account_required_data:
+- src: "{{ inventory_dir }}/group_vars/all/files/sudoers/sudoers.txt"
+  dest: /etc/sudoers
+  owner: root
+  group: root
+  mode: "0440"

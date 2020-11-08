@@ -1,0 +1,13 @@
+---
+# remove user | linux_account
+- name: remove user | linux_account
+  user:
+    name: "{{ item.name }}"
+    remove: "{{ item.remove | default('yes') }}"
+    state: absent
+  with_items:
+    - "{{ linux_account_remove_user }}"
+  when:
+    linux_account_remove_user is defined
+  tags:
+    - remove

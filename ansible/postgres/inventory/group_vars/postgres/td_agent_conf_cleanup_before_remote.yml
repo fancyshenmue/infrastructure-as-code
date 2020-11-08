@@ -1,0 +1,3 @@
+---
+td_agent_conf_cleanup_before_remote:
+- path: "/etc/td-agent/config.d"
