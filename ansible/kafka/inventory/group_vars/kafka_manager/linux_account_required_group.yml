@@ -1,0 +1,4 @@
+---
+linux_account_required_group:
+- name: kafka_manager
+  gid: "65003"

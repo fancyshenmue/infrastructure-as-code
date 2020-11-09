@@ -1,0 +1,15 @@
+---
+kafka_manager_conf:
+# systemd
+- src: "kafka_manager.service.j2"
+  dest: /etc/systemd/system/kafka_manager.service
+  owner: root
+  group: root
+  mode: "0644"
+  info:
+    user: kafka_manager
+    group: kafka_manager
+    execstart: /data/kafka_manager/service/cmak-3.0.0.5/bin/cmak -Dconfig.file=/data/kafka_manager/service/cmak-3.0.0.5/conf/application.conf -java-home /usr/lib/jvm/java-11-openjdk-11.0.8.10-0.el7_8.x86_64 -Dhttp.port=9000
+    workingdirectory: /data/kafka_manager/service/cmak-3.0.0.5
+    environment:
+      zk_hosts: "zookeeper01.pf.stg:2181,zookeeper02.pf.stg:2181,zookeeper03.pf.stg:2181"

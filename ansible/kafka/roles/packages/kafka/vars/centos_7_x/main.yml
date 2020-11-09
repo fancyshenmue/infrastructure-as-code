@@ -4,7 +4,8 @@ kafka_service:
   daemon_reload: yes
 
 kafka_required_package:
-- name: "java-1.8.0-openjdk-1.8.0.252.b09-2.el7_8"
+- name: "java-11-openjdk-11.0.8.10-0.el7_8.x86_64"
+# - name: "java-1.8.0-openjdk-1.8.0.252.b09-2.el7_8"
 
 kafka_required_directory:
 - path: /data
@@ -85,5 +86,5 @@ kafka_environment:
   limitnofile: 300000
   limitfsize: infinity
   environment:
-    java_home: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.252.b09-2.el7_8.x86_64/jre
+    java_home: /usr/lib/jvm/java-11-openjdk-11.0.8.10-0.el7_8.x86_64
     log_dir: /data/kafka/logs

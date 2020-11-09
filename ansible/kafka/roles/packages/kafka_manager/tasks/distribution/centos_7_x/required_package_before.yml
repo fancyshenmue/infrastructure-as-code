@@ -1,0 +1,8 @@
+---
+- name: required package | before | kafka_manager
+  yum:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+  with_items:
+    - "{{ kafka_manager_required_package_before }}"
+  when: kafka_manager_required_package_before is defined

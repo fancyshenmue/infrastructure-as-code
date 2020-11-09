@@ -1,9 +1,12 @@
 [zookeeper]
-zookeeper01.sample.com  ansible_user=root
-zookeeper02.sample.com  ansible_user=root
-zookeeper03.sample.com  ansible_user=root
+zookeeper01.pf.stg  ansible_user=root
+zookeeper02.pf.stg  ansible_user=root
+zookeeper03.pf.stg  ansible_user=root
 
 [kafka]
-kafka01.sample.com  ansible_user=root
-kafka02.sample.com  ansible_user=root
-kafka03.sample.com  ansible_user=root
+kafka01.pf.stg  ansible_user=root
+kafka02.pf.stg  ansible_user=root
+kafka03.pf.stg  ansible_user=root
+
+[kafka_manager]
+kafka-manager.pf.stg  ansible_user=root
