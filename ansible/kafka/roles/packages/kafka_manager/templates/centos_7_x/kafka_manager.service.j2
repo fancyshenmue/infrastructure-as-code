@@ -1,0 +1,19 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+[Unit]
+Description=Kafka Manager
+Documentation=https://github.com/yahoo/kafka-manager
+Requires=network.target
+After=network.target
+
+[Service]
+Type=simple
+Environment=ZK_HOSTS={{ kafka_manager_environment.environment.zk_hosts | default('localhost:2181') }}
+User={{ kafka_manager_environment.user }}
+Group={{ kafka_manager_environment.group }}
+WorkingDirectory={{ kafka_manager_environment.workingdirectory }}
+ExecStart={{ kafka_manager_environment.execstart }}
+StandardOutput=null
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

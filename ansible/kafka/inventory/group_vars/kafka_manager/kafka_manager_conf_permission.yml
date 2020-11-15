@@ -1,0 +1,5 @@
+---
+kafka_manager_conf_permission:
+- dest: /data/kafka_manager/service/cmak-3.0.0.5
+  owner: kafka_manager
+  group: kafka_manager

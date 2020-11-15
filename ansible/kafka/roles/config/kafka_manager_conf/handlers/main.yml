@@ -1,0 +1,11 @@
+---
+# systemd daemon-reload
+- name: systemd daemon-reload
+  systemd:
+    daemon_reload: yes
+
+# kafka_manager
+- name: reload kafka_manager
+  systemd:
+    name: kafka_manager
+    state: reloaded

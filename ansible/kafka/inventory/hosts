@@ -7,3 +7,6 @@ zookeeper03.sample.com  ansible_user=root
 kafka01.sample.com  ansible_user=root
 kafka02.sample.com  ansible_user=root
 kafka03.sample.com  ansible_user=root
+
+[kafka_manager]
+kafka-manager.sample.com  ansible_user=root

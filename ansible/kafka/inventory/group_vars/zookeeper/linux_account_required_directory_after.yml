@@ -1,5 +1,9 @@
 ---
 linux_account_required_directory_after:
+- path: /data
+  owner: root
+  group: root
+  mode: "0755"
 - path: /data/zookeeper
   owner: zookeeper
   group: zookeeper

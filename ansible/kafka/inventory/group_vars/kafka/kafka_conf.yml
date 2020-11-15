@@ -54,7 +54,7 @@ kafka_conf:
     limitnofile: 300000
     limitfsize: infinity
     environment:
-      javaHome: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.252.b09-2.el7_8.x86_64/jre
+      javaHome: /usr/lib/jvm/java-11-openjdk-11.0.8.10-0.el7_8.x86_64
       logDir: /logs/kafka/logs
       kafkaOpts: "-javaagent:/data/kafka/jmx_exporter/jmx_prometheus_javaagent-0.13.0.jar=6060:/data/kafka/jmx_exporter/jmx_exporter.yml"
       jmxPort: "9999"

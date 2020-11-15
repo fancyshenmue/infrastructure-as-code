@@ -4,7 +4,8 @@ zookeeper_service:
   daemon_reload: yes
 
 zookeeper_required_package:
-- name: "java-1.8.0-openjdk-1.8.0.252.b09-2.el7_8"
+- name: "java-11-openjdk-11.0.8.10-0.el7_8.x86_64"
+# - name: "java-1.8.0-openjdk-1.8.0.252.b09-2.el7_8"
 
 zookeeper_required_directory:
 - path: /data
@@ -33,12 +34,14 @@ zookeeper_required_directory:
   mode: "0755"
 
 zookeeper_required_data_before_download_local:
-- url: "https://archive.apache.org/dist/zookeeper/zookeeper-3.4.13/zookeeper-3.4.13.tar.gz"
-  dest: "{{ role_path }}/files/zookeeper-3.4.13.tar.gz"
+- url: "https://downloads.apache.org/zookeeper/zookeeper-3.6.2/apache-zookeeper-3.6.2-bin.tar.gz"
+  dest: "{{ role_path }}/files/apache-zookeeper-3.6.2-bin.tar.gz"
+# - url: "https://archive.apache.org/dist/zookeeper/zookeeper-3.4.13/zookeeper-3.4.13.tar.gz"
+#   dest: "{{ role_path }}/files/zookeeper-3.4.13.tar.gz"
 
 zookeeper_required_data:
-- src: "{{ role_path }}/files/zookeeper-3.4.13.tar.gz"
-  dest: "/tmp/zookeeper-3.4.13.tar.gz"
+- src: "{{ role_path }}/files/apache-zookeeper-3.6.2-bin.tar.gz"
+  dest: "/tmp/apache-zookeeper-3.6.2-bin.tar.gz"
   owner: root
   group: root
   mode: "0644"
@@ -60,7 +63,7 @@ zookeeper_required_data_after_template:
   mode: "0644"
 
 zookeeper_unarchive_data:
-- src: /tmp/zookeeper-3.4.13.tar.gz
+- src: /tmp/apache-zookeeper-3.6.2-bin.tar.gz
   dest: /data/zookeeper/service
   owner: zookeeper
   group: zookeeper
@@ -70,10 +73,10 @@ zookeeper_unarchive_data:
 
 # cleanup
 zookeeper_cleanup_local:
-- path: "{{ role_path }}/files/zookeeper-3.4.13.tar.gz"
+- path: "{{ role_path }}/files/apache-zookeeper-3.6.2-bin.tar.gz"
 
 zookeeper_cleanup_remote:
-- path: /tmp/zookeeper-3.4.13.tar.gz
+- path: /tmp/apache-zookeeper-3.6.2-bin.tar.gz
 
 # environment
 zookeeper_environment:

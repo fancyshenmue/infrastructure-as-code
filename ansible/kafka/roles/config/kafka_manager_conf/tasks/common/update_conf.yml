@@ -1,0 +1,42 @@
+---
+# update conf | template | kafka_manager_conf
+- name: update conf | template | kafka_manager_conf
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ kafka_manager_conf }}"
+  when: kafka_manager_conf is defined
+  notify:
+    - systemd daemon-reload
+    - reload kafka_manager
+
+# update conf | custom | kafka_manager_conf
+- name: update conf | custom | kafka_manager_conf
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - "{{ kafka_manager_conf_custom }}"
+  when: kafka_manager_conf_custom is defined
+  notify:
+    - systemd daemon-reload
+    - reload kafka_manager
+
+# update conf | permission | kafka_manager_conf
+- name: update conf | permission | kafka_manager_conf
+  file:
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+    mode: "{{ item.mode | default(omit) }}"
+    recurse: "{{ item.recurse | default('yes') }}"
+  with_items:
+    - "{{ kafka_manager_conf_permission }}"
+  when: kafka_manager_conf_permission is defined

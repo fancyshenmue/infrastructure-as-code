@@ -1,0 +1,7 @@
+---
+- hosts: '{{ hn }}'
+  roles:
+    - role: "{{ (playbook_dir + '/kafka_manager') | replace('playbook', 'roles') }}"
+      become: True
+      become_user: root
+      become_method: sudo

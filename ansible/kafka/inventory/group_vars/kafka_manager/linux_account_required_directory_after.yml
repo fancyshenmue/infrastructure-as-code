@@ -4,7 +4,7 @@ linux_account_required_directory_after:
   owner: root
   group: root
   mode: "0755"
-- path: /data/kafka
-  owner: kafka
-  group: kafka
+- path: /data/kafka_manager
+  owner: kafka_manager
+  group: kafka_manager
   mode: "0755"

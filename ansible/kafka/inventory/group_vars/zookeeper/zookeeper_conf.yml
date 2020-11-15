@@ -1,7 +1,7 @@
 ---
 zookeeper_conf:
 # zoo.cfg
-- src: zoo.cfg.j2
+- src: zoo.cfg-3.6.2.j2
   dest: /data/zookeeper/service/conf/zoo.cfg
   owner: zookeeper
   group: zookeeper

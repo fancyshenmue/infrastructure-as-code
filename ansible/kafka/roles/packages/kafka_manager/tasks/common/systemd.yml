@@ -1,0 +1,8 @@
+---
+- name: update systemd status | kafka_manager
+  systemd:
+    name: "{{ item.name }}"
+    enabled: "{{ item.enabled | default('yes') }}"
+  with_items:
+    - "{{ kafka_manager_service }}"
+  when: kafka_manager_service is defined
