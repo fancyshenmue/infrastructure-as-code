@@ -1,0 +1,11 @@
+---
+- name: add update conf | crontab_conf
+  blockinfile:
+    dest: "{{ item.dest }}"
+    marker: "{{ item.marker }}"
+    content: |
+      {{ lookup('template', item.template) }}
+  with_items:
+    - "{{ crontab_conf }}"
+  when:
+    - crontab_conf is defined

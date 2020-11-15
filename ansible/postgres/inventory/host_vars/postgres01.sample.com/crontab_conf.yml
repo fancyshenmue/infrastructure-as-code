@@ -1,0 +1,8 @@
+---
+crontab_conf:
+- dest: /etc/crontab
+  marker: "# {mark} ANSIBLE MANAGED CRONTAB BLOCK"
+  template: crontab.j2
+  info:
+  - "* * * * * root echo hello"
+  - "* * * * * root echo world"
