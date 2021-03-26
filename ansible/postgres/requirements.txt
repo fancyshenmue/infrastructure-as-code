@@ -8,5 +8,5 @@ netaddr==0.7.19
 psycopg2-binary==2.8.4
 pycparser==2.19
 pyOpenSSL==19.1.0
-PyYAML==5.2
+PyYAML==5.4
 six==1.13.0
