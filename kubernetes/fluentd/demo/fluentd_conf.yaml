@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: fluentdconf
-  namespace: default
+  namespace: demo
 data:
   containers.input.conf: |-
     <source>

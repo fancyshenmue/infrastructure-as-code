@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fluentd-deployment
-  namespace: default
+  namespace: demo
   labels:
     app: fluentd
 spec:
