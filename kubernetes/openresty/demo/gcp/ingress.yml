@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: openresty-reverse-proxy
+  namespace: demo
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: "demo"
+    ingress.kubernetes.io/enable-cors: "true"
+spec:
+  backend:
+    serviceName: openresty-reverse-proxy
+    servicePort: 50080

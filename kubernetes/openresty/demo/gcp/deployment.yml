@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openresty-reverse-proxy
+  namespace: demo
+spec:
+  selector:
+    matchLabels:
+      app: openresty-reverse-proxy
+  template:
+    metadata:
+      labels:
+        app: openresty-reverse-proxy
+    spec:
+      containers:
+      - name: openresty-reverse-proxy
+        image: openresty/openresty
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 5
+          timeoutSeconds: 3
+          successThreshold: 1
+          failureThreshold: 20
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        volumeMounts:
+        - name: main-conf
+          mountPath: /usr/local/openresty/nginx/conf/nginx.conf
+          subPath: nginx.conf
+        - name: vhost-conf
+          mountPath: /etc/nginx/conf.d
+      volumes:
+      - name: main-conf
+        configMap:
+           name: openresty-main-conf
+      - name: vhost-conf
+        configMap:
+           name: openresty-vhost-conf

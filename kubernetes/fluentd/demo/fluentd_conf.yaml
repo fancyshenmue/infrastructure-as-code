@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluentdconf
+  namespace: default
+data:
+  containers.input.conf: |-
+    <source>
+      @type http
+      @label @logs-server
+      bind 0.0.0.0
+      port 9880
+    </source>
+  output.conf: |-
+    <label @logs-server>
+      <filter **>
+      @type elasticsearch_genid
+      hash_id_key _hash
+      </filter>
+      <filter **>
+        @type record_transformer
+        enable_ruby true
+        auto_typecast true
+        <record>
+          hostname "#{Socket.gethostname}"
+        </record>
+      </filter>
+      <match **>
+          @type copy
+          <store>
+            @type elasticsearch
+            type_name fluentd
+            include_tag_key true
+            id_key _hash
+            remove_keys _hash
+            hosts es-data.demo.com
+            port 443
+            scheme https
+            logstash_format true
+            logstash_dateformat %Y.%m.%d
+            logstash_prefix logs
+            request_timeout 15s
+            reload_connections false
+            reconnect_on_error true
+            reload_on_failure true
+            include_timestamp
+          </store>
+        </match>
+    </label>

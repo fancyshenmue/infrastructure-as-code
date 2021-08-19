@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fluentd-deployment
+  namespace: default
+  labels:
+    app: fluentd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fluentd
+  template:
+    metadata:
+      labels:
+        app: fluentd
+    spec:
+      containers:
+      - name: fluentd
+        image: quay.io/fluentd_elasticsearch/fluentd
+        env:
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/fluent/config.d
+      volumes:
+      - name: config-volume
+        configMap:
+           name: fluentdconf
